@@ -688,7 +688,7 @@
                 html += `<section class="section-card"><h3 class="section-title">${section.name}</h3>`;
                 html += `<div class="list-container">`;
                 section.links.forEach(link => {
-                    html += `<a href="${link.url}" class="link-btn"><span>${link.t}</span><span class="play-icon" aria-hidden="true">▶</span></a>`;
+                    html += `<a href="${link.url}" class="link-btn" target="math"><span>${link.t}</span><span class="play-icon" aria-hidden="true">▶</span></a>`;
                 });
                 html += `</div></section>`;
             });
