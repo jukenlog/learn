@@ -1,0 +1,807 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>中学受験新演習 算数６年上 動画解説</title>
+    <script>
+// links に { t: "問１", url: "動画URL" } を追加します。
+// 開始時刻が判明した場合はURL末尾に #t=4m31s の形式で指定できます。
+// 空のセクションは「準備中」として表示します。カテゴリは元のHTMLに合わせた追加用の枠です。
+const chapterData = [
+  {
+    "id": "ch1",
+    "title": "第1回 いろいろな和と差の問題",
+    "sections": [
+      {
+        "name": "例題",
+        "links": [
+          {
+            "t": "例題１",
+            "url": "https://player.vimeo.com/video/1049132127?h=d5736dd018&speed=0"
+          },
+          {
+            "t": "例題２",
+            "url": "https://player.vimeo.com/video/1049132127?h=d5736dd018&speed=0#t=5m37s"
+          },
+          {
+            "t": "例題３",
+            "url": "https://player.vimeo.com/video/1049132127?h=d5736dd018&speed=0#t=10m17s"
+          },
+          {
+            "t": "例題４",
+            "url": "https://player.vimeo.com/video/1049132598?h=07b30a76d1&speed=0"
+          },
+          {
+            "t": "例題５",
+            "url": "https://player.vimeo.com/video/1049132598?h=07b30a76d1&speed=0#t=3m1s"
+          }
+        ]
+      },
+      {
+        "name": "基本問題",
+        "links": [
+          {
+            "t": "問1",
+            "url": "https://player.vimeo.com/video/1049133127?h=18e6131365&speed=0"
+          },
+          {
+            "t": "問2",
+            "url": "https://player.vimeo.com/video/1049133127?h=18e6131365&speed=0#t=76s"
+          },
+          {
+            "t": "問3",
+            "url": "https://player.vimeo.com/video/1049133127?h=18e6131365&speed=0#t=177s"
+          },
+          {
+            "t": "問4",
+            "url": "https://player.vimeo.com/video/1049133127?h=18e6131365&speed=0#t=272s"
+          },
+          {
+            "t": "問５",
+            "url": "https://player.vimeo.com/video/1049133571?h=0165665129&speed=0"
+          },
+          {
+            "t": "問６",
+            "url": "https://player.vimeo.com/video/1164177942?h=1f95ce90a6&speed=0"
+          },
+          {
+            "t": "問７",
+            "url": "https://player.vimeo.com/video/1049133571?h=0165665129&speed=0#t=220s"
+          },
+          {
+            "t": "問８",
+            "url": "https://player.vimeo.com/video/1049133571?h=0165665129&speed=0#t=315s"
+          },
+          {
+            "t": "問９",
+            "url": "https://player.vimeo.com/video/1049133876?h=0d837d22b5&speed=0"
+          },
+          {
+            "t": "問１０",
+            "url": "https://player.vimeo.com/video/1049133876?h=0d837d22b5&speed=0#t=147s"
+          },
+          {
+            "t": "問１１",
+            "url": "https://player.vimeo.com/video/1049133876?h=0d837d22b5&speed=0#t=252s"
+          }
+        ]
+      },
+      {
+        "name": "練習問題",
+        "links": [
+          {
+            "t": "問１〜",
+            "url": "https://player.vimeo.com/video/1049158100?h=3ae2b944e6&speed=0"
+          },
+          {
+            "t": "問５〜",
+            "url": "https://player.vimeo.com/video/1049158423?h=5c2eff37bc&speed=0"
+          },
+          {
+            "t": "問７〜",
+            "url": "https://player.vimeo.com/video/1049159082?h=aa394d72b7&speed=0"
+          }
+        ]
+      },
+      {
+        "name": "チャレンジ",
+        "links": [
+          {
+            "t": "チャレンジ",
+            "url": "https://player.vimeo.com/video/1049160177?h=9588591165&speed=0"
+          }
+        ]
+      }
+    ],
+    "noteUrl": "https://note.com/hiradoinoshojuku/n/n2c51d188ef9d",
+    "timingNote": "例題２は5:37、例題３は10:17から開きます（画面切り替わりの少し手前）。今回追加した動画は先頭から開きます。「〜」は複数の問題を含む動画です。",
+    "statusNote": "第１回の提供URLを登録済みです。追加分の問題ごとの開始時刻は未登録です。"
+  },
+  {
+    "id": "ch2",
+    "title": "第2回 仕事算／ニュートン算",
+    "sections": [
+      {
+        "name": "例題",
+        "links": [
+          {
+            "t": "例題１〜３",
+            "url": "https://player.vimeo.com/video/1049881511?h=059f9bf752&speed=0"
+          }
+        ]
+      },
+      {
+        "name": "基本問題",
+        "links": []
+      },
+      {
+        "name": "練習問題",
+        "links": []
+      },
+      {
+        "name": "チャレンジ",
+        "links": []
+      }
+    ],
+    "noteUrl": "https://note.com/hiradoinoshojuku/n/n6d4d7dad233e"
+  },
+  {
+    "id": "ch3",
+    "title": "第3回 場合の数（３）－応用",
+    "sections": [
+      {
+        "name": "例題",
+        "links": [
+          {
+            "t": "例題１",
+            "url": "https://player.vimeo.com/video/1053304813?h=330975638b&speed=0"
+          }
+        ]
+      },
+      {
+        "name": "基本問題",
+        "links": []
+      },
+      {
+        "name": "練習問題",
+        "links": []
+      },
+      {
+        "name": "チャレンジ",
+        "links": []
+      }
+    ],
+    "noteUrl": "https://note.com/hiradoinoshojuku/n/n28115abf2354"
+  },
+  {
+    "id": "ch4",
+    "title": "第4回 きまりの利用（３）－応用",
+    "sections": [
+      {
+        "name": "例題",
+        "links": [
+          {
+            "t": "例題１・２",
+            "url": "https://player.vimeo.com/video/1054354190?h=3da0ed1597&speed=0"
+          }
+        ]
+      },
+      {
+        "name": "基本問題",
+        "links": []
+      },
+      {
+        "name": "練習問題",
+        "links": []
+      },
+      {
+        "name": "チャレンジ",
+        "links": []
+      }
+    ],
+    "noteUrl": "https://note.com/hiradoinoshojuku/n/neb08c6818cc6"
+  },
+  {
+    "id": "ch5",
+    "title": "第5回 第１回～第４回のまとめ",
+    "sections": [
+      {
+        "name": "基本問題",
+        "links": []
+      },
+      {
+        "name": "練習問題",
+        "links": []
+      }
+    ],
+    "noteUrl": "https://note.com/hiradoinoshojuku/n/n9d833013b60d"
+  },
+  {
+    "id": "ch6",
+    "title": "第6回 平面図形と比",
+    "sections": [
+      {
+        "name": "例題",
+        "links": [
+          {
+            "t": "例題１〜３",
+            "url": "https://player.vimeo.com/video/1058871999?h=379793c664&speed=0"
+          }
+        ]
+      },
+      {
+        "name": "基本問題",
+        "links": []
+      },
+      {
+        "name": "練習問題",
+        "links": []
+      },
+      {
+        "name": "チャレンジ",
+        "links": []
+      }
+    ],
+    "noteUrl": "https://note.com/hiradoinoshojuku/n/na66689f040c3"
+  },
+  {
+    "id": "ch7",
+    "title": "第7回 対称な図形／影がつくる図形",
+    "sections": [
+      {
+        "name": "例題",
+        "links": [
+          {
+            "t": "例題１〜３",
+            "url": "https://player.vimeo.com/video/1071640114?h=43dde1dc04&speed=0"
+          }
+        ]
+      },
+      {
+        "name": "基本問題",
+        "links": []
+      },
+      {
+        "name": "練習問題",
+        "links": []
+      },
+      {
+        "name": "チャレンジ",
+        "links": []
+      }
+    ],
+    "noteUrl": "https://note.com/hiradoinoshojuku/n/ne20ec3563e01"
+  },
+  {
+    "id": "ch8",
+    "title": "第8回 速さと比",
+    "sections": [
+      {
+        "name": "例題",
+        "links": [
+          {
+            "t": "例題１〜３",
+            "url": "https://player.vimeo.com/video/882314369?h=c1531f64d7&speed=0"
+          }
+        ]
+      },
+      {
+        "name": "基本問題",
+        "links": []
+      },
+      {
+        "name": "練習問題",
+        "links": []
+      },
+      {
+        "name": "チャレンジ",
+        "links": []
+      }
+    ],
+    "noteUrl": "https://note.com/hiradoinoshojuku/n/nc9f85c1d9f1f"
+  },
+  {
+    "id": "ch9",
+    "title": "第9回 速さと比の利用",
+    "sections": [
+      {
+        "name": "例題",
+        "links": [
+          {
+            "t": "例題１〜３",
+            "url": "https://player.vimeo.com/video/1073773602?h=23ceaff5fc&speed=0"
+          }
+        ]
+      },
+      {
+        "name": "基本問題",
+        "links": []
+      },
+      {
+        "name": "練習問題",
+        "links": []
+      },
+      {
+        "name": "チャレンジ",
+        "links": []
+      }
+    ],
+    "noteUrl": "https://note.com/hiradoinoshojuku/n/n97e9bcf1018c"
+  },
+  {
+    "id": "ch10",
+    "title": "第10回 第６回～第９回のまとめ",
+    "sections": [
+      {
+        "name": "基本問題",
+        "links": []
+      },
+      {
+        "name": "練習問題",
+        "links": []
+      }
+    ],
+    "noteUrl": "https://note.com/hiradoinoshojuku/n/n998b67240b8a"
+  },
+  {
+    "id": "ch11",
+    "title": "第11回 流水算",
+    "sections": [
+      {
+        "name": "例題",
+        "links": [
+          {
+            "t": "例題１〜３",
+            "url": "https://player.vimeo.com/video/1080706152?h=057cbcae40&speed=0"
+          }
+        ]
+      },
+      {
+        "name": "基本問題",
+        "links": []
+      },
+      {
+        "name": "練習問題",
+        "links": []
+      },
+      {
+        "name": "チャレンジ",
+        "links": []
+      }
+    ],
+    "noteUrl": "https://note.com/hiradoinoshojuku/n/nf48ae50ece84"
+  },
+  {
+    "id": "ch12",
+    "title": "第12回 多角形の回転・転がり移動",
+    "sections": [
+      {
+        "name": "例題",
+        "links": [
+          {
+            "t": "例題１・２",
+            "url": "https://player.vimeo.com/video/1082400656?h=968e4be18b&speed=0"
+          }
+        ]
+      },
+      {
+        "name": "基本問題",
+        "links": []
+      },
+      {
+        "name": "練習問題",
+        "links": []
+      },
+      {
+        "name": "チャレンジ",
+        "links": []
+      }
+    ],
+    "noteUrl": "https://note.com/hiradoinoshojuku/n/ne1930114b455"
+  },
+  {
+    "id": "ch13",
+    "title": "第13回 円の回転・転がり移動",
+    "sections": [
+      {
+        "name": "例題",
+        "links": [
+          {
+            "t": "例題１〜３",
+            "url": "https://player.vimeo.com/video/1084090638?h=fb05f5ee43&speed=0"
+          }
+        ]
+      },
+      {
+        "name": "基本問題",
+        "links": []
+      },
+      {
+        "name": "練習問題",
+        "links": []
+      },
+      {
+        "name": "チャレンジ",
+        "links": []
+      }
+    ],
+    "noteUrl": "https://note.com/hiradoinoshojuku/n/n1809c7e3000d"
+  },
+  {
+    "id": "ch14",
+    "title": "第14回 図形の平行移動／おうぎ形の転がり移動",
+    "sections": [
+      {
+        "name": "例題",
+        "links": [
+          {
+            "t": "例題１・２",
+            "url": "https://player.vimeo.com/video/1085546756?h=ce2b44a62e&speed=0"
+          }
+        ]
+      },
+      {
+        "name": "基本問題",
+        "links": []
+      },
+      {
+        "name": "練習問題",
+        "links": []
+      },
+      {
+        "name": "チャレンジ",
+        "links": []
+      }
+    ],
+    "noteUrl": "https://note.com/hiradoinoshojuku/n/na861d28d035f"
+  },
+  {
+    "id": "ch15",
+    "title": "第15回 第11回～第14回のまとめ",
+    "sections": [
+      {
+        "name": "基本問題",
+        "links": []
+      },
+      {
+        "name": "練習問題",
+        "links": []
+      }
+    ],
+    "noteUrl": "https://note.com/hiradoinoshojuku/n/n434fad4e8667"
+  },
+  {
+    "id": "ch16",
+    "title": "第16回 図形上の点の移動",
+    "sections": [
+      {
+        "name": "例題",
+        "links": [
+          {
+            "t": "例題１・２",
+            "url": "https://player.vimeo.com/video/1088942000?h=37da0fd402&speed=0"
+          }
+        ]
+      },
+      {
+        "name": "基本問題",
+        "links": []
+      },
+      {
+        "name": "練習問題",
+        "links": []
+      },
+      {
+        "name": "チャレンジ",
+        "links": []
+      }
+    ],
+    "noteUrl": "https://note.com/hiradoinoshojuku/n/nb44fb5a5ee57"
+  },
+  {
+    "id": "ch17",
+    "title": "第17回 水量の変化と比の利用",
+    "sections": [
+      {
+        "name": "例題",
+        "links": [
+          {
+            "t": "例題動画",
+            "url": "https://player.vimeo.com/video/876969718?h=c9e42db29a&speed=0"
+          }
+        ]
+      },
+      {
+        "name": "基本問題",
+        "links": []
+      },
+      {
+        "name": "練習問題",
+        "links": []
+      },
+      {
+        "name": "チャレンジ",
+        "links": []
+      }
+    ],
+    "noteUrl": "https://note.com/hiradoinoshojuku/n/n7a79620ee36c"
+  },
+  {
+    "id": "ch18",
+    "title": "第18回 立体の切断",
+    "sections": [
+      {
+        "name": "例題",
+        "links": [
+          {
+            "t": "例題１",
+            "url": "https://player.vimeo.com/video/1090351469?h=65271134b9&speed=0"
+          }
+        ]
+      },
+      {
+        "name": "基本問題",
+        "links": []
+      },
+      {
+        "name": "練習問題",
+        "links": []
+      },
+      {
+        "name": "チャレンジ",
+        "links": []
+      }
+    ],
+    "noteUrl": "https://note.com/hiradoinoshojuku/n/n6d20ba26e722"
+  },
+  {
+    "id": "ch19",
+    "title": "第19回 立体と投影図",
+    "sections": [
+      {
+        "name": "例題",
+        "links": [
+          {
+            "t": "例題１・２",
+            "url": "https://player.vimeo.com/video/1091695781?h=2159704fea&speed=0"
+          }
+        ]
+      },
+      {
+        "name": "基本問題",
+        "links": []
+      },
+      {
+        "name": "練習問題",
+        "links": []
+      },
+      {
+        "name": "チャレンジ",
+        "links": []
+      }
+    ],
+    "noteUrl": "https://note.com/hiradoinoshojuku/n/n48728251fd65"
+  },
+  {
+    "id": "ch20",
+    "title": "第20回 第16回～第19回のまとめ",
+    "sections": [
+      {
+        "name": "基本問題",
+        "links": []
+      },
+      {
+        "name": "練習問題",
+        "links": []
+      }
+    ],
+    "noteUrl": "https://note.com/hiradoinoshojuku/n/n2cca482f2519"
+  }
+];
+</script>
+    <style>
+        :root { color-scheme: light; --ink:#172c41; --muted:#60758a; --accent:#087f83; --line:#dce5ea; }
+        * { box-sizing:border-box; }
+        body { margin:0; height:100vh; height:100dvh; display:flex; overflow:hidden; background:#f3f6f8; color:var(--ink); font-family:-apple-system,BlinkMacSystemFont,"Hiragino Kaku Gothic ProN","Yu Gothic",sans-serif; -webkit-font-smoothing:antialiased; }
+        button,select { font:inherit; }
+        .sidebar { width:310px; flex-shrink:0; display:flex; flex-direction:column; background:#132b40; color:#eaf2f7; }
+        .sidebar-header { padding:32px 26px 25px; border-bottom:1px solid #ffffff15; }
+        .brand-label { color:#77d6cf; letter-spacing:.18em; font-size:10px; font-weight:700; margin-bottom:18px; }
+        .sidebar-header h1 { margin:0; font-size:13px; font-weight:500; color:#bdcedd; }
+        .course-name { display:block; margin-top:9px; font-size:25px; font-weight:750; letter-spacing:.06em; color:#fff; }
+        .sidebar-header p { margin:13px 0 0; font-size:11px; color:#a8becf; }
+        .sidebar-menu { flex:1; min-height:0; overflow-y:auto; padding:15px 12px 22px; scrollbar-width:thin; scrollbar-color:#4b6478 transparent; }
+        .sidebar-item { width:100%; display:flex; align-items:center; gap:12px; padding:13px 12px; margin:3px 0; border:1px solid transparent; border-radius:10px; background:transparent; color:#c4d3df; text-align:left; cursor:pointer; font-size:12px; line-height:1.6; transition:background .15s,color .15s; }
+        .chapter-number { display:grid; place-items:center; flex-shrink:0; width:29px; height:29px; border:1px solid #ffffff20; border-radius:8px; font-size:11px; font-variant-numeric:tabular-nums; color:#97b4c8; }
+        .sidebar-item:hover { background:#ffffff09; color:white; }
+        .sidebar-item.active { color:white; background:#205165; border-color:#70d6d52a; }
+        .sidebar-item.active .chapter-number { background:#8ce0d7; color:#173d47; border-color:transparent; font-weight:750; }
+        .mobile-nav { display:none; }
+        .main-content { flex:1; min-width:0; overflow-y:auto; padding:48px clamp(24px,5vw,76px); background:radial-gradient(ellipse at top right,#e5f1f0 0,transparent 55%); }
+        .chapter-container { max-width:1000px; margin:0 auto 60px; }
+        .chapter-heading { padding-bottom:26px; margin-bottom:28px; border-bottom:1px solid var(--line); }
+        .eyebrow { font-size:11px; font-weight:700; letter-spacing:.14em; color:var(--accent); margin:0 0 14px; }
+        h2 { font-size:clamp(22px,2.5vw,32px); line-height:1.5; letter-spacing:.01em; margin:0 0 12px; }
+        .chapter-description { font-size:12px; color:var(--muted); margin:0; line-height:1.8; }
+        .section-card { background:#ffffffde; border:1px solid #e1e9ee; border-radius:18px; padding:24px; margin-bottom:20px; box-shadow:0 5px 22px #183c5104; }
+        .section-title { display:flex; align-items:center; gap:10px; font-size:15px; font-weight:700; margin:0 0 19px; }
+        .section-title::before { content:""; width:4px; height:16px; border-radius:3px; background:var(--accent); }
+        .list-container { display:grid; grid-template-columns:repeat(5,minmax(0,1fr)); gap:10px; }
+        .link-btn { display:flex; align-items:center; justify-content:space-between; gap:8px; min-height:52px; padding:14px; border:1px solid #dce6eb; border-radius:10px; background:#f8fafb; color:var(--ink); text-decoration:none; font-size:13px; font-weight:600; transition:background .15s,border-color .15s,transform .15s; }
+        .play-icon { width:22px; height:22px; flex-shrink:0; display:grid; place-items:center; border-radius:50%; color:var(--accent); background:#e2f0ef; font-size:8px; padding-left:1px; }
+        .link-btn:hover { background:#eaf6f4; border-color:#7fbeb7; transform:translateY(-2px); }
+        .link-btn:active { transform:translateY(0); }
+        :is(.sidebar-item,.link-btn,select):focus-visible { outline:3px solid #29b9b0; outline-offset:3px; }
+        .membership-notice { margin-top:16px; border:1px solid #ffffff25; border-radius:9px; background:#ffffff08; font-size:12px; line-height:1.8; }
+        .membership-notice summary { min-height:44px; padding:11px 12px; cursor:pointer; color:#c8ece8; font-size:11px; font-weight:600; }
+        .membership-notice-body { padding:0 12px 13px; }
+        .sidebar-header .membership-notice p { display:block; margin:0 0 8px; color:#d4e2ec; font-size:11px; }
+        .sidebar-header .membership-notice p:last-child { margin-bottom:0; }
+        .membership-notice a { color:#91e4dc; text-underline-offset:3px; overflow-wrap:anywhere; }
+        .membership-notice :is(a,summary):focus-visible { outline:3px solid #29b9b0; outline-offset:3px; }
+        .page-footer { color:var(--muted); font-size:11px; text-align:center; padding:12px 0; }
+        @keyframes fadeIn { from { opacity:0; transform:translateY(5px); } to { opacity:1; transform:translateY(0); } }
+        .animate-in { animation:fadeIn .2s ease-out; }
+        @media(max-width:1100px) { .sidebar { width:275px; } .main-content { padding:32px 24px; } .list-container { grid-template-columns:repeat(3,minmax(0,1fr)); } }
+        @media(max-width:700px) {
+            body { flex-direction:column; }
+            .sidebar { width:100%; }
+            .sidebar-header { padding:18px 20px 12px; border:0; }
+            .brand-label { display:none; }
+            .sidebar-header h1 { font-size:11px; }
+            .course-name { font-size:21px; margin-top:3px; }
+            .sidebar-header > p { display:none; }
+            .sidebar-menu { display:none; }
+            .mobile-nav { display:block; padding:0 20px 17px; }
+            .mobile-nav label { display:block; font-size:10px; color:#b2c6d6; margin-bottom:6px; }
+            .mobile-nav select { width:100%; min-height:44px; border:1px solid #60788b; border-radius:8px; padding:10px; color:white; background:#203e55; font-size:13px; }
+            .main-content { padding:24px 16px; min-height:0; }
+            .chapter-heading { padding-bottom:20px; margin-bottom:20px; }
+            .eyebrow { font-size:10px; margin-bottom:8px; }
+            h2 { font-size:23px; }
+            .section-card { border-radius:14px; padding:18px 16px; margin-bottom:16px; }
+            .list-container { gap:8px; }
+            .link-btn { padding:12px 10px; font-size:12px; }
+        }
+        @media(max-width:390px) { .list-container { grid-template-columns:repeat(2,minmax(0,1fr)); } }
+        @media(prefers-reduced-motion:reduce) { *,*::before,*::after { animation:none!important; transition:none!important; } }
+    
+        .course-nav { display:flex; gap:6px; margin-top:16px; margin-bottom:0; }
+        .course-nav a { flex:1; display:flex; align-items:center; justify-content:center; min-height:44px; padding:9px 5px; border:1px solid #ffffff35; border-radius:8px; color:#d9e8f2; text-decoration:none; font-size:12px; font-weight:600; white-space:nowrap; }
+        .course-nav a:hover { background:#ffffff15; }
+        .course-nav a[aria-current="page"] { background:#91e4dc; color:#173d47; border-color:#91e4dc; }
+        .course-nav a:focus-visible { outline:3px solid #29b9b0; outline-offset:2px; }
+        @media(max-width:700px) { .course-nav { margin-top:14px; margin-bottom:0; } }
+            .link-btn.pending { color:#687b8b; background:#edf1f4; border:1px dashed #ccd7df; cursor:default; justify-content:center; }
+        .link-btn.pending:hover { transform:none; }
+        .page-footer { line-height:1.8; }
+        .page-footer a { color:var(--accent); text-underline-offset:3px; }
+    </style>
+</head>
+<body>
+
+    <div class="sidebar">
+        <div class="sidebar-header">
+            
+            <div class="brand-label">MATH VIDEO LIBRARY</div>
+            <h1>中学受験新演習<span class="course-name">算数 ６年上</span></h1>
+            <p>全20回 · 解説動画ライブラリ</p>
+            <details id="membershipNotice" class="membership-notice" open>
+                <summary>閲覧に関する注意事項</summary>
+                <div class="membership-notice-body">
+                    <p>解説動画の閲覧には、以下のnoteメンバーシップへの登録が必要です。</p>
+                    <p><a href="https://note.com/hiradoinoshojuku/membership" target="_blank" rel="noopener noreferrer">https://note.com/hiradoinoshojuku/membership</a></p>
+                </div>
+            </details>
+            <nav class="course-nav" aria-label="教材を選ぶ"><a href="math5-1.html">小５上</a><a href="math5-2.html">小５下</a><a href="math6-1.html" aria-current="page">小６上</a></nav>
+        </div>
+        <div class="mobile-nav"><label for="chapterSelect">単元を選ぶ</label><select id="chapterSelect"></select></div>
+        <nav id="sidebarMenu" class="sidebar-menu" aria-label="単元一覧"></nav>
+    </div>
+
+    <div class="main-content">
+        <div id="contentArea" class="chapter-container">
+            </div>
+    </div>
+
+    <script>
+        // 2. 初期表示とイベント設定
+        const sidebarMenu = document.getElementById('sidebarMenu');
+        const contentArea = document.getElementById('contentArea');
+        const chapterSelect = document.getElementById('chapterSelect');
+        const lastChapterKey = 'math-6-upper:last-chapter';
+        const membershipNotice = document.getElementById('membershipNotice');
+        const noticeSeenKey = 'math-6-upper:membership-notice-seen';
+        try {
+            membershipNotice.open = localStorage.getItem(noticeSeenKey) !== '1';
+            localStorage.setItem(noticeSeenKey, '1');
+        } catch {
+            // 保存機能が使えない場合も、注意事項は手動で開閉できます。
+        }
+
+        function init() {
+
+            let defaultChapter = chapterData[0];
+            try {
+                const savedId = localStorage.getItem(lastChapterKey);
+                defaultChapter = chapterData.find(chapter => chapter.id === savedId) || defaultChapter;
+            } catch {
+                // 保存機能が利用できない場合は、従来の初期単元を表示します。
+            }
+
+            chapterData.forEach((chapter) => {
+                // サイドバー項目の生成
+                const item = document.createElement('button');
+                item.type = 'button';
+        
+                // 判定：現在のループのチャプターがデフォルトチャプターと同じなら active クラスを付与
+                const isActive = (chapter.id === defaultChapter.id);
+                item.className = `sidebar-item ${isActive ? 'active' : ''}`;
+        
+                const chapterNumber = chapter.id.replace('ch', '');
+                const number = document.createElement('span');
+                number.className = 'chapter-number';
+                number.textContent = chapterNumber.padStart(2, '0');
+                const title = document.createElement('span');
+                title.textContent = chapter.title.replace(/^第\d+回\s*/, '');
+                item.append(number, title);
+                item.dataset.chapterId = chapter.id;
+                const option = document.createElement('option');
+                option.value = chapter.id;
+                option.textContent = chapter.title;
+                chapterSelect.appendChild(option);
+                item.onclick = () => renderChapter(chapter, item);
+                sidebarMenu.appendChild(item);
+
+                // デフォルトチャプターの内容を描画
+                if (isActive) {
+                    renderChapter(chapter, item);
+                }
+            });
+            chapterSelect.value = defaultChapter.id;
+            chapterSelect.onchange = () => {
+                const chapter = chapterData.find(chapter => chapter.id === chapterSelect.value);
+                const item = [...sidebarMenu.children].find(item => item.dataset.chapterId === chapter.id);
+                renderChapter(chapter, item);
+            };
+            sidebarMenu.querySelector('.active')?.scrollIntoView({ block: 'nearest' });
+        }
+
+        // 3. コンテンツの描画関数
+        function renderChapter(chapter, element) {
+            chapterSelect.value = chapter.id;
+            try {
+                localStorage.setItem(lastChapterKey, chapter.id);
+            } catch {
+                // 保存できない場合も、単元の切り替えを続行します。
+            }
+            // サイドバーの active 切り替え
+            document.querySelectorAll('.sidebar-item').forEach(i => i.classList.remove('active'));
+            element.classList.add('active');
+            document.querySelectorAll('.sidebar-item').forEach(item => item.setAttribute('aria-current', item === element ? 'true' : 'false'));
+            document.querySelector('.main-content').scrollTop = 0;
+
+            // HTMLの組み立て
+            let html = `<div class="animate-in"><header class="chapter-heading"><p class="eyebrow">CHAPTER ${chapter.id.replace('ch', '').padStart(2, '0')}</p><h2>${chapter.title}</h2><p class="chapter-description">${chapter.timingNote || 'ボタンを押すと動画を別タブで開きます。開始時刻が未登録の動画は先頭から再生します。'}</p></header>`;
+            
+            chapter.sections.forEach(section => {
+                html += `<section class="section-card"><h3 class="section-title">${section.name}</h3>`;
+                html += `<div class="list-container">`;
+                if (!section.links.length) {
+                    html += '<button type="button" class="link-btn pending" disabled>準備中</button>';
+                }
+                section.links.forEach(link => {
+                    html += `<a href="${link.url}" class="link-btn" target="_blank" rel="noopener noreferrer"><span>${link.t}</span><span class="play-icon" aria-hidden="true">▶</span></a>`;
+                });
+                html += `</div></section>`;
+            });
+
+            html += `<footer class="page-footer"><p>${chapter.statusNote || '公開動画を登録した雛形です。残りの動画・問題別の開始時刻は順次追加します。'}</p><a href="${chapter.noteUrl}" target="_blank" rel="noopener noreferrer">元のnote記事を見る ↗</a><p>中学受験新演習 · 算数６年上</p></footer></div>`;
+            contentArea.innerHTML = html;
+        }
+
+        init();
+    </script>
+</body>
+</html>

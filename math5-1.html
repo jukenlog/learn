@@ -1,0 +1,703 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>中学受験新演習 算数５年上 動画解説</title>
+    <script>
+    const chapterData = [
+    {
+        id : "ch11",
+        title: "第11回 つるかめ算",
+        sections: [
+            {
+                name: "例題",
+                links: [
+                    { t: "例題１", url: "https://player.vimeo.com/video/1048829121?h=9fc7bdcd44&speed=0" },
+                    { t: "例題２", url: "https://player.vimeo.com/video/1048829121?h=9fc7bdcd44&speed=0#t=5m16s" },
+                    { t: "例題３", url: "https://player.vimeo.com/video/1048829577?h=0bd31df88a&speed=0" },
+                    { t: "例題４", url: "https://player.vimeo.com/video/1048829577?h=0bd31df88a&speed=0#t=1m55s" }
+                ]
+            },
+            {
+                "name": "基本問題",
+                "links": [
+                    { t: "問１", url: "https://player.vimeo.com/video/1048830046?h=0c4740519e&speed=0" },
+                    { t: "問２", url: "https://player.vimeo.com/video/1048830046?h=0c4740519e&speed=0#t=1m40s" },
+                    { t: "問３", url: "https://player.vimeo.com/video/1048830432?h=917a7ab3e5&speed=0" },
+                    { t: "問４", url: "https://player.vimeo.com/video/1048830432?h=917a7ab3e5&speed=0#t=1m34s" },
+                    { t: "問５", url: "https://player.vimeo.com/video/1048830432?h=917a7ab3e5&speed=0#t=2m31s" },
+                    { t: "問６", url: "https://player.vimeo.com/video/1048830432?h=917a7ab3e5&speed=0#t=3m18s" },
+                    { t: "問７", url: "https://player.vimeo.com/video/1048830749?h=1a1a1b6eec&speed=0" },
+                    { t: "問８", url: "https://player.vimeo.com/video/1048830749?h=1a1a1b6eec&speed=0#t=1m35s" },
+                    { t: "問９", url: "https://player.vimeo.com/video/1048830749?h=1a1a1b6eec&speed=0#t=2m21s" },
+                    { t: "問１０", url: "https://player.vimeo.com/video/1048830749?h=1a1a1b6eec&speed=0#t=3m31s" }
+                ]
+            },
+            {
+                "name": "練習問題",
+                "links": [
+                    { t: "問１", url: "https://player.vimeo.com/video/1048854306?h=cbfde0699f&speed=0" },
+                    { t: "問２", url: "https://player.vimeo.com/video/1048854306?h=cbfde0699f&speed=0#t=1m04s" },
+                    { t: "問３", url: "https://player.vimeo.com/video/1048854306?h=cbfde0699f&speed=0#t=2m32s" },
+                    { t: "問４", url: "https://player.vimeo.com/video/1048854707?h=3ba9790a27&speed=0" },
+                    { t: "問５", url: "https://player.vimeo.com/video/1048854707?h=3ba9790a27&speed=0#t=1m49s" },
+                    { t: "問６", url: "https://player.vimeo.com/video/1048854707?h=3ba9790a27&speed=0#t=3m31s" },
+                    { t: "問７", url: "https://player.vimeo.com/video/1048856931?h=888646e6ce&speed=0" },
+                    { t: "問８", url: "https://player.vimeo.com/video/1048856931?h=888646e6ce&speed=0#t=1m57s" },
+                    { t: "問９", url: "https://player.vimeo.com/video/1048856931?h=888646e6ce&speed=0#t=4m20s" },
+                    { t: "問１０", url: "https://player.vimeo.com/video/1048856931?h=888646e6ce&speed=0#t=6m08s" }
+                ]
+            },
+            {
+                "name": "チャレンジ",
+                "links": [
+                    { t: "問１", url: "https://player.vimeo.com/video/1048857482?h=52c338cfff&speed=0" },
+                    { t: "問２", url: "https://player.vimeo.com/video/1048857482?h=52c338cfff&speed=0#t=3m02s" },
+                    { t: "問３", url: "https://player.vimeo.com/video/1048857482?h=52c338cfff&speed=0#t=4m56s" }
+                ]
+            }        ]
+    },
+    {
+        id: "ch12",
+        title: "第12回 差集め算",
+        sections: [
+            {
+                name: "例題",
+                links: [
+                    { t: "例題１", url: "https://player.vimeo.com/video/1065704223?h=eb148be89b&speed=0" },
+                    { t: "例題２", url: "https://player.vimeo.com/video/1065704223?h=eb148be89b&speed=0#t=3m18s" },
+                    { t: "例題３", url: "https://player.vimeo.com/video/1065704223?h=eb148be89b&speed=0#t=6m40s" },
+                    { t: "例題４", url: "https://player.vimeo.com/video/1065704627?h=4aef3b3010&speed=0" },
+                    { t: "例題５", url: "https://player.vimeo.com/video/1065704627?h=4aef3b3010&speed=0#t=2m06s" }
+                ]
+            },
+            {
+                name: "基本問題",
+                links: [
+                    { t: "問１／２", url: "https://player.vimeo.com/video/1065705273?h=fc3571e084&speed=0" },
+                    { t: "問３", url: "https://player.vimeo.com/video/1065705273?h=fc3571e084&speed=0#t=1m24s" },
+                    { t: "問４", url: "https://player.vimeo.com/video/1065705765?h=c883411750&speed=0" },
+                    { t: "問５", url: "https://player.vimeo.com/video/1065705765?h=c883411750&speed=0#t=1m15s" },
+                    { t: "問６", url: "https://player.vimeo.com/video/1065705765?h=c883411750&speed=0#t=2m36s" },
+                    { t: "問７", url: "https://player.vimeo.com/video/1065705765?h=c883411750&speed=0#t=3m32s" },
+                    { t: "問８", url: "https://player.vimeo.com/video/1065706365?h=3061a366f1&speed=0" },
+                    { t: "問９", url: "https://player.vimeo.com/video/1065706365?h=3061a366f1&speed=0#t=1m07s" },
+                    { t: "問１０", url: "https://player.vimeo.com/video/1065706365?h=3061a366f1&speed=0#t=2m20s" }
+                ]
+            },
+            {
+                name: "練習問題",
+                links: [
+                    { t: "問１", url: "https://player.vimeo.com/video/1065706841?h=0c00b0caec&speed=0" },
+                    { t: "問２", url: "https://player.vimeo.com/video/1065706841?h=0c00b0caec&speed=0#t=1m56s" },
+                    { t: "問３", url: "https://player.vimeo.com/video/1065706841?h=0c00b0caec&speed=0#t=2m38s" },
+                    { t: "問４", url: "https://player.vimeo.com/video/1065707270?h=3f1fd27a9d&speed=0" },
+                    { t: "問５", url: "https://player.vimeo.com/video/1065707270?h=3f1fd27a9d&speed=0#t=2m03s" },
+                    { t: "問６", url: "https://player.vimeo.com/video/1065707270?h=3f1fd27a9d&speed=0#t=4m04s" },
+                    { t: "問７", url: "https://player.vimeo.com/video/1065707635?h=722f35fb8c&speed=0" },
+                    { t: "問８", url: "https://player.vimeo.com/video/1065707635?h=722f35fb8c&speed=0#t=2m52s" }
+                ]
+            },
+            {
+                name: "チャレンジ",
+                links: [
+                    { t: "問１", url: "https://player.vimeo.com/video/1065707850?h=ce935642bf&speed=0" },
+                    { t: "問２", url: "https://player.vimeo.com/video/1065707850?h=ce935642bf&speed=0#t=3m14s" },
+                    { t: "問３", url: "https://player.vimeo.com/video/1065707850?h=ce935642bf&speed=0#t=5m54s" }
+                ]
+            }
+        ]
+    },
+    {
+        id: "ch13",
+        title: "第13回 円とおうぎ形",
+        sections: [
+            {
+                name: "例題",
+                links: [
+                    { t: "例題１", url: "https://player.vimeo.com/video/1066429854?h=fac54fd3a9&speed=0" },
+                    { t: "例題２", url: "https://player.vimeo.com/video/1066429854?h=fac54fd3a9&speed=0#t=2m54s" },
+                    { t: "例題３", url: "https://player.vimeo.com/video/1066429854?h=fac54fd3a9&speed=0#t=4m35s" },
+                    { t: "例題４", url: "https://player.vimeo.com/video/1066430121?h=af11e1834a&speed=0" },
+                    { t: "例題５", url: "https://player.vimeo.com/video/1066430121?h=af11e1834a&speed=0#t=4m12s" }
+                ]
+            },
+            {
+                name: "基本問題",
+                links: [
+                    { t: "問１／２", url: "https://player.vimeo.com/video/1066430392?h=5476a42f9f&speed=0" },
+                    { t: "問３", url: "https://player.vimeo.com/video/1066430392?h=5476a42f9f&speed=0#t=2m10s" },
+                    { t: "問４", url: "https://player.vimeo.com/video/1066430660?h=4382143ec4&speed=0" },
+                    { t: "問５", url: "https://player.vimeo.com/video/1066430660?h=4382143ec4&speed=0#t=2m02s" },
+                    { t: "問６", url: "https://player.vimeo.com/video/1066430660?h=4382143ec4&speed=0#t=2m53s" },
+                    { t: "問７", url: "https://player.vimeo.com/video/1066430900?h=026eae8b6f&speed=0" },
+                    { t: "問８", url: "https://player.vimeo.com/video/1066430900?h=026eae8b6f&speed=0#t=1m26s" }
+                ]
+            },
+            {
+                name: "練習問題",
+                links: [
+                    { t: "問１", url: "https://player.vimeo.com/video/1066431139?h=2755a296de&speed=0" },
+                    { t: "問２", url: "https://player.vimeo.com/video/1066431139?h=2755a296de&speed=0#t=1m24s" },
+                    { t: "問３", url: "https://player.vimeo.com/video/1066431139?h=2755a296de&speed=0#t=2m04s" },
+                    { t: "問４", url: "https://player.vimeo.com/video/1066431139?h=2755a296de&speed=0#t=3m26s" },
+                    { t: "問５", url: "https://player.vimeo.com/video/1066431599?h=e82c7a1722&speed=0" },
+                    { t: "問６", url: "https://player.vimeo.com/video/1066431599?h=e82c7a1722&speed=0#t=2m03s" },
+                    { t: "問７", url: "https://player.vimeo.com/video/1066431599?h=e82c7a1722&speed=0#t=4m04s" },
+                    { t: "問８", url: "https://player.vimeo.com/video/1066432070?h=8328797203&speed=0" },
+                    { t: "問９", url: "https://player.vimeo.com/video/1066432070?h=8328797203&speed=0#t=1m09s" },
+                    { t: "問１０", url: "https://player.vimeo.com/video/1066432070?h=8328797203&speed=0#t=2m01s" },
+                    { t: "問１１", url: "https://player.vimeo.com/video/1066432070?h=8328797203&speed=0#t=3m22s" }
+                ]
+            },
+            {
+                name: "チャレンジ",
+                links: [
+                    { t: "問１", url: "https://player.vimeo.com/video/1066432315?h=a1a6944d03&speed=0" },
+                    { t: "問２", url: "https://player.vimeo.com/video/1066432315?h=a1a6944d03&speed=0#t=4m30s" }
+                ]
+            }
+        ]
+    },
+    {
+        id: "ch14",
+        title: "第14回 いろいろな面積の求め方",
+        sections: [
+            {
+                name: "例題",
+                links: [
+                    { t: "例題１", url: "https://player.vimeo.com/video/1066793645?h=4ff39a1f6f&speed=0" },
+                    { t: "例題２", url: "https://player.vimeo.com/video/1066793645?h=4ff39a1f6f&speed=0#t=1m49s" },
+                    { t: "例題３", url: "https://player.vimeo.com/video/1066793645?h=4ff39a1f6f&speed=0#t=4m40s" },
+                    { t: "例題４", url: "https://player.vimeo.com/video/1066794382?h=c36b9c9a2b&speed=0" },
+                    { t: "例題５", url: "https://player.vimeo.com/video/1066794382?h=c36b9c9a2b&speed=0#t=1m36s" },
+                    { t: "例題６", url: "https://player.vimeo.com/video/1066794382?h=c36b9c9a2b&speed=0#t=2m57s" }
+                ]
+            },
+            {
+                name: "基本問題",
+                links: [
+                    { t: "問１", url: "https://player.vimeo.com/video/1066795314?h=9c4cb63362&speed=0" },
+                    { t: "問２", url: "https://player.vimeo.com/video/1066795314?h=9c4cb63362&speed=0#t=59s" },
+                    { t: "問３", url: "https://player.vimeo.com/video/1066795314?h=9c4cb63362&speed=0#t=2m01s" },
+                    { t: "問４", url: "https://player.vimeo.com/video/1066795314?h=9c4cb63362&speed=0#t=2m45s" },
+                    { t: "問５", url: "https://player.vimeo.com/video/1066795637?h=45b47c47c7&speed=0" },
+                    { t: "問６", url: "https://player.vimeo.com/video/1066795637?h=45b47c47c7&speed=0#t=1m44s" },
+                    { t: "問７", url: "https://player.vimeo.com/video/1066795637?h=45b47c47c7&speed=0#t=3m04s" },
+                    { t: "問８", url: "https://player.vimeo.com/video/1066797128?h=94ad76af0a&speed=0" },
+                    { t: "問９", url: "https://player.vimeo.com/video/1066797128?h=94ad76af0a&speed=0#t=3m05s" },
+                    { t: "問１０", url: "https://player.vimeo.com/video/1066797128?h=94ad76af0a&speed=0#t=5m08s" }
+                ]
+            },
+            {
+                name: "練習問題",
+                links: [
+                    { t: "問１", url: "https://player.vimeo.com/video/1066798271?h=4605dd4820&speed=0" },
+                    { t: "問２", url: "https://player.vimeo.com/video/1066798271?h=4605dd4820&speed=0#t=1m18s" },
+                    { t: "問３", url: "https://player.vimeo.com/video/1066798271?h=4605dd4820&speed=0#t=2m11s" },
+                    { t: "問４", url: "https://player.vimeo.com/video/1066798271?h=4605dd4820&speed=0#t=3m45s" },
+                    { t: "問５", url: "https://player.vimeo.com/video/1066798578?h=843ac110fa&speed=0" },
+                    { t: "問６", url: "https://player.vimeo.com/video/1066798578?h=843ac110fa&speed=0#t=3m24s" },
+                    { t: "問７", url: "https://player.vimeo.com/video/1066798578?h=843ac110fa&speed=0#t=4m28s" },
+                    { t: "問８", url: "https://player.vimeo.com/video/1066798578?h=843ac110fa&speed=0#t=5m28s" },
+                    { t: "問９", url: "https://player.vimeo.com/video/1066799069?h=bdcd517b11&speed=0" },
+                    { t: "問１０", url: "https://player.vimeo.com/video/1066799069?h=bdcd517b11&speed=0#t=2m44s" },
+                    { t: "問１１", url: "https://player.vimeo.com/video/1066799069?h=bdcd517b11&speed=0#t=5m46s" }
+                ]
+            },
+            {
+                name: "チャレンジ",
+                links: [
+                    { t: "問１", url: "https://player.vimeo.com/video/1066799380?h=b0b1196b29&speed=0" },
+                    { t: "問２", url: "https://player.vimeo.com/video/1066799380?h=b0b1196b29&speed=0#t=2m13s" },
+                    { t: "問３", url: "https://player.vimeo.com/video/1066799380?h=b0b1196b29&speed=0#t=4m50s" }
+                ]
+            }
+        ]
+    },
+    {
+        id: "ch15",
+        title: "第15回 まとめ",
+        sections: [
+            {
+                name: "基本問題",
+                links: [
+                    { t: "問１", url: "https://player.vimeo.com/video/1076243349?h=a0fd4956e8&speed=0" },
+                    { t: "問２", url: "https://player.vimeo.com/video/1076243349?h=a0fd4956e8&speed=0#t=2m08s" },
+                    { t: "問３", url: "https://player.vimeo.com/video/1076243349?h=a0fd4956e8&speed=0#t=2m40s" },
+                    { t: "問４", url: "https://player.vimeo.com/video/1076243349?h=a0fd4956e8&speed=0#t=3m58s" },
+                    { t: "問５", url: "https://player.vimeo.com/video/1076244120?h=4ec766347b&speed=0" },
+                    { t: "問６", url: "https://player.vimeo.com/video/1076244120?h=4ec766347b&speed=0#t=47s" },
+                    { t: "問７", url: "https://player.vimeo.com/video/1076244120?h=4ec766347b&speed=0#t=2m23s" },
+                    { t: "問８", url: "https://player.vimeo.com/video/1076244120?h=4ec766347b&speed=0#t=3m56s" },
+                    { t: "問９", url: "https://player.vimeo.com/video/1076244433?h=73e4c321b0&speed=0" },
+                    { t: "問１０", url: "https://player.vimeo.com/video/1076244433?h=73e4c321b0&speed=0#t=1m57s" },
+                    { t: "問１１", url: "https://player.vimeo.com/video/1076244433?h=73e4c321b0&speed=0#t=2m46s" },
+                    { t: "問１２", url: "https://player.vimeo.com/video/1076244433?h=73e4c321b0&speed=0#t=3m48s" },
+                    { t: "問１３", url: "https://player.vimeo.com/video/1076244862?h=c13ab254ba&speed=0" },
+                    { t: "問１４", url: "https://player.vimeo.com/video/1076244862?h=c13ab254ba&speed=0#t=1m04s" },
+                    { t: "問１５", url: "https://player.vimeo.com/video/1076244862?h=c13ab254ba&speed=0#t=2m16s" },
+                    { t: "問１６", url: "https://player.vimeo.com/video/1076244862?h=c13ab254ba&speed=0#t=2m59s" }
+                ]
+            },
+            {
+                name: "練習問題",
+                links: [
+                    { t: "問１", url: "https://player.vimeo.com/video/1077798032?h=a4149cc66d&speed=0" },
+                    { t: "問２", url: "https://player.vimeo.com/video/1077798032?h=a4149cc66d&speed=0#t=1m54s" },
+                    { t: "問３", url: "https://player.vimeo.com/video/1077798032?h=a4149cc66d&speed=0#t=3m55s" },
+                    { t: "問４", url: "https://player.vimeo.com/video/1077798316?h=2ef70d4e74&speed=0" },
+                    { t: "問５", url: "https://player.vimeo.com/video/1077798316?h=2ef70d4e74&speed=0#t=1m49s" },
+                    { t: "問６", url: "https://player.vimeo.com/video/1077798316?h=2ef70d4e74&speed=0#t=2m59s" },
+                    { t: "問７", url: "https://player.vimeo.com/video/1077798316?h=2ef70d4e74&speed=0#t=4m08s" },
+                    { t: "問８", url: "https://player.vimeo.com/video/1077798568?h=6c0cc6966e&speed=0" },
+                    { t: "問９", url: "https://player.vimeo.com/video/1077798568?h=6c0cc6966e&speed=0#t=1m47s" },
+                    { t: "問１０", url: "https://player.vimeo.com/video/1077798568?h=6c0cc6966e&speed=0#t=3m07s" },
+                    { t: "問１１", url: "https://player.vimeo.com/video/1077798933?h=befe0d38ab&speed=0" },
+                    { t: "問１２", url: "https://player.vimeo.com/video/1077798933?h=befe0d38ab&speed=0#t=2m14s" },
+                    { t: "問１３", url: "https://player.vimeo.com/video/1077798933?h=befe0d38ab&speed=0#t=4m05s" },
+                    { t: "問１４", url: "https://player.vimeo.com/video/1077798933?h=befe0d38ab&speed=0#t=5m32s" }
+                ]
+            }
+        ]
+    },
+    {
+        id: "ch16",
+        title: "第16回 水溶液の濃さ",
+        active: true,
+        sections: [
+            {
+                name: "例題",
+                links: [
+                    { t: "例題１", url: "https://player.vimeo.com/video/1078530177?h=ab1dc437b7&speed=0" },
+                    { t: "例題２", url: "https://player.vimeo.com/video/1078530177?h=ab1dc437b7&speed=0#t=2m49s" },
+                    { t: "例題３", url: "https://player.vimeo.com/video/1078530177?h=ab1dc437b7&speed=0#t=9m21s" },
+                    { t: "例題４", url: "https://player.vimeo.com/video/1078530424?h=68a6aacc08&speed=0" },
+                    { t: "例題５", url: "https://player.vimeo.com/video/1078530424?h=68a6aacc08&speed=0#t=4m57s" }
+                ]
+            },
+            {
+                name: "基本問題",
+                links: [
+                    { t: "問１／２", url: "https://player.vimeo.com/video/1078530694?h=bd70f26af8&speed=0" },
+                    { t: "問３／４", url: "https://player.vimeo.com/video/1078530694?h=bd70f26af8&speed=0#t=1m19s" },
+                    { t: "問５", url: "https://player.vimeo.com/video/1078531219?h=a63910cfac&speed=0" },
+                    { t: "問６", url: "https://player.vimeo.com/video/1078531219?h=a63910cfac&speed=0#t=1m15s" },
+                    { t: "問７", url: "https://player.vimeo.com/video/1078531219?h=a63910cfac&speed=0#t=2m13s" },
+                    { t: "問８", url: "https://player.vimeo.com/video/1078531219?h=a63910cfac&speed=0#t=3m31s" },
+                    { t: "問９", url: "https://player.vimeo.com/video/1078531701?h=26bc7f04ea&speed=0" },
+                    { t: "問１０", url: "https://player.vimeo.com/video/1078531701?h=26bc7f04ea&speed=0#t=1m17s" },
+                    { t: "問１１", url: "https://player.vimeo.com/video/1078531701?h=26bc7f04ea&speed=0#t=1m53s" },
+                    { t: "問１２", url: "https://player.vimeo.com/video/1078531701?h=26bc7f04ea&speed=0#t=2m48s" }
+                ]
+            },
+            {
+                name: "練習問題",
+                links: [
+                    { t: "問１", url: "https://player.vimeo.com/video/1080413123?h=4aa2d74e9e&speed=0" },
+                    { t: "問２", url: "https://player.vimeo.com/video/1080413123?h=4aa2d74e9e&speed=0#t=3m58s" },
+                    { t: "問３", url: "https://player.vimeo.com/video/1080413123?h=4aa2d74e9e&speed=0#t=6m10s" },
+                    { t: "問４", url: "https://player.vimeo.com/video/1080413735?h=84f1883f67&speed=0" },
+                    { t: "問５", url: "https://player.vimeo.com/video/1080413735?h=84f1883f67&speed=0#t=1m46s" },
+                    { t: "問６", url: "https://player.vimeo.com/video/1080413735?h=84f1883f67&speed=0#t=3m30s" },
+                    { t: "問７", url: "https://player.vimeo.com/video/1080414076?h=7fcfd572ea&speed=0" },
+                    { t: "問８", url: "https://player.vimeo.com/video/1080414076?h=7fcfd572ea&speed=0#t=2m38s" },
+                    { t: "問９", url: "https://player.vimeo.com/video/1080414076?h=7fcfd572ea&speed=0#t=4m04s" }
+                ]
+            },
+            {
+                name: "チャレンジ",
+                links: [
+                    { t: "問１", url: "https://player.vimeo.com/video/1080414792?h=b4468bc69b&speed=0" },
+                    { t: "問２", url: "https://player.vimeo.com/video/1080414792?h=b4468bc69b&speed=0#t=1m39s" },
+                    { t: "問３", url: "https://player.vimeo.com/video/1080414792?h=b4468bc69b&speed=0#t=3m32s" }
+                ]
+            }
+        ]
+    },
+    {
+        id: "ch17",
+        title: "第17回 角柱と円柱",
+        sections: [
+            {
+                name: "例題",
+                links: [
+                    { t: "例題１", url: "https://player.vimeo.com/video/1084487103?h=90018392da&speed=0" },
+                    { t: "例題２", url: "https://player.vimeo.com/video/1084487103?h=90018392da&speed=0#t=52s" },
+                    { t: "例題３", url: "https://player.vimeo.com/video/1084487103?h=90018392da&speed=0#t=2m46s" },
+                    { t: "例題４", url: "https://player.vimeo.com/video/1084487103?h=90018392da&speed=0#t=4m50s" },
+                    { t: "例題５", url: "https://player.vimeo.com/video/1084487290?h=86a0bb16ce&speed=0" }
+                ]
+            },
+            {
+                name: "基本問題",
+                links: [
+                    { t: "問１／２", url: "https://player.vimeo.com/video/1084487489?h=ecbd17a81f&speed=0" },
+                    { t: "問３", url: "https://player.vimeo.com/video/1084487489?h=ecbd17a81f&speed=0#t=1m46s" },
+                    { t: "問４", url: "https://player.vimeo.com/video/1084487743?h=668cebe2cf&speed=0" },
+                    { t: "問５", url: "https://player.vimeo.com/video/1084487743?h=668cebe2cf&speed=0#t=53s" },
+                    { t: "問６", url: "https://player.vimeo.com/video/1084487743?h=668cebe2cf&speed=0#t=1m31s" },
+                    { t: "問７", url: "https://player.vimeo.com/video/1084488237?h=3fe90d1809&speed=0" },
+                    { t: "問８", url: "https://player.vimeo.com/video/1084488237?h=3fe90d1809&speed=0#t=1m26s" }
+                ]
+            },
+            {
+                name: "練習問題",
+                links: [
+                    { t: "問１", url: "https://player.vimeo.com/video/1084830450?h=579f45287c&speed=0" },
+                    { t: "問２", url: "https://player.vimeo.com/video/1084830450?h=579f45287c&speed=0#t=1m22s" },
+                    { t: "問３", url: "https://player.vimeo.com/video/1084830450?h=579f45287c&speed=0#t=3m01s" },
+                    { t: "問４", url: "https://player.vimeo.com/video/1084830662?h=a81f7981aa&speed=0" },
+                    { t: "問５", url: "https://player.vimeo.com/video/1084830662?h=a81f7981aa&speed=0#t=2m09s" },
+                    { t: "問６", url: "https://player.vimeo.com/video/1084830662?h=a81f7981aa&speed=0#t=3m59s" },
+                    { t: "問７", url: "https://player.vimeo.com/video/1084831310?h=f4715d8c92&speed=0" },
+                    { t: "問８", url: "https://player.vimeo.com/video/1084831310?h=f4715d8c92&speed=0#t=2m41s" },
+                    { t: "問９", url: "https://player.vimeo.com/video/1084831310?h=f4715d8c92&speed=0#t=4m55s" }
+                ]
+            },
+            {
+                name: "チャレンジ",
+                links: [
+                    { t: "問１", url: "https://player.vimeo.com/video/1084831872?h=091c21c694&speed=0" },
+                    { t: "問２", url: "https://player.vimeo.com/video/1084831872?h=091c21c694&speed=0#t=3m28s" },
+                    { t: "問３", url: "https://player.vimeo.com/video/1084831872?h=091c21c694&speed=0#t=5m31s" }
+                ]
+            }
+        ]
+    },
+    {
+        id: "ch18",
+        title: "第18回 水量の変化とグラフ",
+        sections: [
+            {
+                name: "例題",
+                links: [
+                    { t: "問１", url: "https://player.vimeo.com/video/1086249058?h=42edfddfc5&speed=0" },
+                    { t: "問２", url: "https://player.vimeo.com/video/1086249058?h=42edfddfc5&speed=0#t=1m46s" },
+                    { t: "問３", url: "https://player.vimeo.com/video/1086249058?h=42edfddfc5&speed=0#t=3m09s" },
+                    { t: "問４", url: "https://player.vimeo.com/video/1086249226?h=500b2d4901&speed=0" },
+                    { t: "問５", url: "https://player.vimeo.com/video/1086249226?h=500b2d4901&speed=0#t=3m25s" },
+                    { t: "問６", url: "https://player.vimeo.com/video/1086249226?h=500b2d4901&speed=0#t=4m37s" }
+                ]
+            },
+            {
+                name: "基本問題",
+                links: [
+                    { t: "問１／２", url: "https://player.vimeo.com/video/1086249614?h=d9678e1d19&speed=0" },
+                    { t: "問３", url: "https://player.vimeo.com/video/1086249614?h=d9678e1d19&speed=0#t=1m31s" },
+                    { t: "問４／５", url: "https://player.vimeo.com/video/1086249869?h=0e391d5bd2&speed=0" },
+                    { t: "問６", url: "https://player.vimeo.com/video/1086249869?h=0e391d5bd2&speed=0#t=2m00s" },
+                    { t: "問７", url: "https://player.vimeo.com/video/1086250163?h=3ae8f0ea8a&speed=0" },
+                    { t: "問８", url: "https://player.vimeo.com/video/1086250163?h=3ae8f0ea8a&speed=0#t=2m26s" }
+                ]
+            },
+            {
+                name: "練習問題",
+                links: [
+                    { t: "問１", url: "https://player.vimeo.com/video/1086603661?h=006cb8bc5c&speed=0" },
+                    { t: "問２", url: "https://player.vimeo.com/video/1086603661?h=006cb8bc5c&speed=0#t=1m27s" },
+                    { t: "問３", url: "https://player.vimeo.com/video/1086603661?h=006cb8bc5c&speed=0#t=2m59s" },
+                    { t: "問４", url: "https://player.vimeo.com/video/1086603933?h=ac47e54bab&speed=0" },
+                    { t: "問５", url: "https://player.vimeo.com/video/1086603933?h=ac47e54bab&speed=0#t=3m17s" },
+                    { t: "問６", url: "https://player.vimeo.com/video/1086604237?h=4df54cdf8c&speed=0" },
+                    { t: "問７", url: "https://player.vimeo.com/video/1086604237?h=4df54cdf8c&speed=0#t=2m04s" }
+                ]
+            },
+            {
+                name: "チャレンジ",
+                links: [
+                    { t: "問１", url: "https://player.vimeo.com/video/1086604722?h=c8b6195200&speed=0" },
+                    { t: "問２", url: "https://player.vimeo.com/video/1086604722?h=c8b6195200&speed=0#t=3m37s" }
+                ]
+            }
+        ]
+    },
+    {
+        id: "ch19",
+        title: "第19回 場合の数(1)ーならべ方",
+        sections: [
+            {
+                name: "例題",
+                links: [
+                    { t: "例題１", url: "https://player.vimeo.com/video/1051048315?h=f3427cd903&speed=0" },
+                    { t: "例題２", url: "https://player.vimeo.com/video/1051048315?h=f3427cd903&speed=0#t=3m05s" },
+                    { t: "例題３", url: "https://player.vimeo.com/video/1051048315?h=f3427cd903&speed=0#t=6m20s" },
+                    { t: "例題４", url: "https://player.vimeo.com/video/1051048697?h=23a553b31b&speed=0" },
+                    { t: "例題５", url: "https://player.vimeo.com/video/1051048697?h=23a553b31b&speed=0#t=5m04s" }
+                ]
+            },
+            {
+                name: "基本問題",
+                links: [
+                    { t: "問１", url: "https://player.vimeo.com/video/1051049406?h=f0be5fda96&speed=0" },
+                    { t: "問２", url: "https://player.vimeo.com/video/1051049406?h=f0be5fda96&speed=0#t=59s" },
+                    { t: "問３", url: "https://player.vimeo.com/video/1051049406?h=f0be5fda96&speed=0#t=1m35s" },
+                    { t: "問４", url: "https://player.vimeo.com/video/1051049406?h=f0be5fda96&speed=0#t=3m11s" },
+                    { t: "問５", url: "https://player.vimeo.com/video/1051050019?h=2c6d508b55&speed=0" },
+                    { t: "問６", url: "https://player.vimeo.com/video/1051050019?h=2c6d508b55&speed=0#t=1m23s" },
+                    { t: "問７", url: "https://player.vimeo.com/video/1051050019?h=2c6d508b55&speed=0#t=2m16s" },
+                    { t: "問８", url: "https://player.vimeo.com/video/1051050450?h=1b7e8954ac&speed=0" },
+                    { t: "問９", url: "https://player.vimeo.com/video/1051050450?h=1b7e8954ac&speed=0#t=1m41s" },
+                    { t: "問１０", url: "https://player.vimeo.com/video/1051050450?h=1b7e8954ac&speed=0#t=4m00s" }
+                ]
+            },
+            {
+                name: "練習問題",
+                links: [
+                    { t: "問１", url: "https://player.vimeo.com/video/1051853852?h=fbe79fde63&speed=0" },
+                    { t: "問２", url: "https://player.vimeo.com/video/1051853852?h=fbe79fde63&speed=0#t=58s" },
+                    { t: "問３", url: "https://player.vimeo.com/video/1051853852?h=fbe79fde63&speed=0#t=2m47s" },
+                    { t: "問４", url: "https://player.vimeo.com/video/1051854569?h=14e488d32e&speed=0" },
+                    { t: "問５", url: "https://player.vimeo.com/video/1051854569?h=14e488d32e&speed=0#t=1m21s" },
+                    { t: "問６", url: "https://player.vimeo.com/video/1051855377?h=dc66301ac7&speed=0" },
+                    { t: "問７", url: "https://player.vimeo.com/video/1051855377?h=dc66301ac7&speed=0#t=4m02s" },
+                    { t: "問８", url: "https://player.vimeo.com/video/1051855377?h=dc66301ac7&speed=0#t=6m27s" }
+                ]
+            },
+            {
+                name: "チャレンジ",
+                links: [
+                    { t: "問１", url: "https://player.vimeo.com/video/1051855838?h=a2e658bafc&speed=0" },
+                    { t: "問２", url: "https://player.vimeo.com/video/1051855838?h=a2e658bafc&speed=0#t=1m23s" },
+                    { t: "問３", url: "https://player.vimeo.com/video/1051855838?h=a2e658bafc&speed=0#t=3m58s" }
+                ]
+            }
+        ]
+    },
+    {
+        id: "ch20",
+        title: "第20回 まとめ",
+        sections: [
+            {
+                name: "基本問題",
+                links: [
+                    { t: "問１／２", url: "https://player.vimeo.com/video/1086627341?h=9520139903&speed=0" },
+                    { t: "問３", url: "https://player.vimeo.com/video/1086627341?h=9520139903&speed=0#t=2m49s" },
+                    { t: "問４", url: "https://player.vimeo.com/video/1086627341?h=9520139903&speed=0#t=4m44s" },
+                    { t: "問５／６", url: "https://player.vimeo.com/video/1086627706?h=2ea0d8951a&speed=0" },
+                    { t: "問７／８", url: "https://player.vimeo.com/video/1086627706?h=2ea0d8951a&speed=0#t=1m28s" },
+                    { t: "問９／１０", url: "https://player.vimeo.com/video/1086627891?h=1189828be2&speed=0" },
+                    { t: "問１１／１２", url: "https://player.vimeo.com/video/1086627891?h=1189828be2&speed=0#t=1m20s" },
+                    { t: "問１３／１４", url: "https://player.vimeo.com/video/1086628093?h=b54484ac11&speed=0" },
+                    { t: "問１５／１６", url: "https://player.vimeo.com/video/1086628093?h=b54484ac11&speed=0#t=1m54s" }
+                ]
+            },
+            {
+                name: "練習問題",
+                links: [
+                    { t: "問１", url: "https://player.vimeo.com/video/1087599395?h=5699dc22a1&speed=0" },
+                    { t: "問２", url: "https://player.vimeo.com/video/1087599395?h=5699dc22a1&speed=0#t=3m47s" },
+                    { t: "問３", url: "https://player.vimeo.com/video/1087599395?h=5699dc22a1&speed=0#t=6m04s" },
+                    { t: "問４", url: "https://player.vimeo.com/video/1087599555?h=03d2981419&speed=0" },
+                    { t: "問５", url: "https://player.vimeo.com/video/1087599555?h=03d2981419&speed=0#t=2m20s" },
+                    { t: "問６", url: "https://player.vimeo.com/video/1087599555?h=03d2981419&speed=0#t=3m26s" },
+                    { t: "問７", url: "https://player.vimeo.com/video/1087599779?h=ad55a0a373&speed=0" },
+                    { t: "問８", url: "https://player.vimeo.com/video/1087599779?h=ad55a0a373&speed=0#t=2m04s" },
+                    { t: "問９", url: "https://player.vimeo.com/video/1087600068?h=f44f07fed2&speed=0" },
+                    { t: "問１０", url: "https://player.vimeo.com/video/1087600068?h=f44f07fed2&speed=0#t=2m10s" },
+                    { t: "問１１", url: "https://player.vimeo.com/video/1087600068?h=f44f07fed2&speed=0#t=2m42s" }
+                ]
+            }
+        ]
+    }
+];
+    </script>
+    <style>
+        :root { color-scheme: light; --ink:#172c41; --muted:#60758a; --accent:#087f83; --line:#dce5ea; }
+        * { box-sizing:border-box; }
+        body { margin:0; height:100vh; height:100dvh; display:flex; overflow:hidden; background:#f3f6f8; color:var(--ink); font-family:-apple-system,BlinkMacSystemFont,"Hiragino Kaku Gothic ProN","Yu Gothic",sans-serif; -webkit-font-smoothing:antialiased; }
+        button,select { font:inherit; }
+        .sidebar { width:310px; flex-shrink:0; display:flex; flex-direction:column; background:#132b40; color:#eaf2f7; }
+        .sidebar-header { padding:32px 26px 25px; border-bottom:1px solid #ffffff15; }
+        .brand-label { color:#77d6cf; letter-spacing:.18em; font-size:10px; font-weight:700; margin-bottom:18px; }
+        .sidebar-header h1 { margin:0; font-size:13px; font-weight:500; color:#bdcedd; }
+        .course-name { display:block; margin-top:9px; font-size:25px; font-weight:750; letter-spacing:.06em; color:#fff; }
+        .sidebar-header p { margin:13px 0 0; font-size:11px; color:#a8becf; }
+        .sidebar-menu { flex:1; min-height:0; overflow-y:auto; padding:15px 12px 22px; scrollbar-width:thin; scrollbar-color:#4b6478 transparent; }
+        .sidebar-item { width:100%; display:flex; align-items:center; gap:12px; padding:13px 12px; margin:3px 0; border:1px solid transparent; border-radius:10px; background:transparent; color:#c4d3df; text-align:left; cursor:pointer; font-size:12px; line-height:1.6; transition:background .15s,color .15s; }
+        .chapter-number { display:grid; place-items:center; flex-shrink:0; width:29px; height:29px; border:1px solid #ffffff20; border-radius:8px; font-size:11px; font-variant-numeric:tabular-nums; color:#97b4c8; }
+        .sidebar-item:hover { background:#ffffff09; color:white; }
+        .sidebar-item.active { color:white; background:#205165; border-color:#70d6d52a; }
+        .sidebar-item.active .chapter-number { background:#8ce0d7; color:#173d47; border-color:transparent; font-weight:750; }
+        .mobile-nav { display:none; }
+        .main-content { flex:1; min-width:0; overflow-y:auto; padding:48px clamp(24px,5vw,76px); background:radial-gradient(ellipse at top right,#e5f1f0 0,transparent 55%); }
+        .chapter-container { max-width:1000px; margin:0 auto 60px; }
+        .chapter-heading { padding-bottom:26px; margin-bottom:28px; border-bottom:1px solid var(--line); }
+        .eyebrow { font-size:11px; font-weight:700; letter-spacing:.14em; color:var(--accent); margin:0 0 14px; }
+        h2 { font-size:clamp(22px,2.5vw,32px); line-height:1.5; letter-spacing:.01em; margin:0 0 12px; }
+        .chapter-description { font-size:12px; color:var(--muted); margin:0; line-height:1.8; }
+        .section-card { background:#ffffffde; border:1px solid #e1e9ee; border-radius:18px; padding:24px; margin-bottom:20px; box-shadow:0 5px 22px #183c5104; }
+        .section-title { display:flex; align-items:center; gap:10px; font-size:15px; font-weight:700; margin:0 0 19px; }
+        .section-title::before { content:""; width:4px; height:16px; border-radius:3px; background:var(--accent); }
+        .list-container { display:grid; grid-template-columns:repeat(5,minmax(0,1fr)); gap:10px; }
+        .link-btn { display:flex; align-items:center; justify-content:space-between; gap:8px; min-height:52px; padding:14px; border:1px solid #dce6eb; border-radius:10px; background:#f8fafb; color:var(--ink); text-decoration:none; font-size:13px; font-weight:600; transition:background .15s,border-color .15s,transform .15s; }
+        .play-icon { width:22px; height:22px; flex-shrink:0; display:grid; place-items:center; border-radius:50%; color:var(--accent); background:#e2f0ef; font-size:8px; padding-left:1px; }
+        .link-btn:hover { background:#eaf6f4; border-color:#7fbeb7; transform:translateY(-2px); }
+        .link-btn:active { transform:translateY(0); }
+        :is(.sidebar-item,.link-btn,select):focus-visible { outline:3px solid #29b9b0; outline-offset:3px; }
+        .membership-notice { margin-top:16px; border:1px solid #ffffff25; border-radius:9px; background:#ffffff08; font-size:12px; line-height:1.8; }
+        .membership-notice summary { min-height:44px; padding:11px 12px; cursor:pointer; color:#c8ece8; font-size:11px; font-weight:600; }
+        .membership-notice-body { padding:0 12px 13px; }
+        .sidebar-header .membership-notice p { display:block; margin:0 0 8px; color:#d4e2ec; font-size:11px; }
+        .sidebar-header .membership-notice p:last-child { margin-bottom:0; }
+        .membership-notice a { color:#91e4dc; text-underline-offset:3px; overflow-wrap:anywhere; }
+        .membership-notice :is(a,summary):focus-visible { outline:3px solid #29b9b0; outline-offset:3px; }
+        .page-footer { color:var(--muted); font-size:11px; text-align:center; padding:12px 0; }
+        @keyframes fadeIn { from { opacity:0; transform:translateY(5px); } to { opacity:1; transform:translateY(0); } }
+        .animate-in { animation:fadeIn .2s ease-out; }
+        @media(max-width:1100px) { .sidebar { width:275px; } .main-content { padding:32px 24px; } .list-container { grid-template-columns:repeat(3,minmax(0,1fr)); } }
+        @media(max-width:700px) {
+            body { flex-direction:column; }
+            .sidebar { width:100%; }
+            .sidebar-header { padding:18px 20px 12px; border:0; }
+            .brand-label { display:none; }
+            .sidebar-header h1 { font-size:11px; }
+            .course-name { font-size:21px; margin-top:3px; }
+            .sidebar-header > p { display:none; }
+            .sidebar-menu { display:none; }
+            .mobile-nav { display:block; padding:0 20px 17px; }
+            .mobile-nav label { display:block; font-size:10px; color:#b2c6d6; margin-bottom:6px; }
+            .mobile-nav select { width:100%; min-height:44px; border:1px solid #60788b; border-radius:8px; padding:10px; color:white; background:#203e55; font-size:13px; }
+            .main-content { padding:24px 16px; min-height:0; }
+            .chapter-heading { padding-bottom:20px; margin-bottom:20px; }
+            .eyebrow { font-size:10px; margin-bottom:8px; }
+            h2 { font-size:23px; }
+            .section-card { border-radius:14px; padding:18px 16px; margin-bottom:16px; }
+            .list-container { gap:8px; }
+            .link-btn { padding:12px 10px; font-size:12px; }
+        }
+        @media(max-width:390px) { .list-container { grid-template-columns:repeat(2,minmax(0,1fr)); } }
+        @media(prefers-reduced-motion:reduce) { *,*::before,*::after { animation:none!important; transition:none!important; } }
+    
+        .course-nav { display:flex; gap:6px; margin-top:16px; margin-bottom:0; }
+        .course-nav a { flex:1; display:flex; align-items:center; justify-content:center; min-height:44px; padding:9px 5px; border:1px solid #ffffff35; border-radius:8px; color:#d9e8f2; text-decoration:none; font-size:12px; font-weight:600; white-space:nowrap; }
+        .course-nav a:hover { background:#ffffff15; }
+        .course-nav a[aria-current="page"] { background:#91e4dc; color:#173d47; border-color:#91e4dc; }
+        .course-nav a:focus-visible { outline:3px solid #29b9b0; outline-offset:2px; }
+        @media(max-width:700px) { .course-nav { margin-top:14px; margin-bottom:0; } }
+    </style>
+</head>
+<body>
+
+    <div class="sidebar">
+        <div class="sidebar-header">
+            
+            <div class="brand-label">MATH VIDEO LIBRARY</div>
+            <h1>中学受験新演習<span class="course-name">算数 ５年上</span></h1>
+            <p>第11〜20回 · 解説動画ライブラリ</p>
+            <details id="membershipNotice" class="membership-notice" open>
+                <summary>閲覧に関する注意事項</summary>
+                <div class="membership-notice-body">
+                    <p>解説動画の閲覧には、以下のnoteメンバーシップへの登録が必要です。</p>
+                    <p><a href="https://note.com/hiradoinoshojuku/membership" target="_blank" rel="noopener noreferrer">https://note.com/hiradoinoshojuku/membership</a></p>
+                </div>
+            </details>
+            <nav class="course-nav" aria-label="教材を選ぶ"><a href="math5-1.html" aria-current="page">小５上</a><a href="math5-2.html">小５下</a><a href="math6-1.html">小６上</a></nav>
+        </div>
+        <div class="mobile-nav"><label for="chapterSelect">単元を選ぶ</label><select id="chapterSelect"></select></div>
+        <nav id="sidebarMenu" class="sidebar-menu" aria-label="単元一覧"></nav>
+    </div>
+
+    <div class="main-content">
+        <div id="contentArea" class="chapter-container">
+            </div>
+    </div>
+
+    <script>
+        // 2. 初期表示とイベント設定
+        const sidebarMenu = document.getElementById('sidebarMenu');
+        const contentArea = document.getElementById('contentArea');
+        const chapterSelect = document.getElementById('chapterSelect');
+        const lastChapterKey = 'math-5-upper:last-chapter';
+        const membershipNotice = document.getElementById('membershipNotice');
+        const noticeSeenKey = 'math-5-upper:membership-notice-seen';
+        try {
+            membershipNotice.open = localStorage.getItem(noticeSeenKey) !== '1';
+            localStorage.setItem(noticeSeenKey, '1');
+        } catch {
+            // 保存機能が使えない場合も、注意事項は手動で開閉できます。
+        }
+
+        function init() {
+
+            let defaultChapter = chapterData.find(chapter => chapter.active) || chapterData[0];
+            try {
+                const savedId = localStorage.getItem(lastChapterKey);
+                defaultChapter = chapterData.find(chapter => chapter.id === savedId) || defaultChapter;
+            } catch {
+                // 保存機能が利用できない場合は、従来の初期単元を表示します。
+            }
+
+            chapterData.forEach((chapter) => {
+                // サイドバー項目の生成
+                const item = document.createElement('button');
+                item.type = 'button';
+        
+                // 判定：現在のループのチャプターがデフォルトチャプターと同じなら active クラスを付与
+                const isActive = (chapter.id === defaultChapter.id);
+                item.className = `sidebar-item ${isActive ? 'active' : ''}`;
+        
+                const chapterNumber = chapter.id.replace('ch', '');
+                const number = document.createElement('span');
+                number.className = 'chapter-number';
+                number.textContent = chapterNumber.padStart(2, '0');
+                const title = document.createElement('span');
+                title.textContent = chapter.title.replace(/^第\d+回\s*/, '');
+                item.append(number, title);
+                item.dataset.chapterId = chapter.id;
+                const option = document.createElement('option');
+                option.value = chapter.id;
+                option.textContent = chapter.title;
+                chapterSelect.appendChild(option);
+                item.onclick = () => renderChapter(chapter, item);
+                sidebarMenu.appendChild(item);
+
+                // デフォルトチャプターの内容を描画
+                if (isActive) {
+                    renderChapter(chapter, item);
+                }
+            });
+            chapterSelect.value = defaultChapter.id;
+            chapterSelect.onchange = () => {
+                const chapter = chapterData.find(chapter => chapter.id === chapterSelect.value);
+                const item = [...sidebarMenu.children].find(item => item.dataset.chapterId === chapter.id);
+                renderChapter(chapter, item);
+            };
+            sidebarMenu.querySelector('.active')?.scrollIntoView({ block: 'nearest' });
+        }
+
+        // 3. コンテンツの描画関数
+        function renderChapter(chapter, element) {
+            chapterSelect.value = chapter.id;
+            try {
+                localStorage.setItem(lastChapterKey, chapter.id);
+            } catch {
+                // 保存できない場合も、単元の切り替えを続行します。
+            }
+            // サイドバーの active 切り替え
+            document.querySelectorAll('.sidebar-item').forEach(i => i.classList.remove('active'));
+            element.classList.add('active');
+            document.querySelectorAll('.sidebar-item').forEach(item => item.setAttribute('aria-current', item === element ? 'true' : 'false'));
+            document.querySelector('.main-content').scrollTop = 0;
+
+            // HTMLの組み立て
+            let html = `<div class="animate-in"><header class="chapter-heading"><p class="eyebrow">CHAPTER ${chapter.id.replace('ch', '').padStart(2, '0')}</p><h2>${chapter.title}</h2><p class="chapter-description">見たい問題を選んで、解説動画を再生しましょう。</p></header>`;
+            
+            chapter.sections.forEach(section => {
+                html += `<section class="section-card"><h3 class="section-title">${section.name}</h3>`;
+                html += `<div class="list-container">`;
+                section.links.forEach(link => {
+                    html += `<a href="${link.url}" class="link-btn"><span>${link.t}</span><span class="play-icon" aria-hidden="true">▶</span></a>`;
+                });
+                html += `</div></section>`;
+            });
+
+            html += `<footer class="page-footer">中学受験新演習 · 算数５年上</footer></div>`;
+            contentArea.innerHTML = html;
+        }
+
+        init();
+    </script>
+</body>
+</html>
