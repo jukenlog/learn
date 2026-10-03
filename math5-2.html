@@ -41,9 +41,9 @@
             {
                 "name": "練習問題",
                 "links": [
-                    { t: "問１", url: "https://player.vimeo.com/video/858858801?h=f36ed59823f&speed=0" },
-                    { t: "問２", url: "https://player.vimeo.com/video/858858801?h=f36ed59823f&speed=0#t=3m38s" },
-                    { t: "問３", url: "https://player.vimeo.com/video/858858801?h=f36ed59823f&speed=0#t=6m36s" },
+                    { t: "問１", url: "https://player.vimeo.com/video/858858801?h=f36ed59823&speed=0" },
+                    { t: "問２", url: "https://player.vimeo.com/video/858858801?h=f36ed59823&speed=0#t=3m38s" },
+                    { t: "問３", url: "https://player.vimeo.com/video/858858801?h=f36ed59823&speed=0#t=6m36s" },
                     { t: "問４", url: "https://player.vimeo.com/video/858860865?h=3706a12dc8&speed=0" },
                     { t: "問５", url: "https://player.vimeo.com/video/858860865?h=3706a12dc8&speed=0#t=3m06s" },
                     { t: "問６", url: "https://player.vimeo.com/video/858860865?h=3706a12dc8&speed=0#t=6m27s" },
@@ -1010,6 +1010,14 @@
         .course-nav a[aria-current="page"] { background:#91e4dc; color:#173d47; border-color:#91e4dc; }
         .course-nav a:focus-visible { outline:3px solid #29b9b0; outline-offset:2px; }
         @media(max-width:700px) { .course-nav { margin-top:14px; margin-bottom:0; } }
+        .video-modal { width:min(1000px, calc(100vw - 24px)); max-width:none; max-height:calc(100dvh - 24px); padding:0; border:1px solid #355166; border-radius:16px; background:#102637; color:#fff; box-shadow:0 24px 90px #0008; }
+        .video-modal::backdrop { background:#06121ddd; }
+        .video-modal-header { display:flex; align-items:center; justify-content:space-between; gap:16px; padding:12px 16px; }
+        .video-modal-title { margin:0; font-size:14px; line-height:1.5; }
+        .video-modal-close { flex-shrink:0; min-height:44px; padding:8px 14px; border:1px solid #ffffff40; border-radius:8px; color:#fff; background:#ffffff10; cursor:pointer; font:inherit; }
+        .video-modal-close:focus-visible { outline:3px solid #91e4dc; outline-offset:2px; }
+        .video-frame { display:block; width:100%; height:min(56.25vw, calc(100dvh - 110px)); max-height:563px; min-height:140px; border:0; background:#000; }
+        html.video-open, html.video-open body { overflow:hidden; }
     </style>
 </head>
 <body>
@@ -1037,6 +1045,14 @@
         <div id="contentArea" class="chapter-container">
             </div>
     </div>
+
+    <dialog id="videoModal" class="video-modal" aria-labelledby="videoModalTitle">
+        <div class="video-modal-header">
+            <h2 id="videoModalTitle" class="video-modal-title">解説動画</h2>
+            <button type="button" id="videoModalClose" class="video-modal-close" autofocus>閉じる ×</button>
+        </div>
+        <iframe id="videoFrame" class="video-frame" title="解説動画" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe>
+    </dialog>
 
     <script>
         // 2. 初期表示とイベント設定
@@ -1122,7 +1138,7 @@
                 html += `<section class="section-card"><h3 class="section-title">${section.name}</h3>`;
                 html += `<div class="list-container">`;
                 section.links.forEach(link => {
-                    html += `<a href="${link.url}" class="link-btn" target="math"><span>${link.t}</span><span class="play-icon" aria-hidden="true">▶</span></a>`;
+                    html += `<a href="${link.url}" class="link-btn" aria-haspopup="dialog"><span>${link.t}</span><span class="play-icon" aria-hidden="true">▶</span></a>`;
                 });
                 html += `</div></section>`;
             });
@@ -1130,6 +1146,38 @@
             html += `<footer class="page-footer">中学受験新演習 · 算数５年下</footer></div>`;
             contentArea.innerHTML = html;
         }
+
+        const videoModal = document.getElementById('videoModal');
+        const videoFrame = document.getElementById('videoFrame');
+        const videoModalTitle = document.getElementById('videoModalTitle');
+        let videoTrigger = null;
+        contentArea.addEventListener('click', event => {
+            const link = event.target.closest('a.link-btn');
+            if (!link || event.ctrlKey || event.metaKey || event.shiftKey || event.altKey) return;
+            const url = new URL(link.href);
+            if (url.hostname !== 'player.vimeo.com') return;
+            event.preventDefault();
+            videoTrigger = link;
+            const section = link.closest('.section-card').querySelector('.section-title').textContent;
+            const problem = link.querySelector('span').textContent;
+            videoModalTitle.textContent = `${section} · ${problem}`;
+            videoFrame.title = `${section} ${problem}の解説動画`;
+            url.searchParams.set('autoplay', '1');
+            url.searchParams.set('playsinline', '1');
+            videoFrame.src = url.href;
+            videoModal.showModal();
+            document.documentElement.classList.add('video-open');
+        });
+        document.getElementById('videoModalClose').addEventListener('click', () => videoModal.close());
+        videoModal.addEventListener('click', event => {
+            const rect = videoModal.getBoundingClientRect();
+            if (event.target === videoModal && (event.clientX < rect.left || event.clientX > rect.right || event.clientY < rect.top || event.clientY > rect.bottom)) videoModal.close();
+        });
+        videoModal.addEventListener('close', () => {
+            videoFrame.removeAttribute('src');
+            document.documentElement.classList.remove('video-open');
+            videoTrigger?.focus();
+        });
 
         init();
     </script>
