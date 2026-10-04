@@ -869,6 +869,7 @@ const chapterData = [
             videoModalTitle.textContent = `${section} · ${problem}`;
             videoFrame.title = `${section} ${problem}の解説動画`;
             url.searchParams.set('autoplay', '1');
+            url.searchParams.set('muted', '0');
             url.searchParams.set('playsinline', '1');
             videoFrame.src = url.href;
             videoModal.showModal();
