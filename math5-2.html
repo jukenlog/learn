@@ -1018,7 +1018,17 @@
         .video-modal-close:focus-visible { outline:3px solid #91e4dc; outline-offset:2px; }
         .video-frame { display:block; width:100%; height:min(56.25vw, calc(100dvh - 110px)); max-height:563px; min-height:140px; border:0; background:#000; }
         html.video-open, html.video-open body { overflow:hidden; }
+            .app-help { margin-top:14px; color:#d9e8f2; font-size:12px; line-height:1.7; }
+        .app-help summary { cursor:pointer; padding:8px 0; }
+        .app-help p { margin:8px 0; }
+        .app-help button { background:#91e4dc; color:#173d47; border:0; border-radius:8px; padding:12px; font:inherit; cursor:pointer; }
     </style>
+    <link rel="manifest" href="manifest.webmanifest">
+    <meta name="theme-color" content="#142d42">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-title" content="算数動画">
+    <link rel="apple-touch-icon" sizes="180x180" href="icons/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="icons/favicon-32.png">
 </head>
 <body>
 
@@ -1036,6 +1046,7 @@
                 </div>
             </details>
             <nav class="course-nav" aria-label="教材を選ぶ"><a href="math5-1.html">小５上</a><a href="math5-2.html" aria-current="page">小５下</a><a href="math6-1.html">小６上</a></nav>
+            <details class="app-help"><summary>ホーム画面に追加</summary><p>iPhone・iPad：Safariの共有メニューから「ホーム画面に追加」を選びます。<br>Android：ブラウザのメニューから「アプリをインストール」または「ホーム画面に追加」を選びます。</p><p>動画の再生にはインターネット接続が必要です。</p><button type="button" data-install-app hidden>アプリを追加</button></details>
         </div>
         <div class="mobile-nav"><label for="chapterSelect">単元を選ぶ</label><select id="chapterSelect"></select></div>
         <nav id="sidebarMenu" class="sidebar-menu" aria-label="単元一覧"></nav>
@@ -1182,5 +1193,6 @@
 
         init();
     </script>
+<script src="webapp.js" defer></script>
 </body>
 </html>
