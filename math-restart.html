@@ -2887,8 +2887,8 @@ settings.append(label,notice);const parentSettings=document.querySelector?.('.pa
 const container=parentSettings||settings;container.hidden=true;
 const youtubeSettings=document.createElement('div');youtubeSettings.className='youtube-account-settings';
 const youtubeHeading=document.createElement('h4');youtubeHeading.textContent='YouTubeアカウント';
-const youtubeLogin=document.createElement('a');youtubeLogin.className='youtube-login-link';youtubeLogin.href='https://www.youtube.com/account';youtubeLogin.target='_blank';youtubeLogin.rel='noopener noreferrer';youtubeLogin.textContent='YouTubeでログイン ↗';
-const youtubeNotice=document.createElement('p');youtubeNotice.textContent='YouTubeを開き、Premiumのアカウントでログインしてください。iPadのWebアプリでは、ログインしてもページ内の動画に反映されない場合があります。その場合は動画の「YouTubeで開く」から視聴してください。';
+const youtubeLogin=document.createElement('a');youtubeLogin.className='youtube-login-link';youtubeLogin.href='https://www.youtube.com/account';youtubeLogin.target='_self';youtubeLogin.rel='noopener noreferrer';youtubeLogin.textContent='YouTubeでログイン';
+const youtubeNotice=document.createElement('p');youtubeNotice.textContent='同じ画面でYouTubeへ移動します。Premiumのアカウントでログインしたあと、「戻る」でリンク集へ戻ってください。iPadでは別の画面が開いたり、ページ内の動画にログインが反映されなかったりする場合があります。';
 youtubeSettings.append(youtubeHeading,youtubeLogin,youtubeNotice);(parentSettings||settings).append(youtubeSettings);
 
 const title=document.querySelector?.('.hero h1')||document.body.querySelector?.('.hero h1');
