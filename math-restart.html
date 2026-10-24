@@ -2910,8 +2910,10 @@ window.prepareAnswerReview=(dialog,trigger)=>{
     if(!target)return;
     // Existing row handlers own persistence, log records and visual updates.
     // Repeating ◯ lets the mastery handler promote it to ◎; other repeated marks stay selected.
-    if(mark==='◯'||target.getAttribute('aria-pressed')!=='true')target.click();
+    const shouldRecord=mark==='◯'||target.getAttribute('aria-pressed')!=='true';
     dialog.close();
+    // Safari can ignore a synthetic click on a background control while a modal is open.
+    if(shouldRecord)requestAnimationFrame(()=>target.click());
    });actions.append(button);
   }
   dialog.append(actions);dialog.addEventListener('close',()=>{actions.hidden=true;item.row=null});
