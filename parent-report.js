@@ -40,6 +40,10 @@ function matrix(events,unit,catalog={}){
  const columns=[...names].sort((a,b)=>rank(a)-rank(b)||a.localeCompare(b,'ja',{numeric:true}));
  return {columns,rows:[...rows].sort(([a],[b])=>a.localeCompare(b)).map(([date,values])=>({date,values}))};
 }
+function counts(results,pattern=null){
+ const solved=results.filter(e=>['◎','◯','○','△','×','！','done','retry'].includes(e.value)&&(!pattern||pattern.test(label(e))));
+ return {passed:solved.filter(e=>passed(e.value)).length,solved:solved.length};
+}
 function build(events,now=new Date(),options={}){
  const today=day(now),tomorrow=shift(today,1),weekday=new Date(today+'T00:00:00Z').getUTCDay();
  const monday=shift(today,-((weekday+6)%7));
@@ -54,6 +58,6 @@ function build(events,now=new Date(),options={}){
  }
  return {today,tomorrow,monday,latest,selectedDate,nextDate,selectedUnit,sections:[summarize(ordered.filter(e=>day(e.time)===selectedDate)),summarize(ordered.filter(e=>e.unit===selectedUnit)),summarize(ordered.filter(e=>day(e.time)>=monday)),summarize(ordered)]};
 }
-root.ParentReport={build,day,normalize,passed,label,key,dailyProblems,shift,duration,matrix};
+root.ParentReport={build,day,normalize,passed,label,key,dailyProblems,shift,duration,matrix,counts};
 if(typeof module!=='undefined')module.exports=root.ParentReport;
 })(typeof window!=='undefined'?window:globalThis);

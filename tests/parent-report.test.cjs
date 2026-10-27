@@ -24,7 +24,7 @@ assert.equal((rendered.match(/data-unit=/g)||[]).length,20);
 assert.ok(!rendered.split('id="latest"')[0].includes('class="stats"'));
 vm.runInContext(`files=[{data:{version:1,events:${JSON.stringify(events)}}}];selectedDate='2026-10-25';selectedUnit='6u-6';render();`,context);
 rendered=elements.get('reports').innerHTML;
-assert.ok(rendered.includes('指定日の学習'));assert.ok(rendered.includes('value="2026-10-25"'));assert.ok(rendered.includes('翌日再チャレンジ · 2026-10-26'));
+assert.ok(rendered.includes('今日の学習'));assert.ok(rendered.includes('value="2026-10-25"'));assert.ok(rendered.includes('翌日再チャレンジ · 2026-10-26'));
 assert.ok(rendered.includes('data-unit="6u-6" aria-pressed="true"'));
 console.log('PASS: rendering date picker, no daily summary, 20 selectors, selected state');
 const stored=new Map([['shinen-math-all-restart-activity-v1',JSON.stringify(events)]]);
@@ -66,3 +66,13 @@ console.log('PASS: JSON restore, explicit source switch, clearing persistence, c
 
 autoElements.get('upload').files=[{name:'更新.json',size:100,text:async()=>JSON.stringify({version:1,events})}];
 autoElements.get('upload').listeners.change().then(()=>{assert.equal(JSON.parse(stored.get(sourceKey)).type,'json');assert.equal(autoElements.get('files').textContent,'更新.json');vm.runInContext('files=[];restoreSource()',autoContext);assert.equal(autoElements.get('files').textContent,'更新.json');console.log('PASS: file import persists and restores actual selected data');}).catch(e=>{console.error(e);process.exitCode=1;});
+
+const {counts}=require('../parent-report.js');
+const countResults=[{label:'基本問題1',value:'◯'},{label:'基礎演習1',value:'×'},{label:'練習問題1',value:'◎'},{label:'標準演習1',value:'△'},{label:'例題1',value:'○'},{label:'基本問題2',value:''}];
+assert.deepEqual(counts(countResults),{passed:3,solved:5});assert.deepEqual(counts(countResults,/^(基本問題|基礎演習)/),{passed:1,solved:2});assert.deepEqual(counts(countResults,/^(練習問題|標準演習)/),{passed:1,solved:2});assert.deepEqual(counts([]),{passed:0,solved:0});
+autoContext.document.querySelector=()=>({focus(){}});
+autoElements.get('reports').listeners.click({target:{closest:()=>({id:'',dataset:{unit:'6u-12'}})}});assert.equal(stored.get('shinen-parent-selected-unit-v1'),'6u-12');
+const selectionInit=scripts[2].slice(scripts[2].indexOf('let selectedDate='),scripts[2].indexOf('function render(){'));
+const selectionContext={ParentReport:require('../parent-report.js'),localStorage:autoContext.localStorage};vm.createContext(selectionContext);vm.runInContext(selectionInit,selectionContext);assert.equal(vm.runInContext('selectedUnit',selectionContext),'6u-12');
+const updated=autoElements.get('reports').innerHTML;assert.ok(updated.indexOf('id="prev-day"')<updated.indexOf('id="study-date"'));assert.ok(updated.includes('学習日数'));assert.ok(updated.includes('学習問題数'));
+console.log('PASS: unit counts, cancelled grades, remembered unit, date control order');
