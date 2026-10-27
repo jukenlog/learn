@@ -48,3 +48,11 @@ assert.ok(pointReport.includes('class="group-start"'));assert.ok(pointReport.inc
 const latestRow=pointReport.split('<tr class="latest-results">')[1].split('</tr>')[0];assert.ok(latestRow.includes('◯'));assert.ok(!latestRow.includes('>×<'));
 assert.equal(vm.runInContext('Object.keys(PARENT_CATALOG.groups).length',context),20);
 console.log('PASS: section boundaries, latest result across dates, source point classifications, point summary');
+autoContext.localStorage.setItem=(k,v)=>stored.set(k,v);
+autoElements.get('share-name').value='家庭の記録';autoElements.get('save-share-name').onclick();assert.equal(stored.get('shinen-parent-share-filename-v1'),'家庭の記録.json');
+autoElements.get('share-name').value='../invalid';autoElements.get('save-share-name').onclick();assert.equal(stored.get('shinen-parent-share-filename-v1'),'家庭の記録.json');
+const study=fs.readFileSync(require('node:path').join(__dirname,'../math-study-ses.html'),'utf8');
+const exportFunction=study.slice(study.indexOf('function exportLog('),study.indexOf("panel.querySelectorAll('button').forEach"));let downloaded;
+const shareContext={events:[{id:'test',time:'2026-10-27T01:00:00Z',unit:'6u-6',event:'rating',value:'◯'}],names:{},transferSnapshot:()=>({stores:{},watched:{}}),Blob,URL:{createObjectURL(blob){downloaded={blob};return 'blob:test'},revokeObjectURL(){}},document:{body:{append(a){}},createElement(){return {click(){downloaded.filename=this.download},remove(){}}}},setTimeout(){}};
+vm.createContext(shareContext);vm.runInContext(exportFunction+";exportLog('json','','家庭の記録.json');",shareContext);assert.equal(downloaded.filename,'家庭の記録.json');
+downloaded.blob.text().then(text=>{const data=JSON.parse(text);assert.equal(data.version,2);assert.equal(data.events.length,1);assert.equal(data.unit,null);assert.deepEqual(data.snapshot,{stores:{},watched:{}});console.log('PASS: configured filename, invalid path rejection, named download and v2 transfer payload');});
