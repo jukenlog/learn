@@ -42,3 +42,9 @@ const grid=matrix([...events].reverse(),'6u-6',{'6u-6:question:基本問題10':'
 assert.equal(grid.rows[0].date,'2026-10-25');assert.equal(grid.rows[1].values.get('問題1'),'◯');assert.equal(grid.rows[1].values.get('問題3'),'取消');assert.equal(grid.rows[0].values.has('基本問題2'),false);assert.ok(grid.columns.indexOf('基本問題2')<grid.columns.indexOf('基本問題10'));assert.equal(grid.columns.includes('チャレンジ1'),false);
 const shown=autoElements.get('reports').innerHTML;assert.ok(shown.includes('id="prev-day"'));assert.ok(shown.includes('id="next-day"'));assert.ok(shown.includes('学習時間：'));assert.ok(shown.includes('class="problem-matrix"'));
 console.log('PASS: day arrows/month boundaries, duration, latest daily grade, cancellation, matrix columns and numeric sorting');
+vm.runInContext(`files=[{data:{version:1,events:[{id:'point-a',time:'2026-10-25T01:00:00Z',unit:'6u-6',event:'rating',label:'基本問題1',value:'×'},{id:'point-b',time:'2026-10-26T01:00:00Z',unit:'6u-6',event:'rating',label:'基本問題1',value:'◯'}]}}];selectedUnit='6u-6';render();`,context);
+const pointReport=elements.get('reports').innerHTML.split('id="latest"')[1].split('id="week"')[0];
+assert.ok(pointReport.includes('class="group-start"'));assert.ok(pointReport.includes('最新結果'));assert.ok(pointReport.includes('直角三角形内の正方形'));assert.ok(pointReport.includes('ポイント別の成績'));assert.ok(pointReport.includes('1 / '));
+const latestRow=pointReport.split('<tr class="latest-results">')[1].split('</tr>')[0];assert.ok(latestRow.includes('◯'));assert.ok(!latestRow.includes('>×<'));
+assert.equal(vm.runInContext('Object.keys(PARENT_CATALOG.groups).length',context),20);
+console.log('PASS: section boundaries, latest result across dates, source point classifications, point summary');
