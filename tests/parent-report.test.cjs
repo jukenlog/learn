@@ -16,7 +16,7 @@ const fs=require('node:fs'),vm=require('node:vm');
 const html=fs.readFileSync(require('node:path').join(__dirname,'../math-parent.html'),'utf8');
 const scripts=[...html.matchAll(/<script>([\s\S]*?)<\/script>/g)].map(m=>m[1]);
 const elements=new Map();
-const context={console,document:{getElementById(id){if(!elements.has(id))elements.set(id,{value:id==='grade'?'all':'',addEventListener(){},focus(){},innerHTML:'',textContent:''});return elements.get(id);}}};context.window=context;vm.createContext(context);
+const context={console,document:{getElementById(id){if(!elements.has(id))elements.set(id,{value:id==='grade'?'all':'',addEventListener(type,fn){this.listeners??={};this.listeners[type]=fn;},focus(){},innerHTML:'',textContent:''});return elements.get(id);}}};context.window=context;vm.createContext(context);
 vm.runInContext(scripts[0],context);vm.runInContext(scripts[1],context);
 vm.runInContext(fs.readFileSync(require('node:path').join(__dirname,'../parent-report.js'),'utf8'),context);vm.runInContext(scripts[2],context);
 let rendered=elements.get('reports').innerHTML;
@@ -29,7 +29,7 @@ assert.ok(rendered.includes('data-unit="6u-6" aria-pressed="true"'));
 console.log('PASS: rendering date picker, no daily summary, 20 selectors, selected state');
 const stored=new Map([['shinen-math-all-restart-activity-v1',JSON.stringify(events)]]);
 const autoElements=new Map();
-const autoContext={console,localStorage:{setItem(k,v){stored.set(k,v)},removeItem(k){stored.delete(k)},get length(){return stored.size},key(i){return [...stored.keys()][i]},getItem(k){return stored.get(k)??null}},document:{getElementById(id){if(!autoElements.has(id))autoElements.set(id,{value:id==='grade'?'all':'',addEventListener(){},focus(){},innerHTML:'',textContent:''});return autoElements.get(id)}}};autoContext.window=autoContext;vm.createContext(autoContext);
+const autoContext={console,localStorage:{setItem(k,v){stored.set(k,v)},removeItem(k){stored.delete(k)},get length(){return stored.size},key(i){return [...stored.keys()][i]},getItem(k){return stored.get(k)??null}},document:{getElementById(id){if(!autoElements.has(id))autoElements.set(id,{value:id==='grade'?'all':'',addEventListener(type,fn){this.listeners??={};this.listeners[type]=fn;},focus(){},innerHTML:'',textContent:''});return autoElements.get(id)}}};autoContext.window=autoContext;vm.createContext(autoContext);
 vm.runInContext(scripts[0],autoContext);vm.runInContext(scripts[1],autoContext);vm.runInContext(fs.readFileSync(require('node:path').join(__dirname,'../parent-report.js'),'utf8'),autoContext);vm.runInContext(scripts[2],autoContext);
 assert.equal(autoElements.get('files').textContent,'このブラウザの記録');assert.equal(autoElements.get('status').textContent,'このブラウザの記録を読み込みました。');
 autoElements.get('local').onclick();assert.equal(autoElements.get('files').textContent,'このブラウザの記録');
@@ -63,3 +63,6 @@ autoElements.get('local').onclick();assert.equal(autoElements.get('files').textC
 autoElements.get('clear').onclick();assert.equal(autoElements.get('files').textContent,'');assert.equal(JSON.parse(stored.get(sourceKey)).type,'empty');vm.runInContext('restoreSource()',autoContext);assert.equal(autoElements.get('files').textContent,'');
 stored.set(sourceKey,'invalid-json');vm.runInContext('restoreSource()',autoContext);assert.ok(autoElements.get('status').textContent.includes('復元できません'));
 console.log('PASS: JSON restore, explicit source switch, clearing persistence, corrupt cache');
+
+autoElements.get('upload').files=[{name:'更新.json',size:100,text:async()=>JSON.stringify({version:1,events})}];
+autoElements.get('upload').listeners.change().then(()=>{assert.equal(JSON.parse(stored.get(sourceKey)).type,'json');assert.equal(autoElements.get('files').textContent,'更新.json');vm.runInContext('files=[];restoreSource()',autoContext);assert.equal(autoElements.get('files').textContent,'更新.json');console.log('PASS: file import persists and restores actual selected data');}).catch(e=>{console.error(e);process.exitCode=1;});
