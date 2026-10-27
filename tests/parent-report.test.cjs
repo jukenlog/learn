@@ -76,3 +76,8 @@ const selectionInit=scripts[2].slice(scripts[2].indexOf('let selectedDate='),scr
 const selectionContext={ParentReport:require('../parent-report.js'),localStorage:autoContext.localStorage};vm.createContext(selectionContext);vm.runInContext(selectionInit,selectionContext);assert.equal(vm.runInContext('selectedUnit',selectionContext),'6u-12');
 const updated=autoElements.get('reports').innerHTML;assert.ok(updated.indexOf('id="prev-day"')<updated.indexOf('id="study-date"'));assert.ok(updated.includes('学習日数'));assert.ok(updated.includes('学習問題数'));
 console.log('PASS: unit counts, cancelled grades, remembered unit, date control order');
+vm.runInContext(`files=[{data:{version:1,events:[{id:'overview1',time:'2026-10-25T01:00:00Z',unit:'6u-6',event:'rating',label:'基本問題1',value:'×'},{id:'overview2',time:'2026-10-26T01:00:00Z',unit:'6u-6',event:'rating',label:'基本問題1',value:'◯'},{id:'overview3',time:'2026-10-26T02:00:00Z',unit:'6u-6',event:'rating',label:'基礎演習1',value:'△'}]}}];render();`,context);
+const overview=elements.get('reports').innerHTML.split('id="week"')[1].split('id="all"')[0];
+const overviewRows=[...overview.matchAll(/<tbody>([\s\S]*?)<\/tbody>/g)][0][1].match(/<tr>[\s\S]*?<\/tr>/g);
+assert.equal(overviewRows.length,20);assert.ok(overviewRows[5].includes('<td>2日</td><td>1 / 2</td><td>0 / 0</td><td>1 / 2</td><td>0 / 0</td><td>0 / 0</td>'));assert.ok(overviewRows[0].includes('0日'));assert.ok(!elements.get('reports').innerHTML.includes('今週の学習'));
+console.log('PASS: all 20 units, unique learning days, latest per-problem totals and category counts, empty units');
