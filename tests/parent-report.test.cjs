@@ -108,3 +108,10 @@ console.log('PASS: exclude long gaps, keep shorter intervals, daily time column 
 assert.equal(totalStudyTime([{time:'2026-10-25T01:00:00Z'},{time:'2026-10-25T01:30:00Z'}]),0);
 assert.equal(totalStudyTime([{time:'2026-10-25T01:00:00Z'},{time:'2026-10-25T01:29:59Z'}]),1799000);
 console.log('PASS: 30-minute boundary excluded; 29 minutes 59 seconds included');
+const dailyMarkup=elements.get('reports').innerHTML.split('id="today"')[1].split('id="latest"')[0];
+assert.ok(dailyMarkup.includes('id="daily-log-tools"'));
+vm.runInContext(`selectedDate='2026-10-25';render();`,context);
+const dailyRows=elements.get('reports').innerHTML.split('class="scroll today-history"')[1].split('</section>')[0];
+assert.ok(dailyRows.includes('data-log-id="overview1" tabindex="0" aria-selected="false"'));
+assert.ok(!dailyRows.includes('type="checkbox"'));
+console.log('PASS: selectable daily history rows, keyboard focus and toolbar');

@@ -23,3 +23,12 @@ const start=html.indexOf('function refreshActivity()'),end=html.indexOf('\n',htm
 const context={localStorage:storage,window:{addEventListener(){}},status(){},key,events,failed:false,Date,Math,Intl};vm.createContext(context);vm.runInContext(html.slice(start,end),context);context.window.recordStudyEvent('video_start',{unit:'6u-6'});
 assert.ok(!JSON.parse(storage.getItem(key)).some(e=>e.id==='delete'));assert.equal(JSON.parse(storage.getItem(key)).length,3);
 console.log('PASS: bulk deletion, duplicate sources, snapshots, JSON persistence, concurrent records, rollback, malformed storage, stale learning tab');
+const {selectRange}=require('../parent-log-manager.js');
+const ids=['a','b','c','d','e'],selected=new Set();let anchor=null;
+anchor=selectRange(selected,ids,1,anchor,false);assert.deepEqual([...selected],['b']);
+anchor=selectRange(selected,ids,4,anchor,false);assert.deepEqual([...selected],['b','e']);
+anchor=selectRange(selected,ids,2,anchor,true);assert.deepEqual([...selected].sort(),['b','c','d','e']);assert.equal(anchor,4);
+anchor=selectRange(selected,ids,0,anchor,true);assert.deepEqual([...selected].sort(),ids);
+anchor=selectRange(selected,ids,2,anchor,false);assert.ok(!selected.has('c'));
+selected.clear();anchor=null;anchor=selectRange(selected,ids,3,anchor,true);assert.deepEqual([...selected],['d']);assert.equal(anchor,3);
+console.log('PASS: individual toggle, additive selection, forward/reverse Shift range, no-anchor Shift');

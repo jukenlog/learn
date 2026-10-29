@@ -10,26 +10,29 @@ function remove(files,ids,storage){
  catch(error){for(const [key,old] of written.reverse()){if(old===null)storage.removeItem(key);else storage.setItem(key,old);}throw error;}
  return next;
 }
-if(typeof module==='object'&&module.exports){module.exports={remove};return;}
-const section=document.createElement('section');section.className='panel';section.id='log-management';
-section.innerHTML='<h2>ログの管理</h2><p class="note">日付・単元・操作で絞り込み、不要な記録を選択して削除できます。削除すると履歴から計算する成績・学習時間も変わります。学習ページの現在の評価・視聴状態は変更しません。JSONの元ファイルは変更しないため、削除後は下の保存ボタンから書き出してください。</p><div class="controls"><label>日付<input id="log-date" type="date"></label><label>単元<select id="log-unit"></select></label><label>操作<select id="log-type"></select></label><button id="log-reset">絞り込みを解除</button></div><div class="controls"><button id="log-select">表示中をすべて選択</button><button id="log-unselect">選択を解除</button><button id="log-delete">選択したログを削除</button><span id="log-count"></span></div><p id="log-status" role="status"></p><div id="log-exports" class="controls"></div><div id="log-table" class="scroll"></div>';
-document.querySelector('main').append(section);
-const selected=new Set();let visible=[];
+// Plain clicks toggle individual rows; Shift extends from the last clicked row.
+function selectRange(selected,ids,index,anchor,shift){
+ if(shift&&anchor!==null){for(let i=Math.min(anchor,index);i<=Math.max(anchor,index);i++)selected.add(ids[i]);return anchor;}
+ const id=ids[index];if(selected.has(id))selected.delete(id);else selected.add(id);return index;
+}
+if(typeof module==='object'&&module.exports){module.exports={remove,selectRange};return;}
+const section=$('reports'),selected=new Set();let visible=[],anchor=null;
 function refresh(){
- const events=ParentStats.aggregate(files).events;
- for(const [id,values,label] of [['log-unit',[...new Set(events.map(e=>e.unit))].sort(),title],['log-type',[...new Set(events.map(e=>e.event))].sort(),v=>names[v]||v]]){const el=$(id),previous=el.value;el.innerHTML='<option value="">すべて</option>'+values.map(v=>'<option value="'+esc(v)+'">'+esc(label(v))+'</option>').join('');el.value=values.includes(previous)?previous:'';}
- visible=events.filter(e=>(!$('log-date').value||ParentReport.day(new Date(e.time))===$('log-date').value)&&(!$('log-unit').value||e.unit===$('log-unit').value)&&(!$('log-type').value||e.event===$('log-type').value));
- selected.clear();
- $('log-table').innerHTML=table(['選択','日時（日本時間）','単元','問題・対象','操作','結果'],visible.map(e=>['<input type="checkbox" data-log-id="'+esc(e.id)+'" aria-label="'+esc(stamp(e.time)+' '+(e.label||e.event))+'を選択">',esc(stamp(e.time)),esc(title(e.unit)),esc(e.label||e.title||e.problemId||e.videoId||'—'),esc(names[e.event]||e.event),badge(e.value)]));
+ selected.clear();anchor=null;
+ visible=[...section.querySelectorAll('.today-history [data-log-id]')];
+ $('daily-log-tools').innerHTML='<p class="note" id="log-selection-help">行をクリック・タップして選択／解除。Shift＋クリックで範囲選択できます。キーボードでは行に移動してSpaceまたはEnterで選択できます。</p><div class="controls"><button id="log-select">全記録を選択</button><button id="log-unselect">選択を解除</button><button id="log-delete">選択したログを削除</button><span id="log-count" role="status"></span></div><p id="log-status" role="status"></p><div id="log-exports" class="controls"></div><p class="note">削除は履歴の集計に反映されます。学習ページの現在の評価・視聴状態は変更しません。JSONの元ファイルは変更されないため、削除後に保存してください。</p>';
+ visible.forEach(row=>row.setAttribute('aria-describedby','log-selection-help'));
  $('log-exports').innerHTML=files.map((f,i)=>'<button data-export-index="'+i+'">'+esc(f.name||'学習記録')+'をJSONで保存</button>').join('');updateCount();
 }
-function updateCount(){$('log-count').textContent=selected.size+'件選択 / '+visible.length+'件表示';$('log-delete').disabled=!selected.size;}
-section.addEventListener('change',event=>{if(event.target.dataset.logId){if(event.target.checked)selected.add(event.target.dataset.logId);else selected.delete(event.target.dataset.logId);updateCount();}else refresh();});
+function updateCount(){visible.forEach(row=>row.setAttribute('aria-selected',String(selected.has(row.dataset.logId))));$('log-count').textContent=selected.size+'件選択 / '+visible.length+'件表示';$('log-delete').disabled=!selected.size;}
+function choose(row,shift){anchor=selectRange(selected,visible.map(r=>r.dataset.logId),visible.indexOf(row),anchor,shift);updateCount();}
+section.addEventListener('keydown',event=>{const row=event.target.closest('.today-history [data-log-id]');if(row&&(event.key===' '||event.key==='Enter')){event.preventDefault();choose(row,event.shiftKey);}});
+section.addEventListener('mousedown',event=>{if(event.shiftKey&&event.target.closest('.today-history [data-log-id]'))event.preventDefault();});
 section.addEventListener('click',event=>{
+ const row=event.target.closest('.today-history [data-log-id]');if(row){choose(row,event.shiftKey);return;}
  const button=event.target.closest('button');if(!button)return;
- if(button.id==='log-select'||button.id==='log-unselect'){const checked=button.id==='log-select';selected.clear();section.querySelectorAll('[data-log-id]').forEach(input=>{input.checked=checked;if(checked)selected.add(input.dataset.logId);});updateCount();}
- if(button.id==='log-reset'){for(const id of ['log-date','log-unit','log-type'])$(id).value='';refresh();}
- if(button.id==='log-delete'&&selected.size){const count=selected.size;if(!window.confirm(count+'件のログを削除します。元に戻せません。必要な場合は先にJSONで保存してください。'))return;try{files=remove(files,selected,localStorage);render();$('log-status').textContent=count+'件を削除しました。'+(files.some(f=>f.local)?'ブラウザの記録に反映しました。':'次回の読み込み用データにも反映しました。元ファイルを更新するにはJSONで保存してください。');}catch(error){$('log-status').textContent='削除を保存できませんでした。'+error.message;}}
+ if(button.id==='log-select'||button.id==='log-unselect'){selected.clear();anchor=null;if(button.id==='log-select')visible.forEach(row=>selected.add(row.dataset.logId));updateCount();}
+ if(button.id==='log-delete'&&selected.size){const count=selected.size;if(!window.confirm(count+'件のログを削除します。元に戻せません。必要な場合は先にJSONで保存してください。'))return;try{files=remove(files,selected,localStorage);render();$('log-status').textContent=count+'件を削除しました。'+(files.some(f=>f.local)?'ブラウザの記録に反映しました。':'次回の読み込み用データにも反映しました。元ファイルを更新するにはJSONで保存してください。');$('log-unselect').focus();}catch(error){$('log-status').textContent='削除を保存できませんでした。'+error.message;}}
  if(button.dataset.exportIndex!==undefined){const file=files[Number(button.dataset.exportIndex)];const url=URL.createObjectURL(new Blob([JSON.stringify(file.data,null,2)],{type:'application/json'})),a=document.createElement('a');a.href=url;a.download=(file.local?'算数学習記録':(file.name||'学習記録').replace(/\.json$/i,''))+'-整理済み.json';document.body.append(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),1000);}
 });
 const originalRender=render;render=function(){originalRender();refresh();};refresh();
