@@ -81,3 +81,9 @@ const overview=elements.get('reports').innerHTML.split('id="week"')[1].split('id
 const overviewRows=[...overview.matchAll(/<tbody>([\s\S]*?)<\/tbody>/g)][0][1].match(/<tr>[\s\S]*?<\/tr>/g);
 assert.equal(overviewRows.length,20);assert.ok(overviewRows[5].includes('<td>2日</td><td>1 / 2</td><td>0 / 0</td><td>1 / 2</td><td>0 / 0</td><td>0 / 0</td>'));assert.ok(overviewRows[0].includes('0日'));assert.ok(!elements.get('reports').innerHTML.includes('今週の学習'));
 console.log('PASS: all 20 units, unique learning days, latest per-problem totals and category counts, empty units');
+const {progress}=require('../parent-report.js');
+assert.deepEqual(progress([{label:'例題1',value:'◎'},{label:'基本問題1',value:'×'},{label:'基本問題2',value:''},{label:'不明',value:'◯'}],['例題1','基本問題1','基本問題2','例題1']),{total:3,passed:1,attempted:1,untouched:1});
+assert.deepEqual(progress([],[]),{total:0,passed:0,attempted:0,untouched:0});
+assert.deepEqual(progress([{label:'基本問題1',value:'◯'}],['基本問題1']),{total:1,passed:1,attempted:0,untouched:0});
+assert.equal((overview.match(/class="unit-progress-bar"/g)||[]).length,20);assert.ok(overview.includes('100%'));assert.ok(overview.includes('取り組み済み（◯以外）'));
+console.log('PASS: 100% stacked totals, no double counting, cancelled/unknown records, all 20 bars');
