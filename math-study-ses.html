@@ -777,7 +777,7 @@ document.querySelector('.intro').append(panel);
 const unitPanels=[];
 function status(){unitPanels.forEach(({unit,count})=>{count.textContent=events.filter(e=>e.unit===unit).length+'件の記録'});panel.querySelector('#activity-status').textContent=events.length+'件の記録'+(failed?' ／ 保存できません。このページを閉じる前に出力してください。':' ／ 保存済み')}
 window.recordStudyEvent=(event,data={})=>{const now=new Date();events.push({id:now.getTime()+'-'+Math.random().toString(36).slice(2),time:now.toISOString(),localTime:now.toLocaleString('ja-JP',{hour12:false}),timezone:Intl.DateTimeFormat().resolvedOptions().timeZone,event,...data});try{if(failed)throw Error();localStorage.setItem(key,JSON.stringify(events))}catch(e){failed=true}status()};
-const names={video_rating:'動画の理解度を変更',video_open:'動画を開いた',video_start:'動画の再生開始',video_end:'動画の再生終了',video_external:'YouTubeで開いた',rating:'評価を変更',answer:'答えを表示'};
+const names={example_understanding:'例題の理解度',video_rating:'動画の理解度を変更',video_open:'動画を開いた',video_start:'動画の再生開始',video_end:'動画の再生終了',video_external:'YouTubeで開いた',rating:'評価を変更',answer:'答えを表示'};
 function csvCell(v){let s=String(v??'');if(/^[=+@\-\t\r]/.test(s))s="'"+s;return '"'+s.replaceAll('"','""')+'"'}
 function exportLog(format,unit='',filename=''){const selected=unit?events.filter(e=>e.unit===unit):events;const csv=format==='csv';const rows=[['日時（端末）','日時（UTC）','タイムゾーン','操作','回','対象','動画ID','変更前','変更後'],...selected.map(e=>[e.localTime,e.time,e.timezone,names[e.event]||e.event,e.unit,e.title||e.label,e.videoId,e.previous,e.value])];const text=csv?'\ufeff'+rows.map(r=>r.map(csvCell).join(',')).join('\r\n'):JSON.stringify({version:2,exportedAt:new Date().toISOString(),unit:unit||null,events:selected,snapshot:transferSnapshot(unit)},null,2);const url=URL.createObjectURL(new Blob([text],{type:csv?'text/csv;charset=utf-8':'application/json'}));const a=document.createElement('a');a.href=url;a.download=filename||'算数学習ログ-'+(unit?unit+'-':'全単元-')+new Date().toISOString().replaceAll(':','-').slice(0,19)+(csv?'.csv':'.json');document.body.append(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),60000)}
 panel.querySelectorAll('button').forEach(b=>b.addEventListener('click',()=>exportLog(b.dataset.format)));
@@ -3218,9 +3218,9 @@ checkbox.addEventListener('change',()=>{enabled=checkbox.checked;try{localStorag
  function read(raw){try{const data=JSON.parse(raw||'{}');if(data&&typeof data==='object'&&!Array.isArray(data))return Object.fromEntries(Object.entries(data).filter(([k,v])=>marks.includes(v)))}catch{}return {}}
  try{values=read(localStorage.getItem(key))}catch{}
  const groups=new Map();
- function sync(id){for(const button of groups.get(id)?.querySelectorAll('button')||[])button.setAttribute('aria-pressed',String(values[id]===button.textContent))}
+ function sync(id){for(const button of groups.get(id)?.querySelectorAll('button')||[]){const pressed=String(values[id]===button.textContent);if(button.getAttribute('aria-pressed')!==pressed)button.setAttribute('aria-pressed',pressed)}}
  for(const play of document.querySelectorAll('.example-video-play')){
-  const row=play.closest('.example-problem-row,.example-only-row'),heading=row?.querySelector('.problem-heading'),name=heading?.querySelector('strong'),unit=row?.closest('.unit')?.id;if(!row||!name||!unit)continue;
+  const row=play.closest('.example-problem-row,.example-only-row'),heading=row?.querySelector('.problem-heading'),name=heading?.querySelector('strong'),unit=row?.closest('.unit')?.id;if(!row||!name||!unit||row.dataset.understandingBound==='true')continue;row.dataset.understandingBound='true';
   let description=heading.querySelector('.problem-description');
   if(!description){description=document.createElement('span');description.className='problem-description';description.textContent=row.nextElementSibling?.querySelector('.problem-description')?.textContent||'';heading.append(description)}
   const controls=document.createElement('div');controls.className='example-right-controls';controls.append(play);row.append(controls);
@@ -3228,8 +3228,9 @@ checkbox.addEventListener('change',()=>{enabled=checkbox.checked;try{localStorag
   const label=name.textContent.trim(),id=unit+'|'+label,group=document.createElement('div');group.className='video-rating example-understanding';group.setAttribute('role','group');group.setAttribute('aria-label',label+'の理解度');
   const caption=document.createElement('span');caption.textContent='理解度';group.append(caption);
   const notice=document.createElement('p');notice.className='example-understanding-save';notice.hidden=true;notice.setAttribute('role','status');
+  let lastInput=-Infinity;
   marks.forEach((mark,index)=>{const button=document.createElement('button');button.type='button';button.textContent=mark;button.title=labels[index];button.setAttribute('aria-label',mark+' '+labels[index]);button.dataset.ratingMark=mark;
-   button.addEventListener('click',()=>{const previous=values[id]||'';if(previous===mark)delete values[id];else values[id]=mark;sync(id);try{localStorage.setItem(key,JSON.stringify(values));notice.hidden=true}catch{notice.textContent='理解度を保存できません。このページを開いている間だけ記録します。';notice.hidden=false}window.recordStudyEvent?.('example_understanding',{unit,label,previous,value:values[id]||''})});group.append(button)});
+   button.addEventListener('click',event=>{if(!event.isTrusted)return;event.stopPropagation();const now=performance.now();if(now-lastInput<500)return;lastInput=now;const previous=values[id]||'';if(previous===mark)delete values[id];else values[id]=mark;sync(id);try{localStorage.setItem(key,JSON.stringify(values));notice.hidden=true}catch{notice.textContent='理解度を保存できません。このページを開いている間だけ記録します。';notice.hidden=false}window.recordStudyEvent?.('example_understanding',{unit,label,previous,value:values[id]||''})});group.append(button)});
   groups.set(id,group);controls.append(group);row.append(notice);sync(id);
  }
  window.addEventListener('storage',event=>{if(event.key!==key&&event.key!==null)return;values=read(event.newValue);for(const id of groups.keys())sync(id)});
