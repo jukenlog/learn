@@ -87,3 +87,8 @@ assert.deepEqual(progress([],[]),{total:0,passed:0,attempted:0,untouched:0});
 assert.deepEqual(progress([{label:'基本問題1',value:'◯'}],['基本問題1']),{total:1,passed:1,attempted:0,untouched:0});
 assert.equal((overview.match(/class="unit-progress-bar"/g)||[]).length,20);assert.ok(overview.includes('100%'));assert.ok(overview.includes('取り組み済み（◯以外）'));
 console.log('PASS: 100% stacked totals, no double counting, cancelled/unknown records, all 20 bars');
+const categoryPatterns=[/^(例題|類題)/,/^(基本問題|基礎演習)/,/^(練習問題|標準演習)/,/^チャレンジ/];
+for(const name of vm.runInContext('Object.values(PARENT_CATALOG.problems)',context))assert.equal(categoryPatterns.filter(pattern=>pattern.test(name)).length,1);
+for(const category of ['example','basic','practice','challenge'])assert.ok(overview.includes('category-'+category));
+for(const match of overview.matchAll(/class="unit-progress-bar"[^>]*>([\s\S]*?)<\/div>/g)){const widths=[...match[1].matchAll(/width:([\d.]+)%/g)].map(m=>Number(m[1]));assert.ok(Math.abs(widths.reduce((a,b)=>a+b,0)-100)<0.000001);}
+console.log('PASS: four mutually exclusive categories, all unit bars sum to 100%');
