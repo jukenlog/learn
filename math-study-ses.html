@@ -199,14 +199,12 @@ html[data-youtube-link="true"] .youtube-external-help{display:inline!important}
 .parent-page-link:hover{background:#e0f0ec}.parent-page-link:focus-visible{outline:3px solid #26758f;outline-offset:3px}
 @media print{.parent-page-link{display:none}}
 </style>
-<style data-floating-study-save>
+<style data-floating-parent-link>
 body{padding-bottom:calc(72px + env(safe-area-inset-bottom,0px))}
-.floating-study-save{position:fixed;right:calc(12px + env(safe-area-inset-right,0px));bottom:calc(12px + env(safe-area-inset-bottom,0px));z-index:900;min-height:44px;padding:8px 13px;border:1px solid #cbd5df;border-radius:22px;background:#f8fafcf2;color:#526477;box-shadow:0 2px 8px #233c5014;font:500 13px/1.4 system-ui;cursor:pointer;touch-action:manipulation}
-.floating-study-save:hover{background:#edf2f7;color:#233c50}
-.floating-study-save:focus-visible{outline:3px solid #5384af;outline-offset:3px}
-.floating-study-save-status{position:fixed;right:12px;bottom:calc(66px + env(safe-area-inset-bottom,0px));z-index:900;width:max-content;max-width:calc(100vw - 24px);box-sizing:border-box;margin:0;padding:10px 14px;border:1px solid #cbd5df;border-radius:10px;background:#fff;color:#33485a;box-shadow:0 2px 10px #233c501a;font:14px/1.6 system-ui;overflow-wrap:anywhere;pointer-events:none}
-.floating-study-save-status:empty{display:none}
-@media print{.floating-study-save,.floating-study-save-status{display:none}}
+.floating-parent-link{display:inline-flex;align-items:center;box-sizing:border-box;text-decoration:none;position:fixed;right:calc(12px + env(safe-area-inset-right,0px));bottom:calc(12px + env(safe-area-inset-bottom,0px));z-index:900;min-height:44px;padding:8px 13px;border:1px solid #cbd5df;border-radius:22px;background:#f8fafcf2;color:#526477;box-shadow:0 2px 8px #233c5014;font:500 13px/1.4 system-ui;cursor:pointer;touch-action:manipulation}
+.floating-parent-link:hover{background:#edf2f7;color:#233c50}
+.floating-parent-link:focus-visible{outline:3px solid #5384af;outline-offset:3px}
+@media print{.floating-parent-link{display:none}}
 </style>
 </head><body><header class="hero science-hero"><div class="wrap hero-layout"><div class="hero-copy"><div class="eyebrow">中学受験のrestart × 新演習</div><h1>算数を動画で学習しよう</h1><p class="hero-grades">中学受験新演習 ５年上・５年下・６年上</p><a class="parent-page-link" href="math-parent.html">保護者ページ →</a></div><svg aria-hidden="true" class="hero-art" viewbox="0 0 390 300"><circle cx="270" cy="140" fill="#dce9fa" r="140"></circle><rect fill="white" height="200" rx="25" width="310" x="28" y="62"></rect><rect fill="#245ea8" height="170" rx="15" width="280" x="43" y="77"></rect><circle cx="183" cy="161" fill="white" r="43"></circle><path d="M174 137V185L206 161Z" fill="#245ea8"></path><path d="M57 15L17 83H97Z" fill="#f4bd69" stroke="#15365d" stroke-width="4"></path><path d="M294 23V57M277 40H311" stroke="#245ea8" stroke-linecap="round" stroke-width="9"></path><circle cx="340" cy="267" fill="#f4bd69" r="17"></circle></svg></div></header>
 <div class="toolbar js-only"><div class="wrap"><div class="filters"><nav aria-label="教材の切り替え" class="tabs"><button type="button" data-grade="5u" aria-pressed="false">算数５年上</button><button type="button" data-grade="5l" aria-pressed="false">算数５年下</button><button type="button" data-grade="6u" aria-pressed="false">算数６年上</button></nav><label class="search"><span class="sr">単元名・動画名・キーワードで検索</span><input id="search" placeholder="動画をさがす" type="search"/></label><label><span class="sr">難易度</span><select id="priority"><option value="all">難易度：すべて</option><option value="基本編">基本編</option><option value="標準編">標準編</option><option value="標準発展編">標準発展編</option><option value="応用編">応用編</option><option value="発展編">発展編</option><option value="難問編">難問編</option><option value="区分なし">区分なし</option></select></label><button class="action" id="clear">表示をリセット</button></div><div class="statusline"><span aria-live="polite" id="shown"></span><span id="progress"></span><label><input id="unwatched" type="checkbox"/> まだ見ていない動画</label><span id="save-status">このブラウザに自動保存</span></div></div></div>
@@ -793,21 +791,11 @@ const shareStatus=document.createElement('p');shareStatus.setAttribute('role','s
 const shareHint=document.createElement('p');shareHint.textContent='保護者ページで指定したファイル名で保存します。保存先はSafariのダウンロード設定に従います。';
 shareButton.addEventListener('click',()=>{try{let filename=(localStorage.getItem('shinen-parent-share-filename-v1')||'算数学習記録.json').trim();if(!filename||/[\\/:*?"<>|\x00-\x1f]/.test(filename)||filename.length>105)throw Error('保護者ページでファイル名を設定し直してください。');if(!/\.json$/i.test(filename))filename+='.json';exportLog('json','',filename);shareStatus.textContent=filename+' の保存を開始しました。保存確認が表示された場合は操作してください。';}catch(e){shareStatus.textContent='書き出せませんでした。'+e.message;}});
 panel.prepend(shareButton,shareHint,shareStatus);
-// Keep the existing share action and filename rules available while scrolling.
-const floatingSave=document.createElement('button');
-floatingSave.type='button';floatingSave.className='floating-study-save';
-floatingSave.textContent='↓ JSON保存';floatingSave.setAttribute('aria-label','学習記録を共有（JSONを保存）');
-const floatingSaveStatus=document.createElement('p');
-floatingSaveStatus.className='floating-study-save-status';floatingSaveStatus.setAttribute('role','status');
-let floatingSaveTimer;
-floatingSave.addEventListener('click',()=>{
- shareButton.click();
- floatingSaveStatus.textContent=shareStatus.textContent;
- clearTimeout(floatingSaveTimer);
- floatingSaveTimer=setTimeout(()=>{floatingSaveStatus.textContent='';},8000);
-});
-document.body.append(floatingSave,floatingSaveStatus);
-
+// Keep the parent dashboard accessible while scrolling.
+const floatingParent=document.createElement('a');
+floatingParent.className='floating-parent-link';floatingParent.href='math-parent.html';
+floatingParent.textContent='保護者管理ページ →';
+document.body.append(floatingParent);
 
 document.querySelectorAll('.unit').forEach(unit=>{const box=document.createElement('div');box.className='activity-unit';const label=document.createElement('strong');label.textContent='この単元の学習ログ';const count=document.createElement('span');box.append(label,count);for(const format of ['csv','json']){const button=document.createElement('button');button.type='button';button.textContent=format.toUpperCase()+'で出力';button.addEventListener('click',()=>exportLog(format,unit.id));box.append(button)}unit.append(box);unitPanels.push({unit:unit.id,count})});
 let current={};document.addEventListener('click',e=>{const thumb=e.target.closest('.video-thumb');if(thumb){const card=thumb.closest('.video');current={unit:card.closest('.unit').id,videoId:card.dataset.video,title:card.querySelector('.video-title').textContent};window.recordStudyEvent('video_open',current)}if(e.target.closest('#modal-youtube'))window.recordStudyEvent('video_external',current)},true);
