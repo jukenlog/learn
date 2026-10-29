@@ -2992,7 +2992,7 @@ toggle.addEventListener('change',()=>{applyVideoAccess(toggle.checked);try{windo
 window.addEventListener('storage',event=>{if(event.key===preferenceKey||event.key===null)applyVideoAccess(event.key!==null&&event.newValue==='true')});
 
 function record(state,event,extra={}){if(!state.exampleLearning&&(event==='video_open'||event==='video_external'))window.markStudyAssistanceUsed?.(state.unit,state.label);const clip=state.activeVideo||state.video;window.recordStudyEvent?.(event,{unit:state.unit,label:state.label,title:clip.label+'の解説動画',videoId:clip.videoId,url:clip.url,startSeconds:clip.startSeconds,...extra})}
-function stop(state){state.leaveFullscreen?.();if(state.fullscreen)state.fullscreen.hidden=true;if(state.playing){record(state,'video_end',{reason:'close'});state.playing=false}state.activeVideo=null;state.external.hidden=true;state.frame.removeAttribute('src');state.player.hidden=true;state.close.hidden=true;state.play.hidden=false}
+function stop(state){state.leaveFullscreen?.();if(state.fullscreen)state.fullscreen.hidden=true;if(state.sessionStarted){record(state,'video_end',{reason:'close'});state.sessionStarted=false}state.activeVideo=null;state.external.hidden=true;state.frame.removeAttribute('src');state.player.hidden=true;state.close.hidden=true;state.play.hidden=false}
 window.prepareAnswerReview=(dialog,trigger)=>{
  prepare?.(dialog,trigger);
  let state=states.get(dialog);if(state){stop(state);state.section.hidden=true;state.revealed=false;state.video=null}
@@ -3011,7 +3011,7 @@ window.prepareAnswerReview=(dialog,trigger)=>{
   const player=document.createElement('div');player.className='problem-video-player';player.hidden=true;
   const frame=document.createElement('iframe');frame.setAttribute('allow','autoplay; fullscreen; picture-in-picture');frame.setAttribute('allowfullscreen','');frame.setAttribute('referrerpolicy','strict-origin-when-cross-origin');player.append(frame,exitFullscreen);controls.append(play,fullscreen,external,close);section.append(controls,player);
   const actions=dialog.querySelector('.answer-review-actions');if(actions)dialog.insertBefore(section,actions);else dialog.append(section);
-  state={section,play,external,close,player,frame,fullscreen,video:null,label:'',playing:false};states.set(dialog,state);
+  state={section,play,external,close,player,frame,fullscreen,video:null,label:'',sessionStarted:false};states.set(dialog,state);
   const expand=()=>{if(!player.hidden)player.className='problem-video-player problem-player-expanded'};
   state.leaveFullscreen=()=>{player.className='problem-video-player';if(document.fullscreenElement===player||document.webkitFullscreenElement===player){try{const result=(document.exitFullscreen||document.webkitExitFullscreen)?.call(document);result?.catch?.(()=>{})}catch{}}};
   fullscreen.addEventListener('click',()=>{if(player.hidden)return;const request=player.requestFullscreen||player.webkitRequestFullscreen;if(request){try{const result=request.call(player);result?.catch?.(expand)}catch{expand()}}else expand()});
@@ -3078,9 +3078,9 @@ window.addEventListener('message',event=>{
  if(event.origin!=='https://player.vimeo.com')return;
  const state=[...states.values()].find(s=>s.video&&!s.player.hidden&&s.frame.contentWindow===event.source);if(!state)return;
  let message;try{message=typeof event.data==='string'?JSON.parse(event.data):event.data}catch{return}if(!message||typeof message!=='object')return;
- if(message.event==='ready'){for(const name of ['play','pause','ended'])state.frame.contentWindow.postMessage({method:'addEventListener',value:name},'https://player.vimeo.com')}
- if(message.event==='play'&&!state.playing){state.playing=true;record(state,'video_start',{position:message.data?.seconds})}
- if(['pause','ended'].includes(message.event)&&state.playing){state.playing=false;record(state,'video_end',{reason:message.event,position:message.data?.seconds})}
+ if(message.event==='ready'){for(const name of ['play'])state.frame.contentWindow.postMessage({method:'addEventListener',value:name},'https://player.vimeo.com')}
+ // A viewing session ends when the player closes, not on pauses or playback completion.
+ if(message.event==='play'&&!state.sessionStarted){state.sessionStarted=true;record(state,'video_start',{position:message.data?.seconds})}
 });
 })();
 </script><script data-thinking-gate="all-problems">(()=>{'use strict';
