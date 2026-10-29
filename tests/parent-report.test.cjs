@@ -92,3 +92,10 @@ for(const name of vm.runInContext('Object.values(PARENT_CATALOG.problems)',conte
 for(const category of ['example','basic','practice','challenge'])assert.ok(overview.includes('category-'+category));
 for(const match of overview.matchAll(/class="unit-progress-bar"[^>]*>([\s\S]*?)<\/div>/g)){const widths=[...match[1].matchAll(/width:([\d.]+)%/g)].map(m=>Number(m[1]));assert.ok(Math.abs(widths.reduce((a,b)=>a+b,0)-100)<0.000001);}
 console.log('PASS: four mutually exclusive categories, all unit bars sum to 100%');
+
+const {totalStudyTime}=require('../parent-report.js');
+assert.equal(totalStudyTime([{time:'2026-10-25T01:00:00Z'},{time:'2026-10-25T01:30:00Z'},{time:'2026-10-26T04:00:00Z'},{time:'2026-10-26T05:00:00Z'},{time:'2026-10-27T04:00:00Z'}]),90*60000);
+assert.equal(totalStudyTime([{time:'2026-10-25T14:59:00Z'},{time:'2026-10-25T15:01:00Z'}]),0);assert.equal(totalStudyTime([]),0);
+vm.runInContext(`selectedUnit='6u-6';render();`,context);
+const unitSummary=elements.get('reports').innerHTML.split('id="latest"')[1].split('id="week"')[0];assert.ok(unitSummary.includes('学習時間数'));assert.ok(unitSummary.includes('約1時間'));assert.ok(unitSummary.includes('<span>評価</span><strong>50%</strong>'));assert.ok(unitSummary.includes('<span>学習問題数</span><strong>2 / '));
+console.log('PASS: daily duration sum excludes overnight gaps, single-record days, unit solved/total and percentage');

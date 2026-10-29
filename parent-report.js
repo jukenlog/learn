@@ -50,6 +50,11 @@ function progress(results,problemNames){
  const counted=counts([...latest.values()]);
  return {total:names.size,passed:counted.passed,attempted:counted.solved-counted.passed,untouched:names.size-counted.solved};
 }
+function totalStudyTime(events){
+ const days=new Map();
+ for(const event of events){const time=Date.parse(event.time);if(!Number.isFinite(time))continue;const date=day(time),range=days.get(date);if(range){range.first=Math.min(range.first,time);range.last=Math.max(range.last,time);}else days.set(date,{first:time,last:time});}
+ return [...days.values()].reduce((sum,range)=>sum+range.last-range.first,0);
+}
 function build(events,now=new Date(),options={}){
  const today=day(now),tomorrow=shift(today,1),weekday=new Date(today+'T00:00:00Z').getUTCDay();
  const monday=shift(today,-((weekday+6)%7));
@@ -64,6 +69,6 @@ function build(events,now=new Date(),options={}){
  }
  return {today,tomorrow,monday,latest,selectedDate,nextDate,selectedUnit,sections:[summarize(ordered.filter(e=>day(e.time)===selectedDate)),summarize(ordered.filter(e=>e.unit===selectedUnit)),summarize(ordered.filter(e=>day(e.time)>=monday)),summarize(ordered)]};
 }
-root.ParentReport={build,day,normalize,passed,label,key,dailyProblems,shift,duration,matrix,counts,progress};
+root.ParentReport={build,day,normalize,passed,label,key,dailyProblems,shift,duration,matrix,counts,progress,totalStudyTime};
 if(typeof module!=='undefined')module.exports=root.ParentReport;
 })(typeof window!=='undefined'?window:globalThis);
