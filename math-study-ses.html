@@ -351,7 +351,7 @@ async function play(){
   readyTimer=setTimeout(()=>{if(token!==request||!modal.open)return;++request;destroy();showMessage('この環境ではプレーヤーを読み込めません。「YouTubeで開く」をご利用ください。')},15000);
   player=new YT.Player(slot,{width:'100%',height:'100%',videoId:current.id,playerVars:vars,events:{
    onReady:e=>{if(token!==request||!modal.open){try{e.target.destroy()}catch(err){}return}clearTimeout(readyTimer);stage.hidden=false;message.hidden=true;const frame=e.target.getIframe();frame.title=current.title;frame.setAttribute('referrerpolicy','strict-origin-when-cross-origin')},
-   onStateChange:e=>{if(token!==request||!modal.open)return;if(e.data===YT.PlayerState.PLAYING&&!loggedStart){loggedStart=true;window.markRestartWatched?.(current.id);window.recordStudyEvent?.('video_start',{unit:current.unit,videoId:current.id,title:current.title})}if(e.data===YT.PlayerState.ENDED){window.recordStudyEvent?.('video_end',{unit:current.unit,videoId:current.id,title:current.title});++request;destroy();showMessage('視聴が終了しました。',true)}},
+   onStateChange:e=>{if(token!==request||!modal.open)return;if(e.data===YT.PlayerState.PLAYING&&!loggedStart){loggedStart=true;window.markRestartWatched?.(current.id)}if(e.data===YT.PlayerState.ENDED){window.recordStudyEvent?.('video_end',{unit:current.unit,videoId:current.id,title:current.title});++request;destroy();showMessage('視聴が終了しました。',true)}},
    onError:e=>{if(token!==request||!modal.open)return;++request;destroy();showMessage(e.data===153?'この開き方ではYouTubeの埋め込み再生が許可されていません。「YouTubeで開く」をご利用ください。':'この動画はここでは再生できません。「YouTubeで開く」をご利用ください。')}
   }});
  }catch(e){if(token!==request||!modal.open)return;destroy();showMessage('プレーヤーを読み込めませんでした。通信状況をご確認いただくか「YouTubeで開く」をご利用ください。')}
@@ -3021,7 +3021,7 @@ window.prepareAnswerReview=(dialog,trigger)=>{
   state.leaveFullscreen=()=>{player.className='problem-video-player';if(document.fullscreenElement===player||document.webkitFullscreenElement===player){try{const result=(document.exitFullscreen||document.webkitExitFullscreen)?.call(document);result?.catch?.(()=>{})}catch{}}};
   fullscreen.addEventListener('click',()=>{if(player.hidden)return;const request=player.requestFullscreen||player.webkitRequestFullscreen;if(request){try{const result=request.call(player);result?.catch?.(expand)}catch{expand()}}else expand()});
   exitFullscreen.addEventListener('click',()=>{state.leaveFullscreen();fullscreen.focus({preventScroll:true})});
-  state.start=clip=>{if(!enabled||!clip)return;stop(state);state.activeVideo=clip;const url=new URL(clip.url);url.searchParams.set('autoplay','1');url.searchParams.set('playsinline','1');state.frame.src=url.href;state.frame.title=clip.label+'の解説動画';state.external.href=clip.url;state.external.hidden=false;state.player.hidden=false;state.close.hidden=false;state.fullscreen.hidden=false;state.play.hidden=!(state.video.clips?.length>1);record(state,'video_open')};
+  state.start=clip=>{if(!enabled||!clip)return;stop(state);state.activeVideo=clip;const url=new URL(clip.url);url.searchParams.set('autoplay','1');url.searchParams.set('playsinline','1');state.frame.src=url.href;state.frame.title=clip.label+'の解説動画';state.external.href=clip.url;state.external.hidden=false;state.player.hidden=false;state.close.hidden=false;state.fullscreen.hidden=false;state.play.hidden=!(state.video.clips?.length>1);state.sessionStarted=true;record(state,'video_open')};
   play.addEventListener('click',()=>state.start(state.video?.clips?.[0]||state.video));
   external.addEventListener('click',()=>record(state,'video_external'));
   close.addEventListener('click',()=>{stop(state);state.play.focus()});
@@ -3079,14 +3079,7 @@ for(const unit of document.querySelectorAll?.('.unit')||[]){
   }panel.append(section);
  }unit.append(panel);upperPanels.push(panel);
 }
-window.addEventListener('message',event=>{
- if(event.origin!=='https://player.vimeo.com')return;
- const state=[...states.values()].find(s=>s.video&&!s.player.hidden&&s.frame.contentWindow===event.source);if(!state)return;
- let message;try{message=typeof event.data==='string'?JSON.parse(event.data):event.data}catch{return}if(!message||typeof message!=='object')return;
- if(message.event==='ready'){for(const name of ['play'])state.frame.contentWindow.postMessage({method:'addEventListener',value:name},'https://player.vimeo.com')}
- // A viewing session ends when the player closes, not on pauses or playback completion.
- if(message.event==='play'&&!state.sessionStarted){state.sessionStarted=true;record(state,'video_start',{position:message.data?.seconds})}
-});
+
 })();
 </script><script data-thinking-gate="all-problems">(()=>{'use strict';
 const seconds=5, storageKey='shinen-math-hints-current-attempt-v2';

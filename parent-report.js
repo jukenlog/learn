@@ -65,7 +65,7 @@ function build(events,now=new Date(),options={}){
   const ratings=items.filter(e=>e.event==='rating');const current=new Map();
   for(const e of ratings)current.set(key(e),e);
   const results=[...current.values()];
-  return {events:items,ratings,results,days:new Set(items.map(e=>day(e.time))).size,videos:items.filter(e=>e.event==='video_start').length,retry:results.filter(e=>e.value&&!passed(e.value)),unrated:results.filter(e=>!e.value),passed:results.filter(e=>passed(e.value)).length};
+  return {events:items,ratings,results,days:new Set(items.map(e=>day(e.time))).size,videos:items.filter(e=>e.event==='video_open').length,retry:results.filter(e=>e.value&&!passed(e.value)),unrated:results.filter(e=>!e.value),passed:results.filter(e=>passed(e.value)).length};
  }
  return {today,tomorrow,monday,latest,selectedDate,nextDate,selectedUnit,sections:[summarize(ordered.filter(e=>day(e.time)===selectedDate)),summarize(ordered.filter(e=>e.unit===selectedUnit)),summarize(ordered.filter(e=>day(e.time)>=monday)),summarize(ordered)]};
 }
