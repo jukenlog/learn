@@ -24,7 +24,7 @@ function duration(events){
  const times=events.map(e=>Date.parse(e.time)).filter(Number.isFinite);
  if(!times.length)return null;
  const first=times.reduce((a,b)=>Math.min(a,b),Infinity),last=times.reduce((a,b)=>Math.max(a,b),-Infinity);
- return {first,last,minutes:Math.floor((last-first)/60000),count:times.length};
+ return {first,last,minutes:Math.floor(totalStudyTime(events)/60000),count:times.length};
 }
 function matrix(events,unit,catalog={}){
  const sections=['例題','類題','基本問題','基礎演習','練習問題','標準演習','チャレンジ'];
@@ -51,9 +51,9 @@ function progress(results,problemNames){
  return {total:names.size,passed:counted.passed,attempted:counted.solved-counted.passed,untouched:names.size-counted.solved};
 }
 function totalStudyTime(events){
- const days=new Map();
- for(const event of events){const time=Date.parse(event.time);if(!Number.isFinite(time))continue;const date=day(time),range=days.get(date);if(range){range.first=Math.min(range.first,time);range.last=Math.max(range.last,time);}else days.set(date,{first:time,last:time});}
- return [...days.values()].reduce((sum,range)=>sum+range.last-range.first,0);
+ const times=events.map(e=>Date.parse(e.time)).filter(Number.isFinite).sort((a,b)=>a-b);
+ let total=0;for(let i=1;i<times.length;i++){const gap=times[i]-times[i-1];if(gap<3600000&&day(times[i])===day(times[i-1]))total+=gap;}
+ return total;
 }
 function build(events,now=new Date(),options={}){
  const today=day(now),tomorrow=shift(today,1),weekday=new Date(today+'T00:00:00Z').getUTCDay();

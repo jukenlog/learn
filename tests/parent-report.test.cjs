@@ -36,7 +36,7 @@ autoElements.get('local').onclick();assert.equal(autoElements.get('files').textC
 console.log('PASS: browser records load on startup; refresh does not duplicate source');
 const {duration,matrix,shift}=require('../parent-report.js');
 assert.equal(duration([]),null);assert.equal(duration(events.slice(0,1)).count,1);
-assert.equal(duration([events[1],events[2]]).minutes,600);
+assert.equal(duration([events[1],events[2]]).minutes,0);
 assert.equal(shift('2026-11-01',-1),'2026-10-31');assert.equal(shift('2026-12-31',1),'2027-01-01');
 const grid=matrix([...events].reverse(),'6u-6',{'6u-6:question:基本問題10':'基本問題10','6u-6:question:基本問題2':'基本問題2','6u-6:question:例題1':'例題1・類題1','6u-7:question:チャレンジ1':'チャレンジ1'});
 assert.equal(grid.rows[0].date,'2026-10-25');assert.equal(grid.rows[1].values.get('問題1'),'◯');assert.equal(grid.rows[1].values.get('問題3'),'取消');assert.equal(grid.rows[0].values.has('基本問題2'),false);assert.ok(grid.columns.indexOf('基本問題2')<grid.columns.indexOf('基本問題10'));assert.equal(grid.columns.includes('チャレンジ1'),false);
@@ -94,8 +94,13 @@ for(const match of overview.matchAll(/class="unit-progress-bar"[^>]*>([\s\S]*?)<
 console.log('PASS: four mutually exclusive categories, all unit bars sum to 100%');
 
 const {totalStudyTime}=require('../parent-report.js');
-assert.equal(totalStudyTime([{time:'2026-10-25T01:00:00Z'},{time:'2026-10-25T01:30:00Z'},{time:'2026-10-26T04:00:00Z'},{time:'2026-10-26T05:00:00Z'},{time:'2026-10-27T04:00:00Z'}]),90*60000);
+assert.equal(totalStudyTime([{time:'2026-10-25T01:00:00Z'},{time:'2026-10-25T01:30:00Z'},{time:'2026-10-26T04:00:00Z'},{time:'2026-10-26T05:00:00Z'},{time:'2026-10-27T04:00:00Z'}]),30*60000);
 assert.equal(totalStudyTime([{time:'2026-10-25T14:59:00Z'},{time:'2026-10-25T15:01:00Z'}]),0);assert.equal(totalStudyTime([]),0);
 vm.runInContext(`selectedUnit='6u-6';render();`,context);
-const unitSummary=elements.get('reports').innerHTML.split('id="latest"')[1].split('id="week"')[0];assert.ok(unitSummary.includes('学習時間数'));assert.ok(unitSummary.includes('約1時間'));assert.ok(unitSummary.includes('<span>評価</span><strong>50%</strong>'));assert.ok(unitSummary.includes('<span>学習問題数</span><strong>2 / '));
+const unitSummary=elements.get('reports').innerHTML.split('id="latest"')[1].split('id="week"')[0];assert.ok(unitSummary.includes('学習時間数'));assert.ok(unitSummary.includes('約0分'));assert.ok(unitSummary.includes('<span>評価</span><strong>50%</strong>'));assert.ok(unitSummary.includes('<span>学習問題数</span><strong>2 / '));
 console.log('PASS: daily duration sum excludes overnight gaps, single-record days, unit solved/total and percentage');
+
+const gaps=['2026-10-25T01:00:00Z','2026-10-25T01:20:00Z','2026-10-25T02:20:00Z','2026-10-25T02:35:00Z','2026-10-25T04:40:00Z','2026-10-25T04:50:00Z'].map(time=>({time}));
+assert.equal(totalStudyTime(gaps),45*60000);assert.equal(duration(gaps).minutes,45);
+assert.ok(unitSummary.includes('<small>1 / 2</small>'));assert.ok(unitSummary.includes('rowspan="2">学習時間</th>'));
+console.log('PASS: exclude exact one-hour and longer gaps, keep shorter intervals, daily time column and rating fraction');
