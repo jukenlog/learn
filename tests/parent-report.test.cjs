@@ -115,3 +115,5 @@ const dailyRows=elements.get('reports').innerHTML.split('class="scroll today-his
 assert.ok(dailyRows.includes('data-log-id="overview1" tabindex="0" aria-selected="false"'));
 assert.ok(!dailyRows.includes('type="checkbox"'));
 console.log('PASS: selectable daily history rows, keyboard focus and toolbar');
+assert.ok(dailyRows.indexOf('data-log-id="overview1"')<dailyRows.indexOf('id="daily-log-tools"'));
+console.log('PASS: selection and save toolbar follows history');
