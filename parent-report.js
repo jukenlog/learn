@@ -55,6 +55,27 @@ function totalStudyTime(events){
  let total=0;for(let i=1;i<times.length;i++){const gap=times[i]-times[i-1];if(gap<1800000&&day(times[i])===day(times[i-1]))total+=gap;}
  return total;
 }
+function periodRange(mode,date){
+ const year=date.slice(0,4),month=date.slice(0,7);
+ if(mode==='year')return {start:year+'-01-01',end:year+'-12-31',label:year+'年'};
+ if(mode==='month'){const next=new Date(date.slice(0,7)+'-01T00:00:00Z');next.setUTCMonth(next.getUTCMonth()+1);return {start:month+'-01',end:shift(next.toISOString().slice(0,10),-1),label:year+'年'+Number(date.slice(5,7))+'月'};}
+ if(mode==='week'){const start=shift(date,-((new Date(date+'T00:00:00Z').getUTCDay()+6)%7));return {start,end:shift(start,6),label:start+' 〜 '+shift(start,6)};}
+ if(mode==='day')return {start:date,end:date,label:date};
+ return {start:'',end:'',label:'全期間'};
+}
+function calendar(mode,date,events){
+ const range=periodRange(mode,date),month=date.slice(0,7),first=month+'-01',start=periodRange('week',first).start;
+ const active=new Set(events.map(e=>day(e.time)));
+ const button=(value,text)=>'<button type="button" data-period="'+value+'" aria-pressed="'+(mode===value)+'">'+text+'</button>';
+ let rows='';for(let week=0;week<6;week++){
+  const weekStart=shift(start,week*7);
+  rows+='<tr><td><button type="button" data-period-week="'+weekStart+'" aria-label="'+weekStart+'からの週を選択">週</button></td>';
+  for(let weekday=0;weekday<7;weekday++){const d=shift(weekStart,weekday),chosen=mode!=='all'&&d>=range.start&&d<=range.end;
+   rows+='<td><button type="button" data-period-day="'+d+'" aria-pressed="'+chosen+'" class="'+(d.slice(0,7)!==month?'other-month ':'')+(active.has(d)?'has-record':'')+'" aria-label="'+d+(active.has(d)?' 学習記録あり':'')+'">'+Number(d.slice(8))+'</button></td>';}
+  rows+='</tr>';
+ }
+ return '<div class="period-picker"><div class="controls" role="group" aria-label="集計単位">'+[['all','全期間'],['year','年'],['month','月'],['week','週'],['day','日']].map(([v,t])=>button(v,t)).join('')+'</div><div class="controls"><button type="button" data-period-move="-1" aria-label="前月">←</button><label>カレンダーの年月<input id="period-month" type="month" value="'+month+'"></label><button type="button" data-period-move="1" aria-label="翌月">→</button><button type="button" data-period-today="true">今月に戻る</button></div><table class="period-calendar"><thead><tr>'+['週','月','火','水','木','金','土','日'].map(t=>'<th scope="col">'+t+'</th>').join('')+'</tr></thead><tbody>'+rows+'</tbody></table><p class="note">点は学習記録のある日です。日付をタップすると1日、左の「週」をタップすると月曜〜日曜を選択します。年・月の集計は上のボタンで選べます。問題の結果は選択期間内の最後の評価です。学習時間は日ごとの記録間隔を合計し、30分以上の間隔は除外します。</p></div>';
+}
 function build(events,now=new Date(),options={}){
  const today=day(now),tomorrow=shift(today,1),weekday=new Date(today+'T00:00:00Z').getUTCDay();
  const monday=shift(today,-((weekday+6)%7));
@@ -67,8 +88,8 @@ function build(events,now=new Date(),options={}){
   const results=[...current.values()];
   return {events:items,ratings,results,days:new Set(items.map(e=>day(e.time))).size,videos:items.filter(e=>e.event==='video_open').length,retry:results.filter(e=>e.value&&!passed(e.value)),unrated:results.filter(e=>!e.value),passed:results.filter(e=>passed(e.value)).length};
  }
- return {today,tomorrow,monday,latest,selectedDate,nextDate,selectedUnit,sections:[summarize(ordered.filter(e=>day(e.time)===selectedDate)),summarize(ordered.filter(e=>e.unit===selectedUnit)),summarize(ordered.filter(e=>day(e.time)>=monday)),summarize(ordered)]};
+ return {today,tomorrow,monday,latest,selectedDate,nextDate,selectedUnit,sections:[summarize(ordered.filter(e=>day(e.time)===selectedDate)),summarize(ordered.filter(e=>e.unit===selectedUnit)),summarize(ordered.filter(e=>day(e.time)>=monday)),summarize(ordered.filter(e=>{const range=periodRange(options.period,options.periodDate||today),d=day(e.time);return !range.start||(d>=range.start&&d<=range.end);}))]};
 }
-root.ParentReport={build,day,normalize,passed,label,key,dailyProblems,shift,duration,matrix,counts,progress,totalStudyTime};
+root.ParentReport={periodRange,calendar,build,day,normalize,passed,label,key,dailyProblems,shift,duration,matrix,counts,progress,totalStudyTime};
 if(typeof module!=='undefined')module.exports=root.ParentReport;
 })(typeof window!=='undefined'?window:globalThis);
