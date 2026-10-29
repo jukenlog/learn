@@ -1,0 +1,25 @@
+const assert=require('node:assert/strict');
+const {remove}=require('../parent-log-manager.js');
+const key='shinen-math-all-restart-activity-v1',legacy='shinen-math6-restart-activity-v1',cache='shinen-parent-last-source-v1';
+const events=[{id:'keep'},{id:'delete'},{id:'other-tab'}],snapshot={stores:{rating:'◯'},watched:{video:true}};
+function store(initial){const map=new Map(Object.entries(initial));return {map,getItem:k=>map.get(k)??null,setItem:(k,v)=>map.set(k,v),removeItem:k=>map.delete(k)};}
+const storage=store({[key]:JSON.stringify(events),[legacy]:JSON.stringify(events.slice(0,2))});
+const files=[{local:true,name:'browser',data:{version:2,events:events.slice(0,2),snapshot}}];
+const result=remove(files,new Set(['delete']),storage);
+assert.deepEqual(JSON.parse(storage.getItem(key)).map(e=>e.id),['keep','other-tab']);
+assert.deepEqual(JSON.parse(storage.getItem(legacy)).map(e=>e.id),['keep']);
+assert.equal(files[0].data.events.length,2);assert.equal(result[0].data.snapshot,snapshot);
+const jsonFiles=[{name:'a.json',data:{version:2,events,snapshot}},{name:'b.json',data:{version:1,events}}];
+const cleaned=remove(jsonFiles,new Set(['delete']),storage);
+assert.ok(cleaned.every(f=>f.data.events.length===2));assert.deepEqual(JSON.parse(storage.getItem(cache)).files,cleaned);
+assert.equal(jsonFiles[0].data.events.length,3);
+const failing=store({[key]:JSON.stringify(events),[legacy]:JSON.stringify(events)}),before=new Map(failing.map);
+failing.setItem=(k,v)=>{if(k===legacy)throw Error('quota');failing.map.set(k,v);};
+assert.throws(()=>remove(files,new Set(['delete']),failing),/quota/);assert.deepEqual(failing.map,before);
+const broken=store({[key]:'invalid'});assert.throws(()=>remove(files,new Set(['delete']),broken));assert.equal(broken.getItem(key),'invalid');
+// A learning tab with an old in-memory list must read the deletion before appending.
+const fs=require('node:fs'),vm=require('node:vm'),html=fs.readFileSync(require('node:path').join(__dirname,'../math-study-ses.html'),'utf8');
+const start=html.indexOf('function refreshActivity()'),end=html.indexOf('\n',html.indexOf('window.recordStudyEvent=',start));
+const context={localStorage:storage,window:{addEventListener(){}},status(){},key,events,failed:false,Date,Math,Intl};vm.createContext(context);vm.runInContext(html.slice(start,end),context);context.window.recordStudyEvent('video_start',{unit:'6u-6'});
+assert.ok(!JSON.parse(storage.getItem(key)).some(e=>e.id==='delete'));assert.equal(JSON.parse(storage.getItem(key)).length,3);
+console.log('PASS: bulk deletion, duplicate sources, snapshots, JSON persistence, concurrent records, rollback, malformed storage, stale learning tab');
