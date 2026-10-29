@@ -52,7 +52,7 @@ function progress(results,problemNames){
 }
 function totalStudyTime(events){
  const times=events.map(e=>Date.parse(e.time)).filter(Number.isFinite).sort((a,b)=>a-b);
- let total=0;for(let i=1;i<times.length;i++){const gap=times[i]-times[i-1];if(gap<3600000&&day(times[i])===day(times[i-1]))total+=gap;}
+ let total=0;for(let i=1;i<times.length;i++){const gap=times[i]-times[i-1];if(gap<1800000&&day(times[i])===day(times[i-1]))total+=gap;}
  return total;
 }
 function build(events,now=new Date(),options={}){

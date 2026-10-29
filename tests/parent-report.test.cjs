@@ -94,7 +94,7 @@ for(const match of overview.matchAll(/class="unit-progress-bar"[^>]*>([\s\S]*?)<
 console.log('PASS: four mutually exclusive categories, all unit bars sum to 100%');
 
 const {totalStudyTime}=require('../parent-report.js');
-assert.equal(totalStudyTime([{time:'2026-10-25T01:00:00Z'},{time:'2026-10-25T01:30:00Z'},{time:'2026-10-26T04:00:00Z'},{time:'2026-10-26T05:00:00Z'},{time:'2026-10-27T04:00:00Z'}]),30*60000);
+assert.equal(totalStudyTime([{time:'2026-10-25T01:00:00Z'},{time:'2026-10-25T01:30:00Z'},{time:'2026-10-26T04:00:00Z'},{time:'2026-10-26T05:00:00Z'},{time:'2026-10-27T04:00:00Z'}]),0);
 assert.equal(totalStudyTime([{time:'2026-10-25T14:59:00Z'},{time:'2026-10-25T15:01:00Z'}]),0);assert.equal(totalStudyTime([]),0);
 vm.runInContext(`selectedUnit='6u-6';render();`,context);
 const unitSummary=elements.get('reports').innerHTML.split('id="latest"')[1].split('id="week"')[0];assert.ok(unitSummary.includes('学習時間数'));assert.ok(unitSummary.includes('約0分'));assert.ok(unitSummary.includes('<span>評価</span><strong>50%</strong>'));assert.ok(unitSummary.includes('<span>学習問題数</span><strong>2 / '));
@@ -103,4 +103,8 @@ console.log('PASS: daily duration sum excludes overnight gaps, single-record day
 const gaps=['2026-10-25T01:00:00Z','2026-10-25T01:20:00Z','2026-10-25T02:20:00Z','2026-10-25T02:35:00Z','2026-10-25T04:40:00Z','2026-10-25T04:50:00Z'].map(time=>({time}));
 assert.equal(totalStudyTime(gaps),45*60000);assert.equal(duration(gaps).minutes,45);
 assert.ok(unitSummary.includes('<small>1 / 2</small>'));assert.ok(unitSummary.includes('rowspan="2">学習時間</th>'));
-console.log('PASS: exclude exact one-hour and longer gaps, keep shorter intervals, daily time column and rating fraction');
+console.log('PASS: exclude long gaps, keep shorter intervals, daily time column and rating fraction');
+
+assert.equal(totalStudyTime([{time:'2026-10-25T01:00:00Z'},{time:'2026-10-25T01:30:00Z'}]),0);
+assert.equal(totalStudyTime([{time:'2026-10-25T01:00:00Z'},{time:'2026-10-25T01:29:59Z'}]),1799000);
+console.log('PASS: 30-minute boundary excluded; 29 minutes 59 seconds included');
