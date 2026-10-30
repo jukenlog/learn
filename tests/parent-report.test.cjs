@@ -140,5 +140,5 @@ const periodSummary=elements.get('reports').innerHTML.split('id="all"')[1];
 assert.equal((periodSummary.match(/class="stat"/g)||[]).length,4);
 for(const text of ['学習日数','学習時間数','学習問題数','評価'])assert.ok(periodSummary.includes('<span>'+text+'</span>'));
 assert.ok(periodSummary.includes('<small>1 / 2</small>'));assert.ok(periodSummary.includes('<strong>50%</strong>'));
-assert.ok(!periodSummary.includes('問題ごとの最終結果'));assert.ok(periodSummary.includes('全記録を見る'));
-console.log('PASS: period summary matches unit metrics, rating fraction, no per-problem results, history retained');
+assert.ok(!periodSummary.includes('問題ごとの最終結果'));assert.ok(!periodSummary.includes('全記録を見る'));assert.ok(!periodSummary.includes('<details>'));
+console.log('PASS: period summary matches unit metrics, rating fraction, no per-problem results or full-history table');

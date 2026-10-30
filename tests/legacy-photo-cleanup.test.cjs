@@ -1,0 +1,10 @@
+const fs=require('node:fs'),vm=require('node:vm'),assert=require('node:assert/strict');
+const source=fs.readFileSync(require('node:path').join(__dirname,'../legacy-photo-cleanup.js'),'utf8');
+let allowed=false,called=[],request={},throws=false;const nodes=[];
+const context={document:{querySelector(){return {append(){}}},createElement(tag){const node={tag,append(){},setAttribute(){},addEventListener(type,fn){this.click=fn;}};nodes.push(node);return node;}},window:{confirm:()=>allowed,indexedDB:{deleteDatabase(name){if(throws)throw Error();called.push(name);request={};return request;}}}};
+vm.runInNewContext(source,context);const button=nodes.find(n=>n.tag==='button'),status=nodes.at(-1);
+button.click();assert.equal(called.length,0);allowed=true;button.click();assert.deepEqual(called,['math-solution-photos']);assert.equal(button.disabled,true);button.click();assert.equal(called.length,1);
+request.onblocked();assert.ok(status.textContent.includes('削除待ち'));assert.equal(button.disabled,true);request.onsuccess();assert.equal(button.disabled,false);assert.ok(status.textContent.includes('完了'));
+button.click();request.onerror();assert.equal(button.disabled,false);assert.ok(status.textContent.includes('削除できません'));
+throws=true;button.click();assert.equal(button.disabled,false);assert.ok(status.textContent.includes('アクセスできません'));
+console.log('PASS: confirmation, exact database only, duplicate-click guard, blocked/success/error/unavailable states');
