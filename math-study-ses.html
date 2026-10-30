@@ -200,7 +200,6 @@ html[data-restart-videos="false"] .videos,html[data-restart-videos="false"] .vid
 html.js .sidebar .toc-grade-tabs.js-only{display:flex;flex-wrap:nowrap;gap:14px;width:100%;margin:0 0 16px}
 .sidebar .toc-grade-tabs button{flex:1 1 64px;min-width:0;min-height:44px;padding:8px 5px;font-size:13px;white-space:nowrap}
 </style>
-<style>.legacy-photo-cleanup{margin-top:20px;padding-top:16px;border-top:1px solid #d5e0e8}.legacy-photo-cleanup button{min-height:44px;padding:10px 14px;border:1px solid #bd8080;border-radius:9px;background:#fff;color:#923c3c;font:inherit}.legacy-photo-cleanup p{font-size:13px;line-height:1.7}.legacy-photo-cleanup button:disabled{opacity:.5}</style>
 </head><body><header class="hero science-hero"><div class="wrap hero-layout"><div class="hero-copy"><div class="eyebrow">中学受験新演習</div><h1>算数学習管理アプリ</h1><p class="hero-grades">問題の答え合わせと結果を入力して学習状況を管理しよう</p></div><svg aria-hidden="true" class="hero-art" viewbox="0 0 390 300"><circle cx="270" cy="140" fill="#dce9fa" r="140"></circle><rect fill="white" height="200" rx="25" width="310" x="28" y="62"></rect><rect fill="#245ea8" height="170" rx="15" width="280" x="43" y="77"></rect><circle cx="183" cy="161" fill="white" r="43"></circle><path d="M174 137V185L206 161Z" fill="#245ea8"></path><path d="M57 15L17 83H97Z" fill="#f4bd69" stroke="#15365d" stroke-width="4"></path><path d="M294 23V57M277 40H311" stroke="#245ea8" stroke-linecap="round" stroke-width="9"></path><circle cx="340" cy="267" fill="#f4bd69" r="17"></circle></svg></div></header>
 <main class="wrap"><section class="intro study-intro">
 <details class="guide intro-section" id="learning-log-guide"><summary>学習ログ出力・保存</summary><div id="learning-log-content"></div></details>
@@ -3231,5 +3230,4 @@ toggle.addEventListener('change',()=>{apply(toggle.checked);try{localStorage.set
 window.addEventListener('storage',event=>{if(event.key===key||event.key===null)apply(event.key===null||event.newValue!=='false');});
 })();
 </script>
-<script src="legacy-photo-cleanup.js"></script>
 </body></html>
