@@ -49,8 +49,6 @@ const latestRow=pointReport.split('<tr class="latest-results">')[1].split('</tr>
 assert.equal(vm.runInContext('Object.keys(PARENT_CATALOG.groups).length',context),20);
 console.log('PASS: section boundaries, latest result across dates, source point classifications, point summary');
 autoContext.localStorage.setItem=(k,v)=>stored.set(k,v);
-autoElements.get('share-name').value='家庭の記録';autoElements.get('save-share-name').onclick();assert.equal(stored.get('shinen-parent-share-filename-v1'),'家庭の記録.json');
-autoElements.get('share-name').value='../invalid';autoElements.get('save-share-name').onclick();assert.equal(stored.get('shinen-parent-share-filename-v1'),'家庭の記録.json');
 const study=require('./page-source.cjs')('math-study-ses.html');
 const exportFunction=study.slice(study.indexOf('function exportLog('),study.indexOf("panel.querySelectorAll('button').forEach"));let downloaded;
 const shareContext={events:[{id:'test',time:'2026-10-27T01:00:00Z',unit:'6u-6',event:'rating',value:'◯'}],names:{},transferSnapshot:()=>({stores:{},watched:{}}),Blob,URL:{createObjectURL(blob){downloaded={blob};return 'blob:test'},revokeObjectURL(){}},document:{body:{append(a){}},createElement(){return {click(){downloaded.filename=this.download},remove(){}}}},setTimeout(){}};
@@ -142,3 +140,9 @@ for(const text of ['学習日数','学習時間数','学習問題数','評価'])
 assert.ok(periodSummary.includes('<small>1 / 2</small>'));assert.ok(periodSummary.includes('<strong>50%</strong>'));
 assert.ok(!periodSummary.includes('問題ごとの最終結果'));assert.ok(!periodSummary.includes('全記録を見る'));assert.ok(!periodSummary.includes('<details>'));
 console.log('PASS: period summary matches unit metrics, rating fraction, no per-problem results or full-history table');
+
+assert.ok(!autoElements.get('reports').innerHTML.includes('<p>'+vm.runInContext('selectedDate',autoContext)+'</p>'));
+assert.ok(!fs.readFileSync(require('node:path').join(__dirname,'../math-parent.html'),'utf8').includes('share-name'));
+
+assert.ok(!html.includes('id="grade"'));
+assert.ok(!scripts[2].includes("$('grade')"));

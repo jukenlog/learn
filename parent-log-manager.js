@@ -19,9 +19,9 @@ function tapRange(selected,ids,index,start){
  if(start===null){selected.add(ids[index]);return index;}
  selectRange(selected,ids,index,start,true);return null;
 }
-function saveName(file,count,storage){
- let name=(count===1||file.local?storage.getItem('shinen-parent-share-filename-v1')||'算数学習記録.json':file.name||'算数学習記録.json').trim();
- if(!name||/[\\/:*?"<>|\x00-\x1f]/.test(name)||name.length>105)throw Error('保護者ページでファイル名を設定し直してください。');
+function saveName(file,count){
+ let name=(count===1||file.local?'算数学習記録.json':file.name||'算数学習記録.json').trim();
+ if(!name||/[\\/:*?"<>|\x00-\x1f]/.test(name)||name.length>105)throw Error('読み込んだファイル名を確認してください。');
  if(!/\.json$/i.test(name))name+='.json';return name;
 }
 if(typeof module==='object'&&module.exports){module.exports={remove,selectRange,tapRange,saveName};return;}
@@ -53,7 +53,7 @@ section.addEventListener('click',event=>{
  if(button.id==='log-range'){rangeMode=!rangeMode;rangeStart=null;anchor=null;updateCount();}
  if(button.id==='log-select'||button.id==='log-unselect'){selected.clear();anchor=null;rangeStart=null;if(button.id==='log-select')visible.forEach(row=>selected.add(row.dataset.logId));updateCount();}
  if(button.id==='log-delete'&&selected.size){const count=selected.size;if(!window.confirm(count+'件のログを削除します。元に戻せません。必要な場合は先にJSONで保存してください。'))return;try{files=remove(files,selected,localStorage);render();$('log-status').textContent=count+'件を削除しました。'+(files.some(f=>f.local)?'ブラウザの記録に反映しました。':'次回の読み込み用データにも反映しました。元ファイルを更新するにはJSONで保存してください。');$('log-unselect').focus();}catch(error){$('log-status').textContent='削除を保存できませんでした。'+error.message;}}
- if(button.dataset.exportIndex!==undefined){try{const file=files[Number(button.dataset.exportIndex)],filename=saveName(file,files.length,localStorage);const url=URL.createObjectURL(new Blob([JSON.stringify(file.data,null,2)],{type:'application/json'})),a=document.createElement('a');a.href=url;a.download=filename;document.body.append(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),60000);$('log-status').textContent=filename+' の保存を開始しました。保存確認が表示された場合は操作してください。';}catch(error){$('log-status').textContent='書き出せませんでした。'+error.message;}}
+ if(button.dataset.exportIndex!==undefined){try{const file=files[Number(button.dataset.exportIndex)],filename=saveName(file,files.length);const url=URL.createObjectURL(new Blob([JSON.stringify(file.data,null,2)],{type:'application/json'})),a=document.createElement('a');a.href=url;a.download=filename;document.body.append(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),60000);$('log-status').textContent=filename+' の保存を開始しました。保存確認が表示された場合は操作してください。';}catch(error){$('log-status').textContent='書き出せませんでした。'+error.message;}}
 });
 const originalRender=render;render=function(){originalRender();refresh();};refresh();
 })(globalThis);

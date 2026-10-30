@@ -34,12 +34,13 @@ selected.clear();anchor=null;anchor=selectRange(selected,ids,3,anchor,true);asse
 console.log('PASS: individual toggle, additive selection, forward/reverse Shift range, no-anchor Shift');
 const {saveName}=require('../parent-log-manager.js');
 const settings=store({'shinen-parent-share-filename-v1':'家庭の記録.json'});
-assert.equal(saveName({local:true},1,settings),'家庭の記録.json');
-assert.equal(saveName({name:'取込.json'},1,settings),'家庭の記録.json');
+assert.equal(saveName({local:true},1,settings),'算数学習記録.json');
+assert.equal(saveName({name:'取込.json'},1,settings),'算数学習記録.json');
 assert.equal(saveName({name:'取込.json'},2,settings),'取込.json');
 assert.equal(saveName({},1,store({})),'算数学習記録.json');
-assert.equal(saveName({},1,store({'shinen-parent-share-filename-v1':'算数学習'})),'算数学習.json');
-assert.throws(()=>saveName({},1,store({'shinen-parent-share-filename-v1':'../bad'})));
+assert.equal(saveName({},1,store({'shinen-parent-share-filename-v1':'算数学習'})),'算数学習記録.json');
+assert.equal(saveName({},1,store({'shinen-parent-share-filename-v1':'../bad'})),'算数学習記録.json');
+assert.throws(()=>saveName({name:'../bad'},2));
 console.log('PASS: shared filename, fallback, extension, multiple sources, invalid name');
 const {tapRange}=require('../parent-log-manager.js');
 selected.clear();selected.add('e');let rangeStart=null;
