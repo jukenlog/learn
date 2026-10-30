@@ -18,7 +18,7 @@ failing.setItem=(k,v)=>{if(k===legacy)throw Error('quota');failing.map.set(k,v);
 assert.throws(()=>remove(files,new Set(['delete']),failing),/quota/);assert.deepEqual(failing.map,before);
 const broken=store({[key]:'invalid'});assert.throws(()=>remove(files,new Set(['delete']),broken));assert.equal(broken.getItem(key),'invalid');
 // A learning tab with an old in-memory list must read the deletion before appending.
-const fs=require('node:fs'),vm=require('node:vm'),html=fs.readFileSync(require('node:path').join(__dirname,'../math-study-ses.html'),'utf8');
+const fs=require('node:fs'),vm=require('node:vm'),html=require('./page-source.cjs')('math-study-ses.html');
 const start=html.indexOf('function refreshActivity()'),end=html.indexOf('\n',html.indexOf('window.recordStudyEvent=',start));
 const context={localStorage:storage,window:{addEventListener(){}},status(){},key,events,failed:false,Date,Math,Intl};vm.createContext(context);vm.runInContext(html.slice(start,end),context);context.window.recordStudyEvent('video_start',{unit:'6u-6'});
 assert.ok(!JSON.parse(storage.getItem(key)).some(e=>e.id==='delete'));assert.equal(JSON.parse(storage.getItem(key)).length,3);

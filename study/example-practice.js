@@ -1,0 +1,1 @@
+(()=>{const prepare=window.prepareAnswerReview;window.prepareAnswerReview=(dialog,trigger)=>{prepare?.(dialog,trigger);const label=trigger?.closest('.study-problem-row')?.dataset.studyLabel;if(label?.includes('・類題'))dialog.querySelector('h3').textContent=label.split('・').slice(1).join('・')}})();

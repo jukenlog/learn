@@ -1,5 +1,5 @@
 const fs=require('node:fs'),vm=require('node:vm'),assert=require('node:assert/strict');
-const html=fs.readFileSync(require('node:path').join(__dirname,'../math-study-ses.html'),'utf8');
+const html=require('./page-source.cjs')('math-study-ses.html');
 const script=html.match(/<script data-example-understanding>([\s\S]*?)<\/script>/)[1];
 const start=script.indexOf("button.addEventListener('click',event=>{")+"button.addEventListener('click',".length;
 const handler=script.slice(start,script.indexOf(');group.append(button)',start));

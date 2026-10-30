@@ -13,7 +13,7 @@ assert.equal(r.sections[0].ratings.length,1);assert.equal(r.nextDate,'2026-10-26
 for(let n=1;n<=20;n++){const selected=build(events,now,{unit:'6u-'+n});assert.ok(selected.sections[1].events.every(e=>e.unit==='6u-'+n));}
 console.log('PASS: selected date, following day, all 20 unit filters, independent week');
 const fs=require('node:fs'),vm=require('node:vm');
-const html=fs.readFileSync(require('node:path').join(__dirname,'../math-parent.html'),'utf8');
+const html=require('./page-source.cjs')('math-parent.html');
 const scripts=[...html.matchAll(/<script>([\s\S]*?)<\/script>/g)].map(m=>m[1]);
 const elements=new Map();
 const context={console,document:{getElementById(id){if(!elements.has(id))elements.set(id,{value:id==='grade'?'all':'',addEventListener(type,fn){this.listeners??={};this.listeners[type]=fn;},focus(){},innerHTML:'',textContent:''});return elements.get(id);}}};context.window=context;vm.createContext(context);
@@ -51,7 +51,7 @@ console.log('PASS: section boundaries, latest result across dates, source point 
 autoContext.localStorage.setItem=(k,v)=>stored.set(k,v);
 autoElements.get('share-name').value='家庭の記録';autoElements.get('save-share-name').onclick();assert.equal(stored.get('shinen-parent-share-filename-v1'),'家庭の記録.json');
 autoElements.get('share-name').value='../invalid';autoElements.get('save-share-name').onclick();assert.equal(stored.get('shinen-parent-share-filename-v1'),'家庭の記録.json');
-const study=fs.readFileSync(require('node:path').join(__dirname,'../math-study-ses.html'),'utf8');
+const study=require('./page-source.cjs')('math-study-ses.html');
 const exportFunction=study.slice(study.indexOf('function exportLog('),study.indexOf("panel.querySelectorAll('button').forEach"));let downloaded;
 const shareContext={events:[{id:'test',time:'2026-10-27T01:00:00Z',unit:'6u-6',event:'rating',value:'◯'}],names:{},transferSnapshot:()=>({stores:{},watched:{}}),Blob,URL:{createObjectURL(blob){downloaded={blob};return 'blob:test'},revokeObjectURL(){}},document:{body:{append(a){}},createElement(){return {click(){downloaded.filename=this.download},remove(){}}}},setTimeout(){}};
 vm.createContext(shareContext);vm.runInContext(exportFunction+";exportLog('json','','家庭の記録.json');",shareContext);assert.equal(downloaded.filename,'家庭の記録.json');

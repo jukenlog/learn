@@ -1,5 +1,5 @@
 const fs=require('node:fs'),vm=require('node:vm'),assert=require('node:assert/strict');
-const html=fs.readFileSync(require('node:path').join(__dirname,'../math-study-ses.html'),'utf8');
+const html=require('./page-source.cjs')('math-study-ses.html');
 const stop=html.match(/function stop\(state\)\{[^\n]+/)[0];
 const start=html.match(/state.start=clip=>\{[^\n]+/)[0];
 const logs=[],state={video:{},sessionStarted:false,player:{hidden:true},frame:{removeAttribute(){}},external:{},close:{},play:{},fullscreen:{}};
