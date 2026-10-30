@@ -38,19 +38,19 @@ function render(){
   if(i===2){
    const chartRows=[];
    const categories=[['example','例題',/^(例題|類題)/],['basic','基本＋基礎',/^(基本問題|基礎演習)/],['practice','練習＋標準',/^(練習問題|標準演習)/],['challenge','チャレンジ',/^チャレンジ/]];
-   const unitRows=Array.from({length:20},(_,n)=>{
+   Array.from({length:20},(_,n)=>{
     const unit='6u-'+(n+1),summary=ParentReport.build(allEvents,now,{unit}).sections[1];
-    const count=pattern=>{const c=ParentReport.counts(summary.results,pattern);return c.passed+' / '+c.solved;};
+    const evaluation=ParentReport.counts(summary.results);
+    const percent=evaluation.solved?(evaluation.passed/evaluation.solved*100).toFixed(1).replace(/\.0$/,'')+'%':'—';
     const problemNames=Object.entries(PARENT_CATALOG.problems).filter(([id])=>id.startsWith(unit+':')).map(([,name])=>name);
     const progress=ParentReport.progress(summary.results,problemNames);
     const categoryProgress=categories.map(([kind,name,pattern])=>({kind,name,...ParentReport.progress(summary.results,problemNames.filter(label=>pattern.test(label)))}));
     const description=categoryProgress.map(c=>c.name+'：◯ '+c.passed+'問・取り組み済み（◯以外） '+c.attempted+'問・未着手 '+c.untouched+'問').join(' ／ ')+'／全'+progress.total+'問';
     const bars=categoryProgress.map(c=>{const statuses=[['passed','◯',c.passed],['attempted','取り組み済み（◯以外）',c.attempted],['untouched','未着手',c.untouched]];return statuses.map(([state,label,value])=>{const percent=progress.total?value/progress.total*100:0;return value?'<span class="category-'+c.kind+' state-'+state+'" style="width:'+percent+'%" title="'+esc(c.name+'・'+label+' '+value+'問（'+percent.toFixed(1)+'%）')+'">'+(percent>=8?value:'')+'</span>':'';}).join('');}).join('');
-    chartRows.push('<div class="unit-progress-row"><div class="unit-progress-label">'+esc(title(unit))+'</div><div><div class="unit-progress-bar" role="img" aria-label="'+esc(description)+'">'+bars+'</div><div class="unit-progress-counts">'+categoryProgress.map(c=>esc(c.name+' '+c.passed+'／'+(c.passed+c.attempted)+'／'+c.total)).join('　')+'</div></div></div>');
-    return [esc(title(unit)),summary.days+'日',count(),count(/^(例題|類題)/),count(/^(基本問題|基礎演習)/),count(/^(練習問題|標準演習)/),count(/^チャレンジ/)];
+    chartRows.push('<div class="unit-progress-row" data-unit-summary="'+unit+'"><div class="unit-progress-label">'+esc(title(unit))+'</div><div class="unit-progress-metrics"><div class="unit-progress-days"><span>学習日数</span><strong>'+summary.days+'日</strong></div><div class="unit-progress-chart"><div class="unit-progress-bar" role="img" aria-label="'+esc(description)+'">'+bars+'</div><div class="unit-progress-counts">'+categoryProgress.map(c=>esc(c.name+' '+c.passed+'／'+(c.passed+c.attempted)+'／'+c.total)).join('　')+'</div></div><div class="unit-progress-evaluation"><span>評価</span><strong>'+percent+'</strong><small>◯ '+evaluation.passed+' / '+evaluation.solved+'問</small></div></div></div>');
    });
    const chart='<h3>全問題に対する取り組み状況</h3><p class="note">全問題数＝100%。色は問題の種類、濃さは学習状況を表します。濃色＝◯（◎を含む）、中間色＝取り組み済み（◯以外）、淡色＝未着手。評価取消は未着手に含みます。例題・類題は1問として数えます。</p><div class="progress-legend">'+categories.map(([kind,name])=>'<span><i class="category-'+kind+' state-passed"></i>'+name+'</span>').join('')+'</div><p class="note">棒の下の数字：◯／取り組み済み合計／全問題数</p><div class="unit-progress-axis"><span>0%</span><span>50%</span><span>100%</span></div>'+chartRows.join('');
-   return '<section class="panel report-section" id="week"><div class="eyebrow">03 / STUDY REPORT</div><h2>単元学習一覧</h2><p>６年上・第1〜20回</p><p class="note">各欄は最新評価の◯（◎・◯）／解いた問題数です。同じ問題は1問として数え、未着手・評価取消は除きます。例題には類題を含みます。学習日数は各単元の記録がある日数です。全20回を表示します。</p>'+chart+'<h3>単元別の集計</h3><div class="scroll unit-overview" tabindex="0" role="region" aria-label="全単元の成績一覧">'+table(['単元','学習日数','学習問題数','例題','基本問題・基礎演習','練習問題・標準演習','チャレンジ'],unitRows)+'</div></section>';
+   return '<section class="panel report-section" id="week"><div class="eyebrow">03 / STUDY REPORT</div><h2>単元学習一覧</h2><p>６年上・第1〜20回</p><p class="note">評価は最新評価の◯（◎・◯）／解いた問題数の割合です。同じ問題は1問として数え、未着手・評価取消は除きます。例題には類題を含みます。学習日数は各単元の記録がある日数です。全20回を表示します。</p>'+chart+'</section>';
   }
   const unitProblemNames=Object.entries(PARENT_CATALOG.problems).filter(([id])=>id.startsWith(selectedUnit+':')).map(([,name])=>name);
   const unitProgress=ParentReport.progress(r.results,unitProblemNames),solved=unitProgress.passed+unitProgress.attempted;

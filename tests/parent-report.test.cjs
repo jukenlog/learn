@@ -76,8 +76,14 @@ const updated=autoElements.get('reports').innerHTML;assert.ok(updated.indexOf('i
 console.log('PASS: unit counts, cancelled grades, remembered unit, date control order');
 vm.runInContext(`files=[{data:{version:1,events:[{id:'overview1',time:'2026-10-25T01:00:00Z',unit:'6u-6',event:'rating',label:'基本問題1',value:'×'},{id:'overview2',time:'2026-10-26T01:00:00Z',unit:'6u-6',event:'rating',label:'基本問題1',value:'◯'},{id:'overview3',time:'2026-10-26T02:00:00Z',unit:'6u-6',event:'rating',label:'基礎演習1',value:'△'}]}}];render();`,context);
 const overview=elements.get('reports').innerHTML.split('id="week"')[1].split('id="all"')[0];
-const overviewRows=[...overview.matchAll(/<tbody>([\s\S]*?)<\/tbody>/g)][0][1].match(/<tr>[\s\S]*?<\/tr>/g);
-assert.equal(overviewRows.length,20);assert.ok(overviewRows[5].includes('<td>2日</td><td>1 / 2</td><td>0 / 0</td><td>1 / 2</td><td>0 / 0</td><td>0 / 0</td>'));assert.ok(overviewRows[0].includes('0日'));assert.ok(!elements.get('reports').innerHTML.includes('今週の学習'));
+const overviewRows=overview.split('data-unit-summary="').slice(1);
+assert.equal(overviewRows.length,20);
+assert.ok(overviewRows[5].includes('<strong>2日</strong>'));
+assert.ok(overviewRows[5].includes('<strong>50%</strong><small>◯ 1 / 2問</small>'));
+assert.ok(overviewRows[0].includes('<strong>0日</strong>'));
+assert.ok(overviewRows[0].includes('<strong>—</strong><small>◯ 0 / 0問</small>'));
+assert.ok(!overview.includes('単元別の集計'));
+assert.ok(!overview.includes('<table'));
 console.log('PASS: all 20 units, unique learning days, latest per-problem totals and category counts, empty units');
 const {progress}=require('../parent-report.js');
 assert.deepEqual(progress([{label:'例題1',value:'◎'},{label:'基本問題1',value:'×'},{label:'基本問題2',value:''},{label:'不明',value:'◯'}],['例題1','基本問題1','基本問題2','例題1']),{total:3,passed:1,attempted:1,untouched:1});
