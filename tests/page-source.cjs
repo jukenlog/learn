@@ -6,6 +6,7 @@ module.exports = function pageSource(filename) {
   return fs.readFileSync(absolute, 'utf8').replace(
     /<script\b([^>]*?)\s+src="([^"]+)"([^>]*)><\/script>/g,
     (tag, before, src, after) => {
+      src = src.split('?')[0];
       // These two helpers are loaded explicitly by the parent-page test harness.
       if (['parent-report.js', 'parent-log-manager.js'].includes(src)) return tag;
       return `<script${before}${after}>${fs.readFileSync(path.resolve(path.dirname(absolute), src), 'utf8')}</script>`;

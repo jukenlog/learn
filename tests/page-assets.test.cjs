@@ -8,12 +8,12 @@ for (const name of ['math-study-ses.html', 'math-parent.html']) {
   const loaded = [];
   for (const match of html.matchAll(/<script\b([^>]*)>([\s\S]*?)<\/script>/g)) {
     const src = match[1].match(/src="([^"]+)"/);
-    const source = src ? fs.readFileSync(path.join(root, src[1]), 'utf8') : match[2];
+    const source = src ? fs.readFileSync(path.join(root, src[1].split('?')[0]), 'utf8') : match[2];
     new vm.Script(source, {filename: src ? src[1] : name});
     if (src) loaded.push(src[1]);
   }
   for (const match of html.matchAll(/<link\b[^>]*rel="stylesheet"[^>]*href="([^"]+)"/g)) {
-    assert.ok(fs.existsSync(path.join(root, match[1])), match[1]);
+    assert.ok(fs.existsSync(path.join(root, match[1].split('?')[0])), match[1]);
   }
   if (name === 'math-study-ses.html') {
     assert.ok(loaded.indexOf('study-grade6.js') < loaded.indexOf('study-data/grade6-5.js'));
