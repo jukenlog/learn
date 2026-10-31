@@ -238,4 +238,11 @@ html.js .sidebar .toc-grade-tabs.js-only{display:flex;flex-wrap:nowrap;gap:14px;
 .example-understanding{margin-left:auto;flex-shrink:0}
 .example-understanding-save{font-size:13px;color:#a23b30}
 </style><script data-example-understanding src="study/example-understanding.js"></script><script data-restart-visibility src="study/restart-visibility.js"></script>
-</body></html>
+<style>
+.floating-study-start{position:fixed;left:calc(12px + env(safe-area-inset-left,0px));bottom:calc(68px + env(safe-area-inset-bottom,0px));z-index:900;min-height:48px;padding:12px 24px;border:0;border-radius:26px;background:#007f7a;color:#fff;box-shadow:0 3px 12px #142d4033;font:700 16px/1.4 system-ui;touch-action:manipulation;cursor:pointer}
+.floating-study-start:focus-visible{outline:3px solid #e8ab43;outline-offset:3px}
+.floating-study-start:disabled{background:#526e6c;cursor:default}
+.study-start-status{position:fixed;left:calc(20px + env(safe-area-inset-left,0px));bottom:calc(122px + env(safe-area-inset-bottom,0px));z-index:900;font:12px system-ui;color:#24514e;background:#f2f6f7;border-radius:8px;padding:2px 6px;pointer-events:none}
+.study-start-status:empty{display:none}
+@media print{.floating-study-start,.study-start-status{display:none}}
+</style><script src="study/study-start.js"></script></body></html>
