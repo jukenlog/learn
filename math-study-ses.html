@@ -239,10 +239,13 @@ html.js .sidebar .toc-grade-tabs.js-only{display:flex;flex-wrap:nowrap;gap:14px;
 .example-understanding-save{font-size:13px;color:#a23b30}
 </style><script data-example-understanding src="study/example-understanding.js"></script><script data-restart-visibility src="study/restart-visibility.js"></script>
 <style>
-.floating-study-start{position:fixed;left:calc(12px + env(safe-area-inset-left,0px));top:calc(12px + env(safe-area-inset-top,0px));z-index:900;min-height:58px;padding:15px 30px;border:1px solid #ffffff80;border-radius:32px;background:#007f7abf;color:#fff;box-shadow:0 3px 12px #142d4026;font:700 20px/1.4 system-ui;touch-action:manipulation;cursor:pointer}
+.floating-study-start{position:fixed;left:calc(12px + env(safe-area-inset-left,0px));top:calc(12px + env(safe-area-inset-top,0px));z-index:900;width:min(300px,calc(100vw - 24px - env(safe-area-inset-left,0px) - env(safe-area-inset-right,0px)));min-height:100px;padding:24px 28px;border:1px solid #ffffffb3;border-radius:38px;background:linear-gradient(135deg,#ffffffc9,#bcece7a6 45%,#68bfb8a6);color:#124d49;box-shadow:inset 0 2px 3px #ffffffcc,inset 0 -2px 8px #ffffff66,0 8px 28px #123f4026;backdrop-filter:blur(18px) saturate(160%);-webkit-backdrop-filter:blur(18px) saturate(160%);font:700 26px/1.4 system-ui;touch-action:manipulation;cursor:pointer;transition:box-shadow .2s,transform .2s}
+.floating-study-start[hidden]{display:none}
+.floating-study-start:hover{box-shadow:inset 0 2px 3px #fff,0 10px 32px #123f4033}
+.floating-study-start:active{transform:scale(.97)}
 .floating-study-start:focus-visible{outline:3px solid #e8ab43;outline-offset:3px}
-.floating-study-start:disabled{background:#526e6cbf;cursor:default}
-.study-start-status{position:fixed;left:calc(20px + env(safe-area-inset-left,0px));top:calc(80px + env(safe-area-inset-top,0px));z-index:900;font:12px system-ui;color:#24514e;background:#f2f6f7d9;border-radius:8px;padding:2px 6px;pointer-events:none}
+.study-start-status{position:fixed;left:calc(20px + env(safe-area-inset-left,0px));top:calc(20px + env(safe-area-inset-top,0px));z-index:900;font:14px system-ui;color:#24514e;background:#f2f6f7e6;border-radius:12px;padding:8px 12px;pointer-events:none}
 .study-start-status:empty{display:none}
+@media(prefers-reduced-motion:reduce){.floating-study-start{transition:none}}
 @media print{.floating-study-start,.study-start-status{display:none}}
-</style><script src="study/study-start.js"></script></body></html>
+</style><script src="study/study-start.js?v=76c8548cace8"></script></body></html>

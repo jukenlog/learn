@@ -3,7 +3,7 @@
   const button = document.createElement('button');
   button.type = 'button';
   button.className = 'floating-study-start';
-  button.textContent = '勉強開始';
+  button.textContent = '勉強をはじめる';
   const status = document.createElement('span');
   status.className = 'study-start-status';
   status.setAttribute('role', 'status');
@@ -22,15 +22,35 @@
     }) || units.find(unit => '#' + unit.id === location.hash) || units[0];
   }
 
+  const cooldownKey = 'shinen-study-start-hidden-until-v1';
+  const cooldown = 2 * 60 * 60 * 1000;
+  let hiddenUntil = 0, timer;
+  function syncVisibility() {
+    try { hiddenUntil = Number(localStorage.getItem(cooldownKey)) || 0; } catch {}
+    if (!Number.isFinite(hiddenUntil)) hiddenUntil = 0;
+    clearTimeout(timer);
+    const remaining = hiddenUntil - Date.now();
+    button.hidden = remaining > 0;
+    button.disabled = button.hidden;
+    if (remaining > 0) timer = setTimeout(syncVisibility, Math.min(remaining, cooldown));
+  }
+  window.addEventListener('storage', event => {
+    if (event.key === cooldownKey || event.key === null) syncVisibility();
+  });
+  window.addEventListener('focus', syncVisibility);
+  document.addEventListener('visibilitychange', syncVisibility);
+  syncVisibility();
+
   button.addEventListener('click', () => {
+    syncVisibility();
     if (button.disabled) return;
     const unit = currentUnit();
     if (!unit || typeof window.recordStudyEvent !== 'function') return;
     window.recordStudyEvent('study_start', {unit: unit.id, label: '勉強開始'});
-    button.disabled = true;
-    button.textContent = '開始を記録しました';
-    status.textContent = new Date().toLocaleTimeString('ja-JP', {hour: '2-digit', minute: '2-digit'}) + ' 開始';
-    // Prevent an accidental double tap; a later study session can be started again.
-    setTimeout(() => { button.disabled = false; button.textContent = '勉強開始'; }, 3000);
+    hiddenUntil = Date.now() + cooldown;
+    try { localStorage.setItem(cooldownKey, String(hiddenUntil)); } catch {}
+    syncVisibility();
+    status.textContent = '開始を記録しました';
+    setTimeout(() => { status.textContent = ''; }, 3000);
   });
 })();
