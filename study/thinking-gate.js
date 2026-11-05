@@ -12,19 +12,19 @@ function updateRating(key){
  const row=rowFor(key);if(!row)return;
  const group=row.querySelector('.study-ratings'),locked=hinted.has(key)||explained.has(key),explanationUsed=explained.has(key);
  group.dataset.hintLocked=String(locked);
- for(const mark of (explanationUsed?['◎','◯','△']:['◎','◯'])){
+ for(const mark of ['◎','◯']){
   const button=[...group.querySelectorAll('button[data-result]')].find(b=>b.dataset.result===mark);
   if(!button)continue;
   if(locked&&button.getAttribute('aria-pressed')==='true')button.click();
-  button.title=explanationUsed?'解説を見た問題は×以下で記録してください。':locked?'ヒントを見た問題は△以下で記録してください。':'';
+  button.title=explanationUsed?'解説を見た問題は△以下で記録してください。':locked?'ヒントを見た問題は△以下で記録してください。':'';
  }
  const selected=[...group.querySelectorAll('button[data-result]')].find(b=>b.getAttribute('aria-pressed')==='true')?.dataset.result;
- group.querySelector('button[data-result="◯"]').disabled=locked;group.querySelector('button[data-result="△"]').disabled=explanationUsed;
+ group.querySelector('button[data-result="◯"]').disabled=locked;group.querySelector('button[data-result="△"]').disabled=false;
  group.querySelector('button[data-result="◎"]').disabled=locked||!['◯','△','◎'].includes(selected);
  for(const [dialog,state] of active)if(state.key===key){
   for(const b of dialog.querySelectorAll('.answer-review-actions button[data-review-result]')){
    if(b.dataset.reviewResult==='◯')b.disabled=locked;
-   if(b.dataset.reviewResult==='△')b.disabled=explanationUsed;if(b.dataset.reviewResult==='△')b.textContent='△ミスした・ヒントを見て解いた';
+   if(b.dataset.reviewResult==='△')b.disabled=false;if(b.dataset.reviewResult==='△')b.textContent='△ミスした・ヒントや解説を見て解いた';
   }
  }
 }

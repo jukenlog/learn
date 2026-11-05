@@ -1,7 +1,7 @@
 (()=>{'use strict';
 const messages={'◎':'バッチリ！','◯':'解けた！','△':'ミスした','×':'解けなかった','！':'理解できない'};
 const videoMessages={'◯':'わかった！','△':'ちょっと不安','！':'理解できない'};
-function messageFor(group,mark){if(mark==='△'&&!group?.matches('.video-rating'))return 'ミスした・ヒントを見て解いた';return (group?.matches('.video-rating')?videoMessages:messages)[mark]||''}
+function messageFor(group,mark){if(mark==='△'&&!group?.matches('.video-rating'))return 'ミスした・ヒントや解説を見て解いた';return (group?.matches('.video-rating')?videoMessages:messages)[mark]||''}
 const toast=document.createElement('div');toast.className='rating-toast';toast.hidden=true;toast.setAttribute('role','status');toast.setAttribute('aria-live','polite');document.body.append(toast);
 let toastTimer;
 document.addEventListener('click',event=>{
