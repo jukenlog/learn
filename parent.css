@@ -9,3 +9,7 @@
 .unit-progress-evaluation small{font-size:11px;white-space:nowrap;color:#627589}
 .unit-progress-axis{margin-left:320px;margin-right:100px}
 @media(max-width:700px){.unit-progress-row{grid-template-columns:1fr;gap:5px}.unit-progress-metrics{grid-template-columns:52px minmax(0,1fr) 72px;gap:8px}.unit-progress-axis{margin-left:60px;margin-right:80px}.unit-progress-evaluation strong{font-size:16px}}
+
+.unit-grade-picker{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px;width:100%;margin:0 0 16px}
+.unit-grade-picker button{width:100%;min-width:0;min-height:40px;padding:6px 6px;white-space:nowrap}
+.unit-grade-picker button[aria-pressed="true"]{background:#235b72;color:#fff;border-color:#235b72}
