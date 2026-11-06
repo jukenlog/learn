@@ -200,6 +200,7 @@ html.js .sidebar .toc-grade-tabs.js-only{display:flex;flex-wrap:nowrap;gap:14px;
 .study-ratings button[data-result]:disabled,
 .answer-review-actions button[data-review-result]:disabled{opacity:.35;cursor:not-allowed}
 </style>
+<link rel="stylesheet" href="study/tutorial.css?v=20261106">
 </head><body><header class="hero science-hero"><div class="wrap hero-layout"><div class="hero-copy"><div class="eyebrow">中学受験新演習</div><h1>算数学習管理アプリ</h1><p class="hero-grades">問題の答え合わせと結果を入力して学習状況を管理しよう</p></div><svg aria-hidden="true" class="hero-art" viewbox="0 0 390 300"><circle cx="270" cy="140" fill="#dce9fa" r="140"></circle><rect fill="white" height="200" rx="25" width="310" x="28" y="62"></rect><rect fill="#245ea8" height="170" rx="15" width="280" x="43" y="77"></rect><circle cx="183" cy="161" fill="white" r="43"></circle><path d="M174 137V185L206 161Z" fill="#245ea8"></path><path d="M57 15L17 83H97Z" fill="#f4bd69" stroke="#15365d" stroke-width="4"></path><path d="M294 23V57M277 40H311" stroke="#245ea8" stroke-linecap="round" stroke-width="9"></path><circle cx="340" cy="267" fill="#f4bd69" r="17"></circle></svg></div></header>
 <main class="wrap"><section class="intro study-intro">
 <details class="guide intro-section" id="learning-log-guide"><summary>学習ログ出力・保存</summary><div id="learning-log-content"></div></details>
@@ -243,13 +244,13 @@ html.js .sidebar .toc-grade-tabs.js-only{display:flex;flex-wrap:nowrap;gap:14px;
 .example-understanding-save{font-size:13px;color:#a23b30}
 </style><script data-example-understanding src="study/example-understanding.js"></script><script data-restart-visibility src="study/restart-visibility.js"></script>
 <style>
-.floating-study-start{position:fixed;left:calc(12px + env(safe-area-inset-left,0px));top:calc(12px + env(safe-area-inset-top,0px));z-index:900;width:min(300px,calc(100vw - 24px - env(safe-area-inset-left,0px) - env(safe-area-inset-right,0px)));min-height:10px;padding:24px 28px;border:1px solid #ffffffa6;border-radius:30px;background:linear-gradient(145deg,#ffffff80 0%,#ffffff26 46%,#ffffff52 100%);color:#173d39;box-shadow:inset 0 2px 2px #fffffff2,inset 1px 0 1px #ffffff99,inset 0 -1px 2px #ffffffb3,0 8px 28px #183a4326,0 1px 3px #183a431a;backdrop-filter:blur(24px) saturate(180%);-webkit-backdrop-filter:blur(24px) saturate(180%);text-shadow:0 1px 1px #ffffffb3;font:700 26px/1.4 system-ui;touch-action:manipulation;cursor:pointer;transition:box-shadow .2s,transform .2s}
+.floating-study-start{position:fixed;left:calc(12px + env(safe-area-inset-left,0px));top:calc(12px + env(safe-area-inset-top,0px));z-index:900;width:min(300px,calc(100vw - 24px - env(safe-area-inset-left,0px) - env(safe-area-inset-right,0px)));min-height:10px;padding:24px 28px;border:1px solid #83b5b4;border-radius:30px;background:linear-gradient(145deg,#e5f4f2cc 0%,#bcdeddb8 46%,#d5ecebcc 80%);color:#215655;box-shadow:inset 0 2px 2px #fffffff2,inset 1px 0 1px #ffffff99,inset 0 -1px 2px #ffffffb3,0 8px 28px #183a4326,0 1px 3px #183a431a;backdrop-filter:blur(24px) saturate(180%);-webkit-backdrop-filter:blur(24px) saturate(180%);text-shadow:0 1px 1px #ffffffb3;font:700 26px/1.4 system-ui;touch-action:manipulation;cursor:pointer;transition:box-shadow .2s,transform .2s}
 .floating-study-start[hidden]{display:none}
-.floating-study-start:hover{background:linear-gradient(145deg,#ffffff99,#ffffff38 46%,#ffffff66);box-shadow:inset 0 2px 2px #fff,inset 0 -1px 2px #ffffffcc,0 10px 32px #183a4330}
+.floating-study-start:hover{background:linear-gradient(145deg,#dcf0eddf,#abd5d3cc 46%,#c9e6e3df);box-shadow:inset 0 2px 2px #fff,inset 0 -1px 2px #ffffffcc,0 10px 32px #183a4330}
 .floating-study-start:active{transform:scale(.97)}
 .floating-study-start:focus-visible{outline:3px solid #e8ab43;outline-offset:3px}
 .study-start-status{position:fixed;left:calc(20px + env(safe-area-inset-left,0px));top:calc(20px + env(safe-area-inset-top,0px));z-index:900;font:14px system-ui;color:#24514e;background:#f2f6f7e6;border-radius:12px;padding:8px 12px;pointer-events:none}
 .study-start-status:empty{display:none}
 @media(prefers-reduced-motion:reduce){.floating-study-start{transition:none}}
 @media print{.floating-study-start,.study-start-status{display:none}}
-</style><script src="study/study-start.js?v=76c8548cace8"></script></body></html>
+</style><script src="study/study-start.js?v=76c8548cace8"></script><script src="study/tutorial.js?v=20261106-start"></script></body></html>

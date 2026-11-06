@@ -31,7 +31,7 @@ function render(){
  const now=new Date(),base=ParentStats.aggregate(files),report=ParentReport.build(base.events,now,{date:selectedDate,unit:selectedUnit,period:selectedPeriod,periodDate});
  const allEvents=ParentStats.aggregate(files).events;
  report.sections[1]=ParentReport.build(allEvents,now,{unit:selectedUnit}).sections[1];
- $('files').textContent=files.map(f=>f.name).join(' ／ ');
+ $('files').textContent=files.length?(files.every(f=>f.local)?'表示中：このブラウザの記録':'表示中：JSONファイル（'+files.map(f=>f.name).join(' ／ ')+'）'):'表示中の記録はありません。';
  const headings=['今日の学習','単元の学習','単元学習一覧','期間別の学習'];
  const subtitles=[report.selectedDate,title(selectedUnit),report.monday+' 〜 '+report.today,ParentReport.periodRange(selectedPeriod,periodDate).label+'の学習ログ'];
  $('reports').innerHTML=report.sections.map((r,i)=>{
