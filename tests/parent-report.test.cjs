@@ -31,8 +31,8 @@ const stored=new Map([['shinen-math-all-restart-activity-v1',JSON.stringify(even
 const autoElements=new Map();
 const autoContext={console,localStorage:{setItem(k,v){stored.set(k,v)},removeItem(k){stored.delete(k)},get length(){return stored.size},key(i){return [...stored.keys()][i]},getItem(k){return stored.get(k)??null}},document:{getElementById(id){if(!autoElements.has(id))autoElements.set(id,{value:id==='grade'?'all':'',addEventListener(type,fn){this.listeners??={};this.listeners[type]=fn;},focus(){},innerHTML:'',textContent:''});return autoElements.get(id)}}};autoContext.window=autoContext;vm.createContext(autoContext);
 vm.runInContext(scripts[0],autoContext);vm.runInContext(scripts[1],autoContext);vm.runInContext(fs.readFileSync(require('node:path').join(__dirname,'../parent-report.js'),'utf8'),autoContext);vm.runInContext(scripts[2],autoContext);
-assert.equal(autoElements.get('files').textContent,'このブラウザの記録');assert.equal(autoElements.get('status').textContent,'このブラウザの記録を読み込みました。');
-autoElements.get('local').onclick();assert.equal(autoElements.get('files').textContent,'このブラウザの記録');
+assert.equal(autoElements.get('files').textContent,'表示中：このブラウザの記録');assert.equal(autoElements.get('status').textContent,'このブラウザの記録を読み込みました。');
+autoElements.get('local').onclick();assert.equal(autoElements.get('files').textContent,'表示中：このブラウザの記録');
 console.log('PASS: browser records load on startup; refresh does not duplicate source');
 const {duration,matrix,shift}=require('../parent-report.js');
 assert.equal(duration([]),null);assert.equal(duration(events.slice(0,1)).count,1);
@@ -46,7 +46,7 @@ vm.runInContext(`files=[{data:{version:1,events:[{id:'point-a',time:'2026-10-25T
 const pointReport=elements.get('reports').innerHTML.split('id="latest"')[1].split('id="week"')[0];
 assert.ok(pointReport.includes('class="group-start"'));assert.ok(pointReport.includes('最新結果'));assert.ok(pointReport.includes('直角三角形内の正方形'));assert.ok(pointReport.includes('ポイント別の成績'));assert.ok(pointReport.includes('1 / '));
 const latestRow=pointReport.split('<tr class="latest-results">')[1].split('</tr>')[0];assert.ok(latestRow.includes('◯'));assert.ok(!latestRow.includes('>×<'));
-assert.equal(vm.runInContext('Object.keys(PARENT_CATALOG.groups).length',context),20);
+assert.equal(vm.runInContext('Object.keys(PARENT_CATALOG.groups).length',context),58);
 console.log('PASS: section boundaries, latest result across dates, source point classifications, point summary');
 autoContext.localStorage.setItem=(k,v)=>stored.set(k,v);
 const study=require('./page-source.cjs')('math-study-ses.html');
@@ -56,14 +56,14 @@ vm.createContext(shareContext);vm.runInContext(exportFunction+";exportLog('json'
 downloaded.blob.text().then(text=>{const data=JSON.parse(text);assert.equal(data.version,2);assert.equal(data.events.length,1);assert.equal(data.unit,null);assert.deepEqual(data.snapshot,{stores:{},watched:{}});console.log('PASS: configured filename, invalid path rejection, named download and v2 transfer payload');});
 const sourceKey='shinen-parent-last-source-v1';
 stored.set(sourceKey,JSON.stringify({type:'json',savedAt:'2026-10-27T01:00:00Z',files:[{name:'前回.json',data:{version:1,events}}]}));
-vm.runInContext('restoreSource()',autoContext);assert.equal(autoElements.get('files').textContent,'前回.json');assert.ok(autoElements.get('status').textContent.includes('自動反映されません'));
-autoElements.get('local').onclick();assert.equal(autoElements.get('files').textContent,'このブラウザの記録');assert.equal(JSON.parse(stored.get(sourceKey)).type,'browser');
-autoElements.get('clear').onclick();assert.equal(autoElements.get('files').textContent,'');assert.equal(JSON.parse(stored.get(sourceKey)).type,'empty');vm.runInContext('restoreSource()',autoContext);assert.equal(autoElements.get('files').textContent,'');
+vm.runInContext('restoreSource()',autoContext);assert.equal(autoElements.get('files').textContent,'表示中：JSONファイル（前回.json）');assert.ok(autoElements.get('status').textContent.includes('自動反映されません'));
+autoElements.get('local').onclick();assert.equal(autoElements.get('files').textContent,'表示中：このブラウザの記録');assert.equal(JSON.parse(stored.get(sourceKey)).type,'browser');
+autoElements.get('clear').onclick();assert.equal(autoElements.get('files').textContent,'表示中の記録はありません。');assert.equal(JSON.parse(stored.get(sourceKey)).type,'empty');vm.runInContext('restoreSource()',autoContext);assert.equal(autoElements.get('files').textContent,'表示中の記録はありません。');
 stored.set(sourceKey,'invalid-json');vm.runInContext('restoreSource()',autoContext);assert.ok(autoElements.get('status').textContent.includes('復元できません'));
 console.log('PASS: JSON restore, explicit source switch, clearing persistence, corrupt cache');
 
 autoElements.get('upload').files=[{name:'更新.json',size:100,text:async()=>JSON.stringify({version:1,events})}];
-autoElements.get('upload').listeners.change().then(()=>{assert.equal(JSON.parse(stored.get(sourceKey)).type,'json');assert.equal(autoElements.get('files').textContent,'更新.json');vm.runInContext('files=[];restoreSource()',autoContext);assert.equal(autoElements.get('files').textContent,'更新.json');console.log('PASS: file import persists and restores actual selected data');}).catch(e=>{console.error(e);process.exitCode=1;});
+autoElements.get('upload').listeners.change().then(()=>{assert.equal(JSON.parse(stored.get(sourceKey)).type,'json');assert.equal(autoElements.get('files').textContent,'表示中：JSONファイル（更新.json）');vm.runInContext('files=[];restoreSource()',autoContext);assert.equal(autoElements.get('files').textContent,'表示中：JSONファイル（更新.json）');console.log('PASS: file import persists and restores actual selected data');}).catch(e=>{console.error(e);process.exitCode=1;});
 
 const {counts}=require('../parent-report.js');
 const countResults=[{label:'基本問題1',value:'◯'},{label:'基礎演習1',value:'×'},{label:'練習問題1',value:'◎'},{label:'標準演習1',value:'△'},{label:'例題1',value:'○'},{label:'基本問題2',value:''}];
@@ -152,3 +152,20 @@ assert.ok(!fs.readFileSync(require('node:path').join(__dirname,'../math-parent.h
 
 assert.ok(!html.includes('id="grade"'));
 assert.ok(!scripts[2].includes("$('grade')"));
+// Grade 5 units include the same problem inventory and point groups as the learning page.
+for(const [grade,total] of [['5u',20],['5l',18]]){
+ vm.runInContext(`selectedUnit='${grade}-1';files=[{data:{version:1,events:[{id:'grade5',time:'2026-11-06T01:00:00Z',unit:'${grade}-1',event:'rating',label:'基本問題1',value:'◯'}]}}];render()`,context);
+ const section=elements.get('reports').innerHTML.split('id="latest"')[1].split('id="week"')[0];
+ assert.equal((section.match(/data-unit="/g)||[]).length,total);
+ assert.ok(section.includes('基本問題1'));assert.ok(section.includes('学習ポイント別の成績'));
+ assert.ok(section.includes('100%'));assert.ok(section.includes('1 / 1'));
+ assert.ok(vm.runInContext(`Object.keys(PARENT_CATALOG.problems).filter(k=>k.startsWith('${grade}-1:')).length`,context)>20);
+ autoElements.get('reports').listeners.click({target:{closest:()=>({dataset:{unit:grade+'-1'}})}});
+ const restored={ParentReport:require('../parent-report.js'),localStorage:autoContext.localStorage};vm.createContext(restored);vm.runInContext(selectionInit,restored);
+ assert.equal(vm.runInContext('selectedUnit',restored),grade+'-1');
+}
+vm.runInContext("selectedUnit='6u-20'",autoContext);
+autoElements.get('reports').listeners.click({target:{closest:()=>({dataset:{unitGrade:'5l'}})}});
+assert.equal(vm.runInContext('selectedUnit',autoContext),'5l-1');
+assert.equal(stored.get('shinen-parent-selected-unit-v1'),'5l-1');
+console.log('PASS: grade 5 upper/lower inventories, results, point groups, saved selection and grade switch fallback');

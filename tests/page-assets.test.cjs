@@ -10,7 +10,7 @@ for (const name of ['math-study-ses.html', 'math-parent.html']) {
     const src = match[1].match(/src="([^"]+)"/);
     const source = src ? fs.readFileSync(path.join(root, src[1].split('?')[0]), 'utf8') : match[2];
     new vm.Script(source, {filename: src ? src[1] : name});
-    if (src) loaded.push(src[1]);
+    if (src) loaded.push(src[1].split('?')[0]);
   }
   for (const match of html.matchAll(/<link\b[^>]*rel="stylesheet"[^>]*href="([^"]+)"/g)) {
     assert.ok(fs.existsSync(path.join(root, match[1].split('?')[0])), match[1]);
