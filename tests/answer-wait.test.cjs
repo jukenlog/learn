@@ -1,0 +1,8 @@
+const fs=require('node:fs'),vm=require('node:vm'),assert=require('node:assert/strict'),path=require('node:path');
+const source=fs.readFileSync(path.join(__dirname,'../study/answer-wait-settings.js'),'utf8');
+function load(saved){const nodes=[];const store=new Map(saved===undefined?[]:[['shinen-answer-wait-seconds-v1',saved]]);const parent={querySelector(){return null},insertBefore(){}};const context={window:{},localStorage:{getItem:k=>store.get(k)??null,setItem:(k,v)=>store.set(k,v)},document:{querySelector:()=>parent,createElement(tag){const node={tag,style:{},append(){},setAttribute(){},addEventListener(type,fn){this[type]=fn}};nodes.push(node);return node}}};vm.runInNewContext(source,context);return {get:context.window.getAnswerWaitSeconds,input:nodes.find(n=>n.tag==='input'),save:nodes.find(n=>n.tag==='button'),store};}
+assert.equal(load().get(),5);assert.equal(load('60').get(),60);assert.equal(load('0').get(),0);assert.equal(load('bad').get(),5);
+const settings=load();for(const value of ['-1','601','1.5','']){settings.input.value=value;settings.save.click();assert.equal(settings.get(),5);}
+settings.input.value='120';settings.save.click();assert.equal(settings.get(),120);assert.equal(load(settings.store.get('shinen-answer-wait-seconds-v1')).get(),120);
+const gate=fs.readFileSync(path.join(__dirname,'../study/thinking-gate.js'),'utf8');assert.ok(gate.includes('const answerSeconds=window.getAnswerWaitSeconds?.()??seconds;'));assert.ok(gate.includes('Math.max(0,answerSeconds-Math.floor'));
+console.log('PASS: wait default, zero, saved value, range validation, persistence and answer gate setting');
