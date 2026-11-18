@@ -32,5 +32,13 @@
     catch { status.textContent = value + '秒に変更しましたが、保存できませんでした。このページを閉じるまで有効です。'; }
   });
   section.append(label, save, note, status);
-  parent.insertBefore(section, parent.querySelector('.problem-video-settings'));
+  parent.insertBefore(section, parent.querySelector('summary')?.nextSibling || parent.firstChild);
+  const videoSetting = parent.querySelector('.original-video-setting');
+  if (videoSetting) {
+    const videoNote = videoSetting.nextElementSibling;
+    section.after(videoSetting);
+    if (videoNote?.tagName === 'P') videoSetting.after(videoNote);
+  }
+  const reportLink = parent.querySelector('.parent-report-settings');
+  if (reportLink) parent.append(reportLink);
 })();
