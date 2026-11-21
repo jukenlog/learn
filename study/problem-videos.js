@@ -3,6 +3,13 @@ const videos={"6u-1":{"例題1":{"label":"例題1","url":"https://player.vimeo.c
 // Add a unit and problem entry here for each original explanation.
 const originalVideos = {
  '6u-9': {
+  '例題6': {
+   label: '例題6',
+   videoId: 'math-se-6u-09-06',
+   url: 'study-videos/math-se-6u-09-06.mp4',
+   startSeconds: 0,
+   format: 'mp4'
+  },
   '例題5': {
    label: '例題5',
    videoId: 'math-se-6u-09-05',
@@ -27,7 +34,7 @@ const originalVideos = {
   '例題3': {
    label: '例題3',
    videoId: 'shin-enshu-6u-09-example-03',
-   url: 'study-videos/math-se-6u-09-03.mp4',
+   url: 'study-videos/math-se-6u-09-03.mp4?v=20261121',
    startSeconds: 0,
    format: 'mp4'
   }
