@@ -20,7 +20,8 @@ console.log('PASS: opening logs once, closing logs once even without playback no
 const registration=html.match(/const originalVideos = \{[\s\S]*?\n\};/)[0];
 const startOriginal=html.match(/function startOriginalVideo\(state, clip\) \{[\s\S]*?\n\}/)[0];
 const original=vm.runInContext(registration+'\n'+startOriginal+"\noriginalVideos['6u-9']['例題2']",context);
-assert.ok(fs.statSync(path.join(__dirname,'..',original.url)).size>0);
+const assetPath = new URL(original.url, 'https://example.invalid').pathname.slice(1);
+assert.ok(fs.statSync(path.join(__dirname, '..', assetPath)).size > 0);
 const calls=[];
 const media={
  setAttribute(){},

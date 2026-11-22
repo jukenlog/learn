@@ -6,35 +6,35 @@ const originalVideos = {
   '例題6': {
    label: '例題6',
    videoId: 'math-se-6u-09-06',
-   url: 'study-videos/math-se-6u-09-06.mp4',
+   url: 'study-videos/math-se-6u-09-06.mp4?v=20261122',
    startSeconds: 0,
    format: 'mp4'
   },
   '例題5': {
    label: '例題5',
    videoId: 'math-se-6u-09-05',
-   url: 'study-videos/math-se-6u-09-05.mp4',
+   url: 'study-videos/math-se-6u-09-05.mp4?v=20261122',
    startSeconds: 0,
    format: 'mp4'
   },
   '例題4': {
    label: '例題4',
    videoId: 'math-se-6u-09-04',
-   url: 'study-videos/math-se-6u-09-04.mp4?v=20261120',
+   url: 'study-videos/math-se-6u-09-04.mp4?v=20261122',
    startSeconds: 0,
    format: 'mp4'
   },
   '例題2': {
    label: '例題2',
    videoId: 'shin-enshu-6u-09-example-02',
-   url: 'study-videos/math-se-6u-09-02.mp4',
+   url: 'study-videos/math-se-6u-09-02.mp4?v=20261122',
    startSeconds: 0,
    format: 'mp4'
   },
   '例題3': {
    label: '例題3',
    videoId: 'shin-enshu-6u-09-example-03',
-   url: 'study-videos/math-se-6u-09-03.mp4?v=20261121',
+   url: 'study-videos/math-se-6u-09-03.mp4?v=20261122',
    startSeconds: 0,
    format: 'mp4'
   }
