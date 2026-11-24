@@ -185,6 +185,58 @@ body{padding-bottom:calc(72px + env(safe-area-inset-bottom,0px))}
 .floating-parent-link:focus-visible{outline:3px solid #5384af;outline-offset:3px}
 @media print{.floating-parent-link{display:none}}
 </style>
+<style data-example-video-modal>
+.answer-dialog.example-video-dialog {
+  width: min(960px, calc(100% - 32px));
+  max-width: none;
+  max-height: 92vh;
+  max-height: 92dvh;
+  padding: 0;
+  border: 0;
+  color: #18364c;
+  box-shadow: 0 30px 100px #0005;
+}
+.example-video-dialog::backdrop {
+  background: #102433bb;
+  backdrop-filter: blur(5px);
+}
+body:has(.example-video-dialog[open]) { overflow: hidden; }
+.example-video-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 16px 24px;
+}
+.example-video-header h3 { margin: 0; font-size: clamp(18px, 2.5vw, 24px); line-height: 1.4; }
+.example-video-unit { margin: 0 0 3px; color: #536878; font-size: 14px; }
+.example-video-unit:empty { display: none; }
+.example-video-dialog .answer-corner-close { position: static; flex: 0 0 44px; background: #edf2f5; }
+.example-video-dialog .problem-answer-video { margin: 0; padding: 0; border: 0; }
+.example-video-dialog .problem-video-player {
+  margin: 0;
+  max-height: 65vh;
+  max-height: 65dvh;
+  border-radius: 0;
+  background: #000;
+}
+@media (max-height: 500px) {
+  .example-video-dialog .problem-video-player {
+    max-height: clamp(80px, calc(92vh - 175px), 65vh);
+    max-height: clamp(80px, calc(92dvh - 175px), 65dvh);
+  }
+}
+.example-video-dialog .problem-video-player.problem-player-expanded,
+.example-video-dialog .problem-video-player:fullscreen { max-height: none; }
+.example-video-dialog .problem-video-player:-webkit-full-screen { max-height: none; }
+.example-video-dialog .problem-video-player video { object-fit: contain; }
+.example-video-dialog .problem-video-controls { justify-content: flex-end; padding: 12px 24px; }
+.example-video-dialog .original-video-credit { margin: 0; padding: 0 24px 12px; }
+@media (max-width: 600px) {
+  .example-video-header, .example-video-dialog .problem-video-controls { padding: 12px 16px; }
+  .example-video-dialog .original-video-credit { padding-inline: 16px; }
+}
+</style>
 <style data-restart-visibility>
 .problem-video-settings[hidden]{display:none!important}
 .video[data-level="難問編"],
@@ -224,7 +276,7 @@ html.js .sidebar .toc-grade-tabs.js-only{display:flex;flex-wrap:nowrap;gap:14px;
 <script src="study-grade6.js"></script>
 <script src="study-data/grade6-5.js"></script><script src="study-data/grade6-10.js"></script><script src="study-data/grade6-15.js"></script><script src="study-data/grade6-20.js"></script><script src="study/navigation.js?v=20261124-inline-examples"></script>
 <dialog aria-labelledby="modal-title" id="video-modal"><div class="modal-head"><h2 id="modal-title">動画を再生</h2><button autofocus="" class="action" id="modal-close" type="button">閉じる ×</button></div><div class="player-stage" hidden="" id="player-stage"></div><div class="modal-message" id="modal-message" role="status"><p id="modal-message-text">プレーヤーを読み込んでいます…</p><button class="action" hidden="" id="modal-replay" type="button">もう一度見る</button></div><div class="modal-actions"><button class="action" id="modal-back" type="button">一覧に戻る</button></div><p class="modal-help">終了を検知するとプレーヤーを閉じます。YouTubeの仕様により、一時停止中の候補や動画内の終了画面は完全には非表示にできません。</p></dialog>
-<script src="study/restart-player.js"></script><script src="study/thumbnail-fallback.js"></script><span hidden role="status" id="study-save"></span><script src="study-data/grade6-2.js"></script><span hidden role="status" id="study-save-1"></span><script src="study-data/grade6-1.js"></script><span hidden role="status" id="study-save-3"></span><script src="study-data/grade6-3.js"></script><span hidden role="status" id="study-save-4"></span><script src="study-data/grade6-4.js"></script><span hidden role="status" id="study-save-6"></span><script src="study-data/grade6-6.js"></script><span hidden role="status" id="study-save-7"></span><script src="study-data/grade6-7.js"></script><span hidden role="status" id="study-save-8"></span><script src="study-data/grade6-8.js"></script><span hidden role="status" id="study-save-9"></span><script src="study-data/grade6-9.js"></script><span hidden role="status" id="study-save-11"></span><script src="study-data/grade6-11.js"></script><span hidden role="status" id="study-save-12"></span><script src="study-data/grade6-12.js"></script><span hidden role="status" id="study-save-13"></span><script src="study-data/grade6-13.js"></script><span hidden role="status" id="study-save-14"></span><script src="study-data/grade6-14.js"></script><span hidden role="status" id="study-save-16"></span><script src="study-data/grade6-16.js"></script><span hidden role="status" id="study-save-17"></span><script src="study-data/grade6-17.js"></script><span hidden role="status" id="study-save-18"></span><script src="study-data/grade6-18.js"></script><span hidden role="status" id="study-save-19"></span><script src="study-data/grade6-19.js"></script><script src="study/activity.js?v=20261124-inline-examples"></script><script src="study/grade5-answers.js"></script><script data-grade5-lower-answers="true" src="study/grade5-lower-answers.js"></script><script data-grade5-lower-learning="true" src="study/grade5-lower.js"></script><script data-grade5-upper-answers="true" src="study/grade5-upper-answers.js"></script><script data-grade5-upper-learning="true" src="study/grade5-upper.js"></script><script src="study/video-ratings.js"></script><script data-rating-feedback="true" src="study/rating-feedback.js?v=20261105-triangle"></script><script data-mastery="true" src="study/mastery.js"></script><script data-answer-review="true" src="study/answer-review.js"></script><script data-problem-videos="6u-3" src="study/problem-videos.js?v=20261124-inline-examples"></script><script src="study/grade5-lower-hints.js?v=20261101"></script><script src="study/answer-wait-settings.js?v=20261118-order"></script><script data-thinking-gate="all-problems" src="study/thinking-gate.js?v=70695a291767"></script><style data-lesson6-answer-images>
+<script src="study/restart-player.js"></script><script src="study/thumbnail-fallback.js"></script><span hidden role="status" id="study-save"></span><script src="study-data/grade6-2.js"></script><span hidden role="status" id="study-save-1"></span><script src="study-data/grade6-1.js"></script><span hidden role="status" id="study-save-3"></span><script src="study-data/grade6-3.js"></script><span hidden role="status" id="study-save-4"></span><script src="study-data/grade6-4.js"></script><span hidden role="status" id="study-save-6"></span><script src="study-data/grade6-6.js"></script><span hidden role="status" id="study-save-7"></span><script src="study-data/grade6-7.js"></script><span hidden role="status" id="study-save-8"></span><script src="study-data/grade6-8.js"></script><span hidden role="status" id="study-save-9"></span><script src="study-data/grade6-9.js"></script><span hidden role="status" id="study-save-11"></span><script src="study-data/grade6-11.js"></script><span hidden role="status" id="study-save-12"></span><script src="study-data/grade6-12.js"></script><span hidden role="status" id="study-save-13"></span><script src="study-data/grade6-13.js"></script><span hidden role="status" id="study-save-14"></span><script src="study-data/grade6-14.js"></script><span hidden role="status" id="study-save-16"></span><script src="study-data/grade6-16.js"></script><span hidden role="status" id="study-save-17"></span><script src="study-data/grade6-17.js"></script><span hidden role="status" id="study-save-18"></span><script src="study-data/grade6-18.js"></script><span hidden role="status" id="study-save-19"></span><script src="study-data/grade6-19.js"></script><script src="study/activity.js?v=20261124-inline-examples"></script><script src="study/grade5-answers.js"></script><script data-grade5-lower-answers="true" src="study/grade5-lower-answers.js"></script><script data-grade5-lower-learning="true" src="study/grade5-lower.js"></script><script data-grade5-upper-answers="true" src="study/grade5-upper-answers.js"></script><script data-grade5-upper-learning="true" src="study/grade5-upper.js"></script><script src="study/video-ratings.js"></script><script data-rating-feedback="true" src="study/rating-feedback.js?v=20261105-triangle"></script><script data-mastery="true" src="study/mastery.js"></script><script data-answer-review="true" src="study/answer-review.js"></script><script data-problem-videos="6u-3" src="study/problem-videos.js?v=20261125-wide-modal"></script><script src="study/grade5-lower-hints.js?v=20261101"></script><script src="study/answer-wait-settings.js?v=20261118-order"></script><script data-thinking-gate="all-problems" src="study/thinking-gate.js?v=70695a291767"></script><style data-lesson6-answer-images>
 .unit-head h3{touch-action:manipulation;user-select:none;-webkit-user-select:none}
 .lesson6-answer-images{border-top:1px solid #d5e0e8;margin-top:18px;padding-top:12px}
 .lesson6-answer-images>button{display:inline-flex;align-items:center;justify-content:center;min-height:44px;padding:8px 12px;border:1px solid #b5cbe4;border-radius:9px;background:#f3f8fc;color:#245ea8;font:700 14px system-ui;cursor:pointer}
@@ -251,6 +303,7 @@ html.js .sidebar .toc-grade-tabs.js-only{display:flex;flex-wrap:nowrap;gap:14px;
 
 .video.example-video-card{flex-direction:row;align-items:center;gap:10px 14px;padding:10px 12px;margin:8px 0 0}
 .example-video-card .example-video-thumb{order:0;width:144px;flex:0 0 144px;border-radius:8px}
+.example-video-card .example-video-thumb:hover .thumb-play{background:#245ea8}
 .example-video-card .problem-heading{order:1;flex:1 1 185px;min-width:0;flex-wrap:wrap}
 .example-video-card .example-right-controls{order:2}
 .example-video-card .example-video-watch{position:static;width:auto;height:auto;min-height:44px;padding:0 4px;white-space:nowrap}

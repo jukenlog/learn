@@ -107,7 +107,9 @@ window.prepareAnswerReview=(dialog,trigger)=>{
   const fullscreen=document.createElement('button');fullscreen.type='button';fullscreen.className='problem-fullscreen';fullscreen.textContent='⛶ 全画面';fullscreen.hidden=true;
   const exitFullscreen=document.createElement('button');exitFullscreen.type='button';exitFullscreen.className='problem-fullscreen-exit';exitFullscreen.textContent='全画面を閉じる ×';
   const player=document.createElement('div');player.className='problem-video-player';player.hidden=true;
-  const frame=document.createElement('iframe');frame.setAttribute('allow','autoplay; fullscreen; picture-in-picture');frame.setAttribute('allowfullscreen','');frame.setAttribute('referrerpolicy','strict-origin-when-cross-origin');player.append(frame,exitFullscreen);controls.append(play,fullscreen,external,close);section.append(controls,player);
+  const frame=document.createElement('iframe');frame.setAttribute('allow','autoplay; fullscreen; picture-in-picture');frame.setAttribute('allowfullscreen','');frame.setAttribute('referrerpolicy','strict-origin-when-cross-origin');player.append(frame,exitFullscreen);controls.append(play,fullscreen,external,close);
+  if (dialog.classList.contains('example-video-dialog')) section.append(player, controls);
+  else section.append(controls, player);
   const actions=dialog.querySelector('.answer-review-actions');if(actions)dialog.insertBefore(section,actions);else dialog.append(section);
   state={section,play,external,close,player,frame,fullscreen,video:null,label:'',sessionStarted:false};states.set(dialog,state);
   const expand=()=>{if(!player.hidden)player.className='problem-video-player problem-player-expanded'};
@@ -201,9 +203,20 @@ function addExampleVideoCard(row, name, clip) {
 function bindExampleDialog(trigger, name, original) {
  const dialog=document.createElement('dialog');dialog.className='answer-dialog example-video-dialog';
  if(original)dialog.classList.add('original-video-dialog');
- const title=document.createElement('h3');title.textContent=name+(original?'の解説動画':'の井上先生解説動画');
+ const header = document.createElement('header');
+ header.className = 'example-video-header';
+ const heading = document.createElement('div');
+ const unitTitle = document.createElement('p');
+ unitTitle.className = 'example-video-unit';
+ const title = document.createElement('h3');
+ const videoTitle = name + (original ? 'の解説動画' : 'の井上先生解説動画');
+ title.textContent = videoTitle;
+
  const close=document.createElement('button');close.type='button';close.className='answer-corner-close';close.textContent='×';close.setAttribute('aria-label','閉じる');close.addEventListener('click',()=>dialog.close());
- dialog.append(title,close);document.body.append(dialog);
+ heading.append(unitTitle, title);
+ header.append(heading, close);
+ dialog.append(header);
+ document.body.append(dialog);
  dialog.addEventListener('close', () => trigger.focus({preventScroll: true}));
  trigger.addEventListener('click', event => {
   if (original) {
@@ -211,6 +224,12 @@ function bindExampleDialog(trigger, name, original) {
    event.preventDefault();
   }
   if(original?!originalEnabled:!enabled)return;
+  const unit = trigger.closest('.unit');
+  unitTitle.textContent = unit?.querySelector('.unit-head h3')?.textContent.trim() || '';
+  const topic = trigger.closest('.example-problem-row,.example-only-row')
+   ?.querySelector('.problem-description')?.textContent.trim();
+  title.textContent = topic ? videoTitle + '　' + topic : videoTitle;
+  dialog.setAttribute('aria-label', title.textContent);
   prepareExampleVideo(dialog,trigger);
   const actions=dialog.querySelector('.answer-review-actions');if(actions)actions.hidden=true;
   const state=states.get(dialog);if(!state)return;
