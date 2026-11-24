@@ -17,7 +17,20 @@ function reset(){choose(grade);}
 document.querySelectorAll('[data-grade][aria-pressed]').forEach(b=>b.addEventListener('click',()=>{choose(b.dataset.grade);history.replaceState(null,'','#'+b.dataset.grade+'-1');}));
 function saveProgress(){try{localStorage.setItem(key,JSON.stringify(done))}catch(err){saveNotice('視聴済みの状態は現在の画面内のみ有効です')}sync();filter();}
 function setWatched(id){if(done[id])return;done[id]=true;saveProgress()}window.markRestartWatched=setWatched;
+function bindWatchToggle(card) {
+ card.querySelector('.watch-toggle').addEventListener('click', () => {
+  const id = card.dataset.video;
+  if (done[id]) delete done[id];
+  else done[id] = true;
+  saveProgress();
+ });
+}
+window.registerExampleVideoCard = card => {
+ videos.push(card);
+ bindWatchToggle(card);
+ sync();
+};
 videos.forEach(v=>{
- v.querySelector('.watch-toggle').addEventListener('click',()=>{if(!done[v.dataset.video])done[v.dataset.video]=true;else delete done[v.dataset.video];saveProgress()});
+ bindWatchToggle(v);
  v.querySelector('.video-thumb').addEventListener('click',()=>{if(!["6u-1", "6u-2", "6u-3", "6u-4", "6u-6", "6u-7", "6u-8", "6u-9", "6u-11", "6u-12", "6u-13", "6u-14", "6u-16", "6u-17", "6u-18", "6u-19"].includes(v.closest('.unit').id))setWatched(v.dataset.video)});
 });document.querySelectorAll('[data-jump]').forEach(a=>a.addEventListener('click',e=>{e.preventDefault();grade=a.dataset.jump.split('-')[0];reset();const target=document.getElementById(a.dataset.jump);if(target){target.scrollIntoView({behavior:'smooth',block:'start'});history.replaceState(null,'','#'+target.id)}}));window.addEventListener('hashchange',()=>{const next=location.hash.slice(1).split('-')[0];if(['5u','5l','6u'].includes(next)&&next!==grade){grade=next;reset()}});sync();choose(grade);})();

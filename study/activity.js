@@ -18,7 +18,7 @@ floatingParent.className='floating-parent-link';floatingParent.href='math-parent
 floatingParent.textContent='学習レポートページ（保護者用）→';
 document.body.append(floatingParent);
 
-let current={};document.addEventListener('click',e=>{const thumb=e.target.closest('.video-thumb');if(thumb){const card=thumb.closest('.video');current={unit:card.closest('.unit').id,videoId:card.dataset.video,title:card.querySelector('.video-title').textContent};window.recordStudyEvent('video_open',current)}},true);
+let current={};document.addEventListener('click',e=>{const thumb=e.target.closest('.video-thumb');if(thumb&&!thumb.classList.contains('example-video-thumb')){const card=thumb.closest('.video');current={unit:card.closest('.unit').id,videoId:card.dataset.video,title:card.querySelector('.video-title').textContent};window.recordStudyEvent('video_open',current)}},true);
 // Transfer data only: settings and account information are never included.
 const transferKeys=['shinen-math5-upper-results-v1','shinen-math5-lower-results-v1','shinen-restart-video-ratings-v1',...Array.from({length:20},(_,i)=>'shinen-math6-restart-practice-'+(i+1)+'-v1')];
 const watchedKeys=['shinen-math-all-restart-watched-v1','shinen-math5-restart-watched-v1','shinen-math6-restart-watched-v1'];

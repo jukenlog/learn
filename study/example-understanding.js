@@ -8,7 +8,9 @@
   const row=play.closest('.example-problem-row,.example-only-row'),heading=row?.querySelector('.problem-heading'),name=heading?.querySelector('strong'),unit=row?.closest('.unit')?.id;if(!row||!name||!unit||row.dataset.understandingBound==='true')continue;row.dataset.understandingBound='true';
   let description=heading.querySelector('.problem-description');
   if(!description){description=document.createElement('span');description.className='problem-description';description.textContent=row.nextElementSibling?.querySelector('.problem-description')?.textContent||'';heading.append(description)}
-  const controls=document.createElement('div');controls.className='example-right-controls';controls.append(...row.querySelectorAll('.example-video-play'));row.append(controls);
+  const controls=document.createElement('div');controls.className='example-right-controls';const watch = row.querySelector('.example-video-watch');
+  if (watch) controls.append(watch);
+  controls.append(...row.querySelectorAll('button.example-video-play'));row.append(controls);
   const old=row.querySelector('.study-ratings');if(old&&!old.children.length)old.remove();
   const label=name.textContent.trim(),id=unit+'|'+label,group=document.createElement('div');group.className='video-rating example-understanding';group.setAttribute('role','group');group.setAttribute('aria-label',label+'の理解度');
   const caption=document.createElement('span');caption.textContent='理解度';group.append(caption);

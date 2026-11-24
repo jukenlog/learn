@@ -66,7 +66,7 @@ const originalToggle=document.createElement('input');originalToggle.type='checkb
 originalSetting.append(originalToggle,document.createTextNode('解説動画を表示する'));
 const originalNotice=document.createElement('p');originalNotice.textContent='このアプリ独自の解説動画を表示します。初期設定はオンです。小６上から少しずつ作成中なので、順次見られるようになります。';
 settings.before(originalSetting,originalNotice);
-function applyOriginalAccess(value){originalEnabled=value;originalToggle.checked=value;for(const button of document.querySelectorAll('.original-video-play'))button.hidden=!value;if(!value){for(const state of states.values())if(state.video?.format==='mp4'){stop(state);state.section.hidden=true}for(const dialog of document.querySelectorAll('.original-video-dialog[open]'))dialog.close()}}
+function applyOriginalAccess(value){originalEnabled=value;originalToggle.checked=value;for(const control of document.querySelectorAll('.original-video-play,.example-video-watch'))control.hidden=!value;if(!value){for(const state of states.values())if(state.video?.format==='mp4'){stop(state);state.section.hidden=true}for(const dialog of document.querySelectorAll('.original-video-dialog[open]'))dialog.close()}}
 originalToggle.addEventListener('change',()=>{applyOriginalAccess(originalToggle.checked);try{localStorage.setItem(originalPreferenceKey,String(originalEnabled))}catch{originalNotice.textContent='設定を保存できません。このページを開いている間だけ有効です。'}});
 window.addEventListener('storage',event=>{if(event.key===originalPreferenceKey||event.key===null)applyOriginalAccess(event.key===null||event.newValue!=='false')});
 
@@ -146,12 +146,9 @@ for(const unit of document.querySelectorAll('.unit')){
   }else row.classList.add('example-only-row');
   const ratings=videoRow.querySelector('.study-ratings');if(!ratings)continue;
   const buttons=[];
-  if(original){
-   const originalButton=document.createElement('button');originalButton.type='button';
-   originalButton.className='example-video-play original-video-play';originalButton.textContent='▶ 解説動画';
-   originalButton.setAttribute('aria-label',name+'の解説動画');originalButton.hidden=!originalEnabled;
-   buttons.push(originalButton);
-   bindExampleDialog(originalButton,name,true);
+  if (original) {
+   const thumb = addExampleVideoCard(videoRow, name, original);
+   bindExampleDialog(thumb, name, true);
   }
   if(existing){
    const button=document.createElement('button');button.type='button';button.className='example-video-play inoue-video-play';button.innerHTML='井上先生<br>解説動画';button.setAttribute('aria-label',name+'の井上先生解説動画');button.hidden=!enabled;
@@ -161,23 +158,72 @@ for(const unit of document.querySelectorAll('.unit')){
   const answer=ratings.querySelector('.answer-button');if(answer)answer.after(...buttons);else ratings.prepend(...buttons);
  }
 }
-function bindExampleDialog(button,name,original){
+function addExampleVideoCard(row, name, clip) {
+ row.classList.add('video', 'example-video-card');
+ row.dataset.video = clip.videoId;
+ const thumb = document.createElement('a');
+ thumb.className = 'video-thumb example-video-thumb example-video-play original-video-play';
+ thumb.href = clip.url;
+ thumb.hidden = !originalEnabled;
+ thumb.setAttribute('aria-label', name + 'の解説動画を再生');
+ thumb.setAttribute('aria-haspopup', 'dialog');
+ const image = document.createElement('img');
+ image.alt = '';
+ image.width = 320;
+ image.height = 180;
+ image.loading = 'lazy';
+ image.src = clip.url.replace(/\.mp4(?:\?.*)?$/, '.jpg');
+ image.addEventListener('error', () => {
+  image.hidden = true;
+  thumb.classList.add('thumb-error');
+ });
+ const play = document.createElement('span');
+ play.className = 'thumb-play';
+ play.textContent = '▶';
+ play.setAttribute('aria-hidden', 'true');
+ thumb.append(image, play);
+
+ const watch = document.createElement('button');
+ watch.type = 'button';
+ watch.className = 'watch-toggle example-video-watch';
+ watch.hidden = !originalEnabled;
+ watch.setAttribute('aria-label', name + 'の視聴済みを切り替え');
+ const status = document.createElement('span');
+ status.className = 'watch-state';
+ status.textContent = '未視聴';
+ watch.append(status);
+ row.prepend(thumb);
+ row.append(watch);
+ window.registerExampleVideoCard?.(row);
+ return thumb;
+}
+
+function bindExampleDialog(trigger, name, original) {
  const dialog=document.createElement('dialog');dialog.className='answer-dialog example-video-dialog';
  if(original)dialog.classList.add('original-video-dialog');
  const title=document.createElement('h3');title.textContent=name+(original?'の解説動画':'の井上先生解説動画');
  const close=document.createElement('button');close.type='button';close.className='answer-corner-close';close.textContent='×';close.setAttribute('aria-label','閉じる');close.addEventListener('click',()=>dialog.close());
  dialog.append(title,close);document.body.append(dialog);
- dialog.addEventListener('close',()=>button.focus({preventScroll:true}));
- button.addEventListener('click',()=>{
+ dialog.addEventListener('close', () => trigger.focus({preventScroll: true}));
+ trigger.addEventListener('click', event => {
+  if (original) {
+   if (event.ctrlKey || event.metaKey || event.shiftKey || event.altKey || event.button !== 0) return;
+   event.preventDefault();
+  }
   if(original?!originalEnabled:!enabled)return;
-  prepareExampleVideo(dialog,button);
+  prepareExampleVideo(dialog,trigger);
   const actions=dialog.querySelector('.answer-review-actions');if(actions)actions.hidden=true;
   const state=states.get(dialog);if(!state)return;
   if(original&&!dialog.querySelector('.original-video-credit')){
    const credit=document.createElement('small');credit.className='original-video-credit';credit.textContent='ナレーション 音読さん';dialog.append(credit);
   }
   state.revealed=true;state.section.hidden=false;dialog.showModal();
-  state.start(state.video.clips?.[0]||state.video);close.focus({preventScroll:true});
+  state.start(state.video.clips?.[0]||state.video);
+  if (original) {
+   const videoId = state.video.videoId;
+   state.media?.addEventListener('play', () => window.markRestartWatched?.(videoId), {once: true});
+  }
+  close.focus({preventScroll:true});
  });
 }
 for(const unit of document.querySelectorAll?.('.unit')||[]){
